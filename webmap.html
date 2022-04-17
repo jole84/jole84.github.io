@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Terrängkarta med slitlager</title>
+  <title>Vägkarta med slitlager</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Grusvägar, asfalterade vägar och traktorvägar på karta. Baserad på Lantmäteriets Terrängkarta.">
+  <meta name="description" content="Rekommenderade vägar för tyngre transporter, höjdhinder, fartkameror. Baserad på Lantmäteriets Vägkarta.">
   <meta charset="utf-8" />
 
   <link rel="stylesheet" href="leaflet.css" />
@@ -23,14 +23,52 @@
 <body>
   <div id="map"></div>
   <script>
-      var map = L.map('map').setView([57.8, 14.2], 9.0);
-      L.tileLayer('slitlagerkarta/{z}/{x}/{y}.jpg', {
+      //var map = L.map('map').setView([57.78564196397448, 14.215799665093242], 9.0);
+
+      var slitlagerkarta = L.tileLayer('slitlagerkarta/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 13,
         minZoom: 8,
-        maxZoom: 15,
+        maxZoom: 14,
         tms: false,
         attribution: 'jole84.github.io'
-      }).addTo(map);
-  </script>
+      });
+      
+      var slitlagerkarta_test = L.tileLayer('http://195.252.39.34/slitlagerkarta/{z}/{x}/{y}.jpg', {
+        maxNativeZoom: 13,
+        minZoom: 8,
+        maxZoom: 14,
+        tms: false,
+        attribution: 'jole84.github.io'
+      });
+
+      var streetmap = L.tileLayer('slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
+        maxNativeZoom: 13,
+        minZoom: 8,
+        maxZoom: 14,
+        tms: false,
+        attribution: 'jole84.github.io'
+      });
+      
+      var streetmap_test = L.tileLayer('http://195.252.39.34/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
+        maxNativeZoom: 13,
+        minZoom: 8,
+        maxZoom: 14,
+        tms: false,
+        attribution: 'jole84.github.io'
+      });
+
+      var map = L.map('map', {
+        center: [57.78564196397448, 14.215799665093242],
+        zoom: 12,
+        layers: [slitlagerkarta]
+      });
+      var baseLayers = {
+        'Slitlagerkarta': slitlagerkarta,
+        'Slitlagerkarta test': slitlagerkarta_test,
+        'Vägkarta': streetmap,
+        'Vägkarta test': streetmap_test
+      };
+      var layerControl = L.control.layers(baseLayers,null,{collapsed:false}).addTo(map);
+      </script>
 </body>
 </html>
