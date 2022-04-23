@@ -23,7 +23,8 @@
 <body>
   <div id="map"></div>
   <script>
-      //var map = L.map('map').setView([57.78564196397448, 14.215799665093242], 9.0);
+      // ip address to map server
+      var ipAddr = '195.252.39.34';
 
       var slitlagerkarta_demo = L.tileLayer('slitlagerkarta/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 13,
@@ -33,7 +34,7 @@
         attribution: 'jole84.github.io'
       });
       
-      var slitlagerkarta = L.tileLayer('http://195.252.39.34/slitlagerkarta/{z}/{x}/{y}.jpg', {
+      var slitlagerkarta = L.tileLayer('https://' + ipAddr + '/slitlagerkarta/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 13,
         minZoom: 8,
         maxZoom: 14,
@@ -49,7 +50,7 @@
         attribution: 'jole84.github.io'
       });
       
-      var streetmap = L.tileLayer('http://195.252.39.34/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
+      var streetmap = L.tileLayer('https://' + ipAddr + '/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 13,
         minZoom: 8,
         maxZoom: 14,
