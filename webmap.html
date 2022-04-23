@@ -25,7 +25,7 @@
   <script>
       //var map = L.map('map').setView([57.78564196397448, 14.215799665093242], 9.0);
 
-      var slitlagerkarta = L.tileLayer('slitlagerkarta/{z}/{x}/{y}.jpg', {
+      var slitlagerkarta_demo = L.tileLayer('slitlagerkarta/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 13,
         minZoom: 8,
         maxZoom: 14,
@@ -33,7 +33,7 @@
         attribution: 'jole84.github.io'
       });
       
-      var slitlagerkarta_test = L.tileLayer('http://195.252.39.34/slitlagerkarta/{z}/{x}/{y}.jpg', {
+      var slitlagerkarta = L.tileLayer('http://195.252.39.34/slitlagerkarta/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 13,
         minZoom: 8,
         maxZoom: 14,
@@ -41,7 +41,7 @@
         attribution: 'jole84.github.io'
       });
 
-      var streetmap = L.tileLayer('slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
+      var streetmap_demo = L.tileLayer('slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 13,
         minZoom: 8,
         maxZoom: 14,
@@ -49,7 +49,7 @@
         attribution: 'jole84.github.io'
       });
       
-      var streetmap_test = L.tileLayer('http://195.252.39.34/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
+      var streetmap = L.tileLayer('http://195.252.39.34/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 13,
         minZoom: 8,
         maxZoom: 14,
@@ -64,9 +64,9 @@
       });
       var baseLayers = {
         'Slitlagerkarta': slitlagerkarta,
-        'Slitlagerkarta test': slitlagerkarta_test,
         'Vägkarta': streetmap,
-        'Vägkarta test': streetmap_test
+        'Slitlagerkarta demo': slitlagerkarta_demo,
+        'Vägkarta demo': streetmap_demo,
       };
       var layerControl = L.control.layers(baseLayers,null,{collapsed:false}).addTo(map);
       </script>
