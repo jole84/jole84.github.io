@@ -24,14 +24,6 @@
   <div id="map"></div>
   <script>
       // ip address to map server
-
-      var slitlagerkarta_demo = L.tileLayer('slitlagerkarta/{z}/{x}/{y}.jpg', {
-        maxNativeZoom: 13,
-        minZoom: 8,
-        maxZoom: 14,
-        tms: false,
-        attribution: 'jole84.github.io'
-      });
       
       var slitlagerkarta = L.tileLayer('https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 13,
@@ -40,16 +32,8 @@
         tms: false,
         attribution: 'jole84.github.io'
       });
-
-      var streetmap_demo = L.tileLayer('slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
-        maxNativeZoom: 13,
-        minZoom: 8,
-        maxZoom: 14,
-        tms: false,
-        attribution: 'jole84.github.io'
-      });
       
-      var streetmap = L.tileLayer('{z}/{x}/{y}.jpg', {
+      var streetmap = L.tileLayer('https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 13,
         minZoom: 8,
         maxZoom: 14,
@@ -65,8 +49,6 @@
       var baseLayers = {
         'Slitlagerkarta': slitlagerkarta,
         'Vägkarta': streetmap,
-        'Slitlagerkarta demo': slitlagerkarta_demo,
-        'Vägkarta demo': streetmap_demo,
       };
       var layerControl = L.control.layers(baseLayers,null,{collapsed:false}).addTo(map);
       </script>
