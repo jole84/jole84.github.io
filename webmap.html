@@ -28,7 +28,7 @@
       var slitlagerkarta = L.tileLayer('https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 13,
         minZoom: 8,
-        maxZoom: 14,
+        maxZoom: 15,
         tms: false,
         attribution: 'jole84.github.io'
       });
@@ -36,14 +36,14 @@
       var streetmap = L.tileLayer('https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 13,
         minZoom: 8,
-        maxZoom: 14,
+        maxZoom: 15,
         tms: false,
         attribution: 'jole84.github.io'
       });
 
       var map = L.map('map', {
         center: [57.78564196397448, 14.215799665093242],
-        zoom: 12,
+        zoom: 10,
         layers: [slitlagerkarta]
       });
       var baseLayers = {
