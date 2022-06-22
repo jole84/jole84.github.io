@@ -70,6 +70,11 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       });
 
+      var opentopomap = L.tileLayer('https://opentopomap.org/{z}/{x}/{y}.png', {
+        tms: false,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      });
+
       var map = L.map('map', {
         center: [57.78564196397448, 14.215799665093242],
         zoom: 10,
@@ -85,8 +90,12 @@
         'Eniro Historical': enirohistorical,
         'Eniro Nautical': enironautical,
         'Openstreetmap' : openstreetmap,
+        'Opentopomap' : opentopomap,
       };
-      var layerControl = L.control.layers(baseLayers,null,{collapsed:false}).addTo(map);
+      var layerControl = L.control.layers(baseLayers,null,{collapsed:true}).addTo(map);
+
+      var scale = L.control.scale({metric:true, imperial:false}).addTo(map);
+
       </script>
 </body>
 </html>
