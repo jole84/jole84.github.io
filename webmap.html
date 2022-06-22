@@ -39,6 +39,12 @@
         attribution: 'jole84.github.io'
       });
 
+      var topo = L.tileLayer('https://minkarta.lantmateriet.se/map/topowebbcache/?layer=topowebb&style=default&tilematrixset=3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix={z}&TileCol={x}&TileRow={y}', {
+        maxNativeZoom: 17,
+        tms: false,
+        attribution: 'Lantmäteriet'
+      });
+
       var eniroaerial = L.tileLayer('http://map.eniro.se/geowebcache/service/tms1.0.0/aerial/{z}/{x}/{-y}.jpeg', {
         tms: false,
         attribution: 'Eniro'
@@ -68,6 +74,7 @@
       var baseLayers = {
         'Slitlagerkarta': slitlagerkarta,
         'Vägkarta': streetmap,
+        'Lantmäteriet topo' : topo,
         'Eniro Aerial': eniroaerial,
         'Eniro Map': eniromap,
         'Eniro Historical': enirohistorical,
