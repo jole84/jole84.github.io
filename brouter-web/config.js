@@ -26,7 +26,7 @@
         // local web server with the profiles in a subdirectory or allowing file access
         // in the Browser (security!), see
         // https://github.com/mrdoob/three.js/wiki/How-to-run-things-locally
-        BR.conf.profilesUrl = '/profiles2/';
+        BR.conf.profilesUrl = 'https://jole84.github.io/profiles2/';
         //BR.conf.profilesUrl = 'file://YOUR_PATH_TO/profiles2/';
     }
 
@@ -43,17 +43,7 @@
         'car-fast',
         'safety',
         'shortest',
-        'trekking-ignore-cr',
-        'trekking-steep',
-        'trekking-noferries',
-        'trekking-nosteps',
         'moped',
-        'rail',
-        'river',
-        'vm-forum-liegerad-schnell',
-        'vm-forum-velomobil-schnell',
-        'fastbike-lowtraffic',
-        'fastbike-asia-pacific',
         'hiking-mountain',
     ];
 
