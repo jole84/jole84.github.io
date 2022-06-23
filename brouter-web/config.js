@@ -37,13 +37,13 @@
     BR.conf.initialMapZoom = 10;
 
     BR.conf.profiles = [
+        'moped',
         'trekking',
         'fastbike',
         'car-eco',
         'car-fast',
         'safety',
         'shortest',
-        'moped',
         'hiking-mountain',
     ];
 
