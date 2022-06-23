@@ -91,7 +91,7 @@
             color: 'magenta',
         },
         track: {
-            weight: 5,
+            weight: 10,
             color: 'magenta',
             opacity: BR.conf.defaultOpacity,
         },
