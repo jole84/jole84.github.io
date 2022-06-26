@@ -1,4 +1,19 @@
 BR.changelog = `
+<h2 id="0180-2022-06-24">0.18.0 (2022-06-24)</h2>
+<h3 id="bugfixes">Bugfixes</h3>
+<ul>
+<li>Layer &quot;Mapillary&quot; is currently not populated with coverage - by <a href="https://github.com/nrenner">@nrenner</a> (<a href="https://github.com/nrenner/brouter-web/issues/432">#432</a>)</li>
+<li>Hillshading and Hike&amp;Bike layers show tile &quot;Contact [[User:TheDJ]] ...&quot; - by <a href="https://github.com/nrenner">@nrenner</a> (<a href="https://github.com/nrenner/brouter-web/issues/475">#475</a>)</li>
+<li>Route drawing stops working by random - by <a href="https://github.com/nrenner">@nrenner</a> (<a href="https://github.com/nrenner/brouter-web/issues/561">#561</a>)</li>
+</ul>
+<h3 id="local-installation--development">Local installation / development</h3>
+<ul>
+<li>access token required for Mapillary layer in <code>keys.js</code> (merge from <code>keys.template.js</code>)</li>
+<li>vector-tile support - by <a href="https://github.com/nrenner">@nrenner</a> (<a href="https://github.com/nrenner/brouter-web/issues/289">#289</a>)<ul>
+<li>see documentation <a href="https://github.com/nrenner/brouter-web/blob/master/CONTRIBUTING.md#vector-tiles--dem">in CONTRIBUTING.md</a></li>
+</ul>
+</li>
+</ul>
 <h2 id="0170-2022-06-08">0.17.0 (2022-06-08)</h2>
 <h3 id="new-features">New Features</h3>
 <ul>
@@ -34,12 +49,12 @@ BR.changelog = `
 <li>Toggle &quot;locate&quot; state with keyboard shortcut - by <a href="https://github.com/mjaschen">@mjaschen</a> (<a href="https://github.com/nrenner/brouter-web/pull/462">#462</a>)</li>
 <li>Support <code>surface</code> and <code>smoothness</code> variants like <code>cycleway:surface</code> in analysis - by <a href="https://github.com/mjaschen">@mjaschen</a> (<a href="https://github.com/nrenner/brouter-web/pull/460">#460</a>)</li>
 </ul>
-<h3 id="bugfixes">Bugfixes</h3>
+<h3 id="bugfixes-1">Bugfixes</h3>
 <ul>
 <li>Fix loading no-go areas - by <a href="https://github.com/rkflx">@rkflx</a> (<a href="https://github.com/nrenner/brouter-web/pull/395">#395</a>)</li>
 <li>Error when exporting route with empty POI name - by <a href="https://github.com/bagage">@bagage</a> (<a href="https://github.com/nrenner/brouter-web/issues/427">#427</a>)</li>
 </ul>
-<h3 id="local-installation--development">Local installation / development</h3>
+<h3 id="local-installation--development-1">Local installation / development</h3>
 <ul>
 <li>config.js<ul>
 <li>rename <code>hiking-beta.brf</code> -&gt; <code>hiking-mountain.brf</code></li>
@@ -61,12 +76,12 @@ BR.changelog = `
 <li>Size limit for loading a track increased to 10 MiB (<a href="https://github.com/nrenner/brouter-web/commit/dd34064e8c09f1bc6b11e2e14e1bb83d41a61ed9">dd34064</a>)</li>
 <li>Update France Go area to 10km - by <a href="https://github.com/bagage">@bagage</a> (<a href="https://github.com/nrenner/brouter-web/commit/1c135879746f670b1a854fcbe55ab5dabacfa0a9">1c13587</a>)</li>
 </ul>
-<h3 id="bugfixes-1">Bugfixes</h3>
+<h3 id="bugfixes-2">Bugfixes</h3>
 <ul>
 <li>Flickering search field on Firefox @ Android - by <a href="https://github.com/mjaschen">@mjaschen</a> (<a href="https://github.com/nrenner/brouter-web/issues/393">#393</a>)</li>
 <li>Custom layers table width and type translations added - by <a href="https://github.com/bagage">@bagage</a> (<a href="https://github.com/nrenner/brouter-web/pull/379">#379</a>)</li>
 </ul>
-<h3 id="local-installation--development-1">Local installation / development</h3>
+<h3 id="local-installation--development-2">Local installation / development</h3>
 <ul>
 <li>New config entries <code>overpassBaseUrl</code> and <code>trackSizeLimit</code> (<a href="https://github.com/nrenner/brouter-web/blob/a2717ac10298f5e9689b420a0af0eb310eababd3/config.template.js#L131-L134">config.template.js</a>)</li>
 </ul>
@@ -75,7 +90,7 @@ BR.changelog = `
 <ul>
 <li>Popup for allowed zone marker with delete button and GPX &amp; GeoJSON download links</li>
 </ul>
-<h3 id="bugfixes-2">Bugfixes</h3>
+<h3 id="bugfixes-3">Bugfixes</h3>
 <ul>
 <li>Apply allowed zone country rules on click instead of using browser language (<a href="https://github.com/nrenner/brouter-web/issues/360">#360</a>)</li>
 </ul>
@@ -104,7 +119,7 @@ BR.changelog = `
 <ul>
 <li>Add more keyboard shortcuts and fix various shortcut related issues - by <a href="https://github.com/rkflx">@rkflx</a> (<a href="https://github.com/nrenner/brouter-web/pull/314">#314</a>, <a href="https://github.com/nrenner/brouter-web/issues/315">#315</a>)</li>
 </ul>
-<h3 id="bugfixes-3">Bugfixes</h3>
+<h3 id="bugfixes-4">Bugfixes</h3>
 <ul>
 <li>Empty elevation chart on load, but button to hide not visible (<a href="https://github.com/nrenner/brouter-web/issues/320">#320</a>)</li>
 </ul>
@@ -124,13 +139,13 @@ BR.changelog = `
 <li>Improve mobile stats layout - by <a href="https://github.com/bagage">@bagage</a> (<a href="https://github.com/nrenner/brouter-web/pull/298">#298</a>)</li>
 <li>Polish color coding + analysis tab visuals - by <a href="https://github.com/rkflx">@rkflx</a> (<a href="https://github.com/nrenner/brouter-web/pull/313">#313</a>)</li>
 </ul>
-<h3 id="bugfixes-4">Bugfixes</h3>
+<h3 id="bugfixes-5">Bugfixes</h3>
 <ul>
 <li>Brouter-Web on mobile: adjust route in between two waypoints (<a href="https://github.com/nrenner/brouter-web/issues/285">#285</a>)</li>
 <li>NogoAreas control doesn&#39;t work on mobile Chrome (<a href="https://github.com/nrenner/brouter-web/issues/259">#259</a>)</li>
 <li>Fix: Profile params of type &#39;select&#39; ignored default value from profile - by <a href="https://github.com/tbsmark86">@tbsmark86</a> (<a href="https://github.com/nrenner/brouter-web/pull/292">#292</a>)</li>
 </ul>
-<h3 id="local-installation--development-2">Local installation / development</h3>
+<h3 id="local-installation--development-3">Local installation / development</h3>
 <ul>
 <li>Add config option for initial map position and zoom level - by <a href="https://github.com/rmsacks">@rmsacks</a> (<a href="https://github.com/nrenner/brouter-web/pull/281">#281</a>)</li>
 <li>Privacy link relative path - by <a href="https://github.com/erdmark">@erdmark</a> (<a href="https://github.com/nrenner/brouter-web/pull/284">#284</a>)</li>
@@ -143,7 +158,7 @@ BR.changelog = `
 <ul>
 <li>Show icon indicator when profile is pinned (modified in editor) (<a href="https://github.com/nrenner/brouter-web/pull/277">#277</a>)</li>
 </ul>
-<h3 id="bugfixes-5">Bugfixes</h3>
+<h3 id="bugfixes-6">Bugfixes</h3>
 <ul>
 <li>Fix overwriting editor changes when switching profile tabs (<a href="https://github.com/nrenner/brouter-web/pull/277">#277</a>)</li>
 <li>Fix search result not selectable in Chrome (<a href="https://github.com/perliedman/leaflet-control-geocoder/issues/255">leaflet-control-geocoder#272</a>)</li>
@@ -170,7 +185,7 @@ BR.changelog = `
 </ul>
 <h2 id="0103-2019-06-27">0.10.3 (2019-06-27)</h2>
 <p>See also <a href="https://github.com/nrenner/brouter-web/milestone/11?closed=1">milestone 0.10.3</a></p>
-<h3 id="bugfixes-6">Bugfixes</h3>
+<h3 id="bugfixes-7">Bugfixes</h3>
 <ul>
 <li>Warn when special characters in export name will get removed (<a href="https://github.com/nrenner/brouter-web/issues/194">#194</a>, <a href="https://github.com/nrenner/brouter-web/issues/202">#202</a>)</li>
 <li>Fix %-encoded export file name in Microsoft Edge (<a href="https://github.com/nrenner/brouter-web/issues/201">#201</a>)</li>
@@ -194,14 +209,14 @@ BR.changelog = `
 <ul>
 <li>Polish formatting and behaviour of track statistics bar - by <a href="https://github.com/rkflx">@rkflx</a> (<a href="https://github.com/nrenner/brouter-web/pull/200">#200</a>)</li>
 </ul>
-<h3 id="bugfixes-7">Bugfixes</h3>
+<h3 id="bugfixes-8">Bugfixes</h3>
 <ul>
 <li>Fix unintentional shortcut activations when typing text - by <a href="https://github.com/rkflx">@rkflx</a> (<a href="https://github.com/nrenner/brouter-web/pull/198">#198</a>)</li>
 <li>Fix export button translation - by <a href="https://github.com/bagage">@bagage</a> (<a href="https://github.com/nrenner/brouter-web/issues/195">#195</a>)</li>
 <li>Fix downloads in Microsoft Edge - by <a href="https://github.com/bagage">@bagage</a> (<a href="https://github.com/nrenner/brouter-web/issues/193">#193</a>)</li>
 </ul>
 <h2 id="0101-2019-05-22">0.10.1 (2019-05-22)</h2>
-<h3 id="bugfixes-8">Bugfixes</h3>
+<h3 id="bugfixes-9">Bugfixes</h3>
 <ul>
 <li>Really ignore missing elevation points in elevation chart - by <a href="https://github.com/bagage">@bagage</a>/<a href="https://github.com/nrenner">@nrenner</a> (<a href="https://github.com/nrenner/brouter-web/issues/147">#147</a>)</li>
 </ul>
@@ -211,7 +226,7 @@ BR.changelog = `
 <ul>
 <li>Export dialog with input field for file name and track title (replaces Download dropdown) - by <a href="https://github.com/bagage">@bagage</a> (<a href="https://github.com/nrenner/brouter-web/issues/96">#96</a>)</li>
 </ul>
-<h3 id="bugfixes-9">Bugfixes</h3>
+<h3 id="bugfixes-10">Bugfixes</h3>
 <ul>
 <li>Fix broken nogo&#39;s - by <a href="https://github.com/bagage">@bagage</a>/<a href="https://github.com/nrenner">@nrenner</a> (<a href="https://github.com/nrenner/brouter-web/issues/183">#183</a>)</li>
 </ul>
@@ -227,7 +242,7 @@ BR.changelog = `
 <li>Improve about dialog texts - by <a href="https://github.com/bagage">@bagage</a> (<a href="https://github.com/nrenner/brouter-web/pull/176">#176</a>)</li>
 <li>Replace | with ; in URL - by <a href="https://github.com/bagage">@bagage</a> (<a href="https://github.com/nrenner/brouter-web/issues/109">#109</a>)</li>
 </ul>
-<h3 id="bugfixes-10">Bugfixes</h3>
+<h3 id="bugfixes-11">Bugfixes</h3>
 <ul>
 <li>Ignore missing elevation points in elevation chart - by <a href="https://github.com/bagage">@bagage</a> (<a href="https://github.com/nrenner/brouter-web/issues/147">#147</a>)</li>
 <li>Fix loading nogos with weight - by <a href="https://github.com/Phyks">@Phyks</a> (<a href="https://github.com/nrenner/brouter-web/issues/174">#174</a>)</li>
@@ -253,7 +268,7 @@ BR.changelog = `
 <li>Add strava layer in overlays - by <a href="https://github.com/bagage">@bagage</a> (<a href="https://github.com/nrenner/brouter-web/pull/152">#152</a>)</li>
 <li>Fix release script - by <a href="https://github.com/bagage">@bagage</a> (<a href="https://github.com/nrenner/brouter-web/pull/150">#150</a>)</li>
 </ul>
-<h3 id="bugfixes-11">Bugfixes</h3>
+<h3 id="bugfixes-12">Bugfixes</h3>
 <ul>
 <li>Overlays hidden under custom layer (<a href="https://github.com/nrenner/brouter-web/issues/143">#143</a>)</li>
 </ul>
@@ -307,7 +322,7 @@ BR.changelog = `
 <li>[local installation] add keys.js to configure API keys instead of bingkey request</li>
 <li>Switch to new icon set (Font Awesome) with more options</li>
 </ul>
-<h3 id="bugfixes-12">Bugfixes</h3>
+<h3 id="bugfixes-13">Bugfixes</h3>
 <ul>
 <li>Replace Bing (usage limit exceeded) with DigitalGlobe Recent Imagery layer (newer images, but sometimes cloudy)</li>
 <li>[local installation] Show error message for invalid server response with custom profiles on Windows (still needs to be fixed) (<a href="https://github.com/nrenner/brouter-web/issues/53">#53</a>)</li>
@@ -338,7 +353,7 @@ BR.changelog = `
 <li>&quot;about&quot; popup with a bit more infos and links</li>
 <li>closable error/warning messages, profile messages in place</li>
 </ul>
-<h3 id="bugfixes-13">Bugfixes</h3>
+<h3 id="bugfixes-14">Bugfixes</h3>
 <ul>
 <li>keys to enable/disable drawing (d, q/esc) now always work, not only when map is focused</li>
 <li>fix adding new waypoint after deleting the last (#11)</li>

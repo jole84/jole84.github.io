@@ -15,7 +15,7 @@ BR.confLayers.languageDefaultLayers = [
 ];
 
 BR.confLayers.defaultOverlays =  [
-    'HikeBike.HillShading',
+    'terrarium-hillshading',
     'Waymarked_Trails-Cycling',
     'Waymarked_Trails-Hiking'
 ];
@@ -26,7 +26,9 @@ BR.confLayers.legacyNameToIdMap = {
     'OpenTopoMap': 'OpenTopoMap',
     'Esri World Imagery': 'Esri.WorldImagery',
     'Cycling (Waymarked Trails)': 'Waymarked_Trails-Cycling',
-    'Hiking (Waymarked Trails)': 'Waymarked_Trails-Hiking'
+    'Hiking (Waymarked Trails)': 'Waymarked_Trails-Hiking',
+    'HikeBike.HillShading': 'terrarium-hillshading',
+    'mapillary-coverage-raster': 'mapillary-coverage'
 };
 
 BR.confLayers.leafletProvidersIncludeList = [
@@ -107,11 +109,11 @@ BR.confLayers.tree = {
     },
     'overlays': {
         'worldwide': [
-            'HikeBike.HillShading',
+            'terrarium-hillshading',
             'Waymarked_Trails-Cycling',
             'Waymarked_Trails-Hiking',
             'Waymarked_Trails-MTB',
-            'mapillary-coverage-raster',
+            'mapillary-coverage',
             'osm-notes'
         ],
         'country': [
@@ -435,7 +437,7 @@ BR.confLayers.getPropertyOverrides = function() {
             'nameShort': 'MTB',
             'mapUrl': 'http://mtb.waymarkedtrails.org/#?map={zoom}!{lat}!{lon}'
         },
-        'mapillary-coverage-raster': {
+        'mapillary-coverage': {
             'nameShort': 'Mapillary',
             'mapUrl': 'https://www.mapillary.com/app/?lat={lat}&lng={lon}&z={zoom}&menu=false'
         },
@@ -467,6 +469,9 @@ BR.confLayers.getPropertyOverrides = function() {
             'nameShort': 'CyclOSM',
             'mapUrl': 'https://www.cyclosm.org/#map={zoom}/{lat}/{lon}/cyclosm'
         },
+        'terrarium-hillshading': {
+            'name': i18next.t('map.layer.hillshading')
+        }
     };
 };
 

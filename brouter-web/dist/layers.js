@@ -175,22 +175,6 @@ BR.layerIndex = {
     },
     "type": "Feature"
   },
-  "mapillary-coverage-raster": {
-    "geometry": null,
-    "properties": {
-      "attribution": {
-        "text": "Mapillary, CC BY",
-        "url": "https://www.mapillary.com"
-      },
-      "id": "mapillary-coverage-raster",
-      "max_zoom": 17,
-      "name": "Mapillary Coverage",
-      "overlay": true,
-      "type": "tms",
-      "url": "https://d6a1v2w10ny40.cloudfront.net/v0.1/{z}/{x}/{y}.png"
-    },
-    "type": "Feature"
-  },
   "openmapsurfer": {
     "geometry": null,
     "properties": {
@@ -10549,6 +10533,33 @@ BR.layerIndex = {
     },
     "type": "Feature"
   },
+  "mapillary-coverage": {
+    "geometry": null,
+    "properties": {
+      "attribution": {
+        "text": "Mapillary, CC BY",
+        "url": "https://www.mapillary.com"
+      },
+      "id": "mapillary-coverage",
+      "name": "Mapillary Coverage",
+      "overlay": true,
+      "type": "mvt",
+      "url": "mapillary-coverage-style?{keys_mapillary}"
+    },
+    "type": "Feature"
+  },
+  "terrarium-hillshading": {
+    "geometry": null,
+    "properties": {
+      "id": "terrarium-hillshading",
+      "overlay": true,
+      "type": "mvt",
+      "url": "terrarium-hillshading-style",
+      "mapUrl": "https://registry.opendata.aws/terrain-tiles/",
+      "attribution": "<a target=\"_blank\" rel=\"noopener\" href=\"https://registry.opendata.aws/terrain-tiles/\">Terrain Tiles at Registry of Open Data on AWS</a>: <ul><li>ArcticDEM terrain data DEM(s) were created from DigitalGlobe, Inc., imagery and funded under National Science Foundation awards 1043681, 1559691, and 1542736 </li><li> Australia terrain data © Commonwealth of Australia (Geoscience Australia) 2017 </li><li> Austria terrain data © offene Daten Österreichs – Digitales Geländemodell (DGM) Österreich </li><li> Canada terrain data contains information licensed under the Open Government Licence – Canada </li><li> Europe terrain data produced using Copernicus data and information funded by the European Union - EU-DEM layers </li><li> Global ETOPO1 terrain data U.S. National Oceanic and Atmospheric Administration</li><li> Mexico terrain data source: INEGI, Continental relief, 2016 </li><li> New Zealand terrain data Copyright 2011 Crown copyright (c) Land Information New Zealand and the New Zealand Government (All rights reserved) </li><li> Norway terrain data © Kartverket </li><li> United Kingdom terrain data © Environment Agency copyright and/or database right 2015. All rights reserved </li><li> United States 3DEP (formerly NED) and global GMTED2010 and SRTM terrain data courtesy of the U.S. Geological Survey.</li></ul>"
+    },
+    "type": "Feature"
+  },
   "mapaszlakow-cycle": {
     "geometry": {
       "coordinates": [
@@ -12163,5 +12174,105 @@ BR.layerIndex = {
       "query": "nwr[shop=supermarket];"
     },
     "type": "Feature"
+  },
+  "mapillary-coverage-style": {
+    "version": 8,
+    "sources": {
+      "mapillary-coverage": {
+        "type": "vector",
+        "tiles": [
+          "https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token={keys_mapillary}"
+        ],
+        "minzoom": 0,
+        "maxzoom": 14
+      }
+    },
+    "layers": [
+      {
+        "id": "mapillary-sequence",
+        "type": "line",
+        "source": "mapillary-coverage",
+        "source-layer": "sequence",
+        "minzoom": 6,
+        "layout": {
+          "line-cap": "round",
+          "line-join": "round"
+        },
+        "paint": {
+          "line-opacity": 1,
+          "line-color": "rgb(53, 175, 109)",
+          "line-width": 2
+        }
+      },
+      {
+        "id": "mapillary-image",
+        "type": "circle",
+        "source": "mapillary-coverage",
+        "source-layer": "image",
+        "interactive": true,
+        "minzoom": 14,
+        "paint": {
+          "circle-radius": 3,
+          "circle-opacity": 1,
+          "circle-color": "rgb(53, 175, 109)"
+        }
+      },
+      {
+        "filter": [
+          "==",
+          "is_pano",
+          true
+        ],
+        "id": "mapillary-pano",
+        "type": "circle",
+        "source": "mapillary-coverage",
+        "source-layer": "image",
+        "minzoom": 17,
+        "paint": {
+          "circle-radius": 9,
+          "circle-opacity": 0.2,
+          "circle-color": "rgb(53, 175, 109)"
+        }
+      },
+      {
+        "id": "mapillary-overview",
+        "type": "circle",
+        "source": "mapillary-coverage",
+        "source-layer": "overview",
+        "maxzoom": 6,
+        "paint": {
+          "circle-radius": 2,
+          "circle-opacity": 0.5,
+          "circle-color": "rgb(53, 175, 109)"
+        }
+      }
+    ]
+  },
+  "terrarium-hillshading-style": {
+    "version": 8,
+    "sources": {
+      "dem": {
+        "type": "raster-dem",
+        "tiles": [
+          "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"
+        ],
+        "encoding": "terrarium",
+        "tileSize": 256,
+        "maxzoom": 15
+      }
+    },
+    "layers": [
+      {
+        "id": "hillshading",
+        "source": "dem",
+        "type": "hillshade",
+        "paint": {
+          "hillshade-exaggeration": 0.5,
+          "hillshade-shadow-color": "#000000",
+          "hillshade-highlight-color": "#FFFFFF",
+          "hillshade-accent-color": "rgba(0, 0, 0, 1)"
+        }
+      }
+    ]
   }
 };
