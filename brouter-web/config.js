@@ -64,13 +64,13 @@
         //'Mapsforge Tile Server': 'http://localhost:6090/{z}/{x}/{y}.png'
         'Slitlagerkarta' : 'https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta/{z}/{x}/{y}.jpg',
         'Vägkarta' : 'https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg',
-        'Lantmäteriet topo' : 'https://minkarta.lantmateriet.se/map/topowebbcache/?layer=topowebb&style=default&tilematrixset=3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix={z}&TileCol={x}&TileRow={y}',
-        'Eniro Aerial' : 'http://map.eniro.se/geowebcache/service/tms1.0.0/aerial/{z}/{x}/{-y}.jpeg',
-        'Eniro Map' : 'http://map.eniro.se/geowebcache/service/tms1.0.0/map/{z}/{x}/{-y}.png',
-        'Eniro Historical' : 'https://map01.eniro.no/geowebcache/service/tms1.0.0/se_aerial_1950_60s/{z}/{x}/{-y}.jpeg',
-        'Eniro Nautical' : 'http://map.eniro.se/geowebcache/service/tms1.0.0/nautical/{z}/{x}/{-y}.png',
-        'Openstreetmap' : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        'Opentopomap' : 'https://opentopomap.org/{z}/{x}/{y}.png',
+        'Lantmäteriet Topo' : 'https://minkarta.lantmateriet.se/map/topowebbcache/?layer=topowebb&style=default&tilematrixset=3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix={z}&TileCol={x}&TileRow={y}',
+        'Eniro Karta' : 'http://map.eniro.se/geowebcache/service/tms1.0.0/map/{z}/{x}/{-y}.png',
+        'Eniro Flygfoto' : 'http://map.eniro.se/geowebcache/service/tms1.0.0/aerial/{z}/{x}/{-y}.jpeg',
+        'Eniro Historisk' : 'https://map01.eniro.no/geowebcache/service/tms1.0.0/se_aerial_1950_60s/{z}/{x}/{-y}.jpeg',
+        'Eniro Sjökort' : 'http://map.eniro.se/geowebcache/service/tms1.0.0/nautical/{z}/{x}/{-y}.png',
+        'OpenStreetMap' : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        'OpenTopoMap' : 'https://opentopomap.org/{z}/{x}/{y}.png',
     };
 
     // Base layer to show on start, as position number in the layer switcher, starting from 0, default is first
