@@ -95,11 +95,11 @@
       var layerControl = L.control.layers(baseLayers,null,{collapsed:true}).addTo(map);
 
       map.on('contextmenu',(e) => {
-        var streetviewcoord = 'http://maps.google.com/maps?q=&layer=c&cbll=' + e.latlng.lat.toString() + ',' + e.latlng.lng.toString();
-        var streetviewlink = "<a href=\"" + streetviewcoord + '\" target=\"_blank\">' + 'Streetview</a>'
+        var streetviewlink = "<a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Streetview</a>"
+        var gmaplink = "<a href=\"http://maps.google.com/maps?q=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Gmap</a>"
         L.popup()
         .setLatLng(e.latlng)
-        .setContent(streetviewlink)
+        .setContent(streetviewlink + " " + gmaplink)
         .addTo(map)
         .openOn(map);
       });
