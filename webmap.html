@@ -45,6 +45,12 @@
         attribution: 'Lantmäteriet'
       });
 
+      var topowebb_nedtonad = L.tileLayer('https://minkarta.lantmateriet.se/map/topowebbcache/?layer=topowebb_nedtonad&style=default&tilematrixset=3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix={z}&TileCol={x}&TileRow={y}', {
+        maxNativeZoom: 17,
+        tms: false,
+        attribution: 'Lantmäteriet'
+      });
+
       var eniroaerial = L.tileLayer('http://map.eniro.se/geowebcache/service/tms1.0.0/aerial/{z}/{x}/{y}.jpeg', {
         tms: true,
         attribution: 'Eniro'
@@ -112,8 +118,26 @@
       style: 'registerkarta,registerkarta',
       });
 
+      var Trafikplatsnummer = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfoRoad_1_2?', {
+      layers: 'Trafikplatsnummer',
+      transparent: true,
+      format: 'image/png',
+      });
+
+      var ATK_Matplats = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
+      layers: 'ATK_Matplats,Rastplats',
+      transparent: true,
+      format: 'image/png',
+      });
+
       var ortofoto = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
       layers: 'Ortofoto_0.16',
+      });
+
+      var smhi = L.tileLayer.wms('https://wts4.smhi.se/tile/?', {
+      layers: 'baltrad:radarcomp-lightning_scandinavia_wpt',
+      format: 'image/png',
+      transparent: true,
       });
 
       var eniro_hybrid = L.tileLayer('https://map01.eniro.no/geowebcache/service/tms1.0.0/hybrid/{z}/{x}/{y}.png', {
@@ -137,6 +161,7 @@
         'Slitlagerkarta': slitlagerkarta,
         'Vägkarta': streetmap,
         'Lantmäteriet Topo' : topo,
+        'Topo Nedtonad' : topowebb_nedtonad,
         'Lantmäteriet Orto' : ortofoto,
         'Flygfoto 60':topo_60,
         'Flygfoto 75':topo_75,
@@ -156,6 +181,9 @@
         'terrangskuggning' : terrangskuggning,
         'markers' : markers,
         'gränser' : grans,
+        'Fartkamera/Rastplats' : ATK_Matplats,
+        'Trafikplatsnummer' : Trafikplatsnummer,
+        'SMHI' : smhi
       };
 
 
