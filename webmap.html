@@ -65,6 +65,21 @@
         attribution: 'Eniro'
       });
 
+      var hitta_friluft = L.tileLayer('https://static.hitta.se/tile/v3/4/{z}/{x}/{y}', {
+        tms: true,
+        attribution: 'hitta'
+      });
+
+      var hitta_karta = L.tileLayer('https://static.hitta.se/tile/v3/0/{z}/{x}/{y}', {
+        tms: true,
+        attribution: 'hitta'
+      });
+
+      var hitta_satellit = L.tileLayer('https://static.hitta.se/tile/v3/1/{z}/{x}/{y}', {
+        tms: true,
+        attribution: 'hitta'
+      });
+
       var openstreetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         tms: false,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -75,24 +90,75 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       });
 
+      var topo_60 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/historiskaortofoto/service?', {
+      layers: 'OI.Histortho_60'
+      });
+
+      var topo_75 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/historiskaortofoto/service?', {
+      layers: 'OI.Histortho_75'
+      });
+
+      var terrangskuggning = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/hojdmodell/SERVICE?', {
+      layers: 'terrangskuggning',
+      transparent: false,
+      opacity: 0.5
+      });
+
+      var grans = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/fastighetsindelning/SERVICE?', {
+      layers: 'granser,text,fiske',
+      transparent: false,
+      opacity: 0.5,
+      style: 'morkbakgrund',
+      });
+
+      var ortofoto = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
+      layers: 'Ortofoto_0.16',
+      });
+
+      var eniro_hybrid = L.tileLayer('https://map01.eniro.no/geowebcache/service/tms1.0.0/hybrid/{z}/{x}/{y}.png', {
+        tms: true,
+        transparent: false,
+        attribution: 'Eniro'
+      });
+
       var map = L.map('map', {
         center: [57.78564196397448, 14.215799665093242],
         zoom: 10,
         layers: [slitlagerkarta]
       });
+
+      var marker1 = L.marker([57, 14]).bindPopup('testmarker1'),
+          marker2 = L.marker([58, 15]).bindPopup('testmarker2');
+
+      var markers = L.layerGroup([marker1, marker2]);
       
       var baseLayers = {
         'Slitlagerkarta': slitlagerkarta,
         'Vägkarta': streetmap,
         'Lantmäteriet Topo' : topo,
+        'Lantmäteriet Orto' : ortofoto,
+        'Flygfoto 60':topo_60,
+        'Flygfoto 75':topo_75,
         'Eniro Karta': eniromap,
         'Eniro Flygfoto': eniroaerial,
         'Eniro Historisk': enirohistorical,
         'Eniro Sjökort': enironautical,
+        'Hitta Karta' : hitta_karta,
+        'Hitta Friluft' : hitta_friluft,
+        'Hitta Satellit' : hitta_satellit,
         'OpenStreetMap' : openstreetmap,
         'OpenTopoMap' : opentopomap,
       };
-      var layerControl = L.control.layers(baseLayers,null,{collapsed:true}).addTo(map);
+      
+      var overlayMaps = {
+        'Eniro hybrid' : eniro_hybrid,
+        'terrangskuggning' : terrangskuggning,
+        'markers' : markers,
+        'gränser' : grans,
+      };
+
+
+      var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:true}).addTo(map);
 
       map.on('contextmenu',(e) => {
         var streetviewlink = "<a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Streetview</a>"
@@ -105,6 +171,7 @@
       });
 
       var scale = L.control.scale({metric:true, imperial:false}).addTo(map);
+
 
       </script>
 </body>
