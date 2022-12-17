@@ -134,9 +134,26 @@
       layers: 'Ortofoto_0.16',
       });
 
-      var smhi = L.tileLayer.wms('https://wts4.smhi.se/tile/?', {
-      layers: 'baltrad:radarcomp-lightning_scandinavia_wpt',
+      var smhi = L.tileLayer.wms('https://wts1.smhi.se/tile/?', {
+      layers: 'baltrad:radarcomp-lightning_sweden_wpt',
       format: 'image/png',
+      crs: L.CRS.EPSG900913,
+      transparent: true,
+      });
+
+      var smhi_temp = L.tileLayer.wms('https://wts1.smhi.se/tile/?', {
+      layers: 'pmp:temperature-2m_n-europe__',
+      format: 'image/png',
+      crs: L.CRS.EPSG900913,
+      transparent: true,
+      opacity: 0.5,
+      maxNativeZoom: 10,
+      });
+
+      var smhi_vind = L.tileLayer.wms('https://wts1.smhi.se/tile/?', {
+      layers: 'pmp25_vind_lufttryck__havochkust-gradient',
+      format: 'image/png',
+      crs: L.CRS.EPSG900913,
       transparent: true,
       });
 
@@ -183,7 +200,9 @@
         'gränser' : grans,
         'Fartkamera/Rastplats' : ATK_Matplats,
         'Trafikplatsnummer' : Trafikplatsnummer,
-        'SMHI' : smhi
+        'SMHI nederbörd' : smhi,
+        'SMHI temp' : smhi_temp,
+        'SMHI vind' : smhi_vind,
       };
 
 
