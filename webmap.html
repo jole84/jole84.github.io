@@ -106,9 +106,10 @@
 
       var grans = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/fastighetsindelning/SERVICE?', {
       layers: 'granser,text,fiske',
-      transparent: false,
-      opacity: 0.5,
-      style: 'morkbakgrund',
+      transparent: true,
+      opacity: 1,
+      format: 'image/png',
+      style: 'registerkarta,registerkarta',
       });
 
       var ortofoto = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
