@@ -134,15 +134,20 @@
       layers: 'Ortofoto_0.16',
       });
 
+      // var today = new Date();
+      // console.log(today.toISOString());
+      // pmpfrekvent:temperature-2m_n-europe_rainbow_::2022-12-17T21:00:00Z
+      // pmpfrekvent:precipitation-1h_n-europe_wpt::2022-12-17T21:00:00Z
+
       var smhi = L.tileLayer.wms('https://wts1.smhi.se/tile/?', {
-      layers: 'baltrad:radarcomp-lightning_sweden_wpt',
+      layers: 'baltrad:radarcomp-lightning_scandinavia_wpt',
       format: 'image/png',
       crs: L.CRS.EPSG900913,
       transparent: true,
       });
 
       var smhi_temp = L.tileLayer.wms('https://wts1.smhi.se/tile/?', {
-      layers: 'SMHI_frysen:temperature-2m_sweden_rainbow',
+      layers: 'pmpfrekvent:temperature-2m_n-europe_rainbow_',
       format: 'image/png',
       crs: L.CRS.EPSG900913,
       transparent: true,
