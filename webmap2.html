@@ -45,6 +45,16 @@
         attribution: 'Lantmäteriet'
       });
 
+      var topo_wmts = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/topowebbcache/?TileMatrix={z}&TileCol={x}&TileRow={y}', {
+        layers: 'topoweb',
+        service: 'wmts',
+        format: 'image/png',
+        TileMatrixSet: '3857',
+        styles: 'default',
+        tms: false,
+        attribution: 'Lantmäteriet',
+      });
+
       var topowebb_nedtonad = L.tileLayer('https://minkarta.lantmateriet.se/map/topowebbcache/?layer=topowebb_nedtonad&style=default&tilematrixset=3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix={z}&TileCol={x}&TileRow={y}', {
         maxNativeZoom: 17,
         tms: false,
@@ -147,8 +157,24 @@
       format: 'image/png',
       });
 
-      var ortofoto = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
+      var ortofoto16 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
       layers: 'Ortofoto_0.16',
+      });
+
+      var ortofoto25 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
+      layers: 'Ortofoto_0.25',
+      });
+
+      var ortofoto4 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
+      layers: 'Ortofoto_0.4',
+      });
+
+      var ortofoto5 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
+      layers: 'Ortofoto_0.5',
+      });
+
+      var ortofotoir = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
+      layers: 'Ortofoto_IR',
       });
 
       // var today = new Date();
@@ -200,8 +226,13 @@
         'Slitlagerkarta': slitlagerkarta,
         'Vägkarta': streetmap,
         'Lantmäteriet Topo' : topo,
+        'topo wmts' : topo_wmts,
         'Topo Nedtonad' : topowebb_nedtonad,
-        'Lantmäteriet Orto' : ortofoto,
+        'Lantmäteriet Orto 0.16' : ortofoto16,
+        'Lantmäteriet Orto 0.25' : ortofoto25,
+        'Lantmäteriet Orto 0.4' : ortofoto4,
+        'Lantmäteriet Orto 0.5' : ortofoto5,
+        'Lantmäteriet Orto IR' : ortofotoir,
         'Flygfoto 60':topo_60,
         'Flygfoto 75':topo_75,
         'Eniro Karta': eniromap,
