@@ -135,6 +135,18 @@
       format: 'image/png',
       });
 
+      var nvdb = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
+      layers: 'Vaghinder',
+      transparent: true,
+      format: 'image/png',
+      });
+
+      var trafiklage = L.tileLayer('https://maps.trafikinfo.trafikverket.se/TMS/.TMS/1.0.0/LPV/{z}/{x}/{y}.png', {
+      tms: true,
+      transparent: true,
+      format: 'image/png',
+      });
+
       var ortofoto = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
       layers: 'Ortofoto_0.16',
       });
@@ -214,6 +226,8 @@
         'SMHI temp' : smhi_temp,
         'SMHI vind' : smhi_vind,
         'tele2 5G' : tele2,
+        'nvdb' : nvdb,
+        'trafigläge' : trafiklage,
       };
 
 
