@@ -151,6 +151,18 @@
       format: 'image/png',
       });
 
+      var nvdb_slitlager = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
+      layers: 'Slitlager',
+      transparent: true,
+      format: 'image/png',
+      });
+
+      var nvdb_begransning = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
+      layers: 'BegransatAxelBoggitryck,BegransadBruttovikt,BegransadFordonslangd',
+      transparent: true,
+      format: 'image/png',
+      });
+
       var trafiklage = L.tileLayer('https://maps.trafikinfo.trafikverket.se/TMS/.TMS/1.0.0/LPV/{z}/{x}/{y}.png', {
       tms: true,
       transparent: true,
@@ -258,11 +270,13 @@
         'SMHI vind' : smhi_vind,
         'tele2 5G' : tele2,
         'nvdb' : nvdb,
+        'slitlager' : nvdb_slitlager,
+        'Begränsning' : nvdb_begransning,
         'trafigläge' : trafiklage,
       };
 
 
-      var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:true}).addTo(map);
+      var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:false}).addTo(map);
 
       map.on('contextmenu',(e) => {
         var streetviewlink = "<a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Streetview</a>"
