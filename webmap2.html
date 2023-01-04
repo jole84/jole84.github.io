@@ -23,7 +23,6 @@
 <body>
   <div id="map"></div>
   <script>
-      // ip address to map server
       
       var slitlagerkarta = L.tileLayer('https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 14,
@@ -232,7 +231,7 @@
       function onLocationFound(e) {
         var radius = e.accuracy;
 
-        L.marker(e.latlng).bindPopup('Du är här: ' + e.latlng.lat.toString() + "," + e.latlng.lng.toString() ).addTo(map);
+        L.marker(e.latlng).bindPopup('Du är här: ' + e.latlng.lat.toString() + "," + e.latlng.lng.toString()).addTo(map);
       }
 
       map.on('locationfound', onLocationFound);
@@ -286,7 +285,7 @@
       };
 
 
-      var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:false}).addTo(map);
+      var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:true}).addTo(map);
 
       map.on('contextmenu',(e) => {
         var streetviewlink = "<a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Streetview</a>"
