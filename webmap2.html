@@ -229,6 +229,16 @@
         layers: [slitlagerkarta]
       });
 
+      function onLocationFound(e) {
+        var radius = e.accuracy;
+
+        L.marker(e.latlng).bindPopup('Du är här: ' + e.latlng.lat.toString() + "," + e.latlng.lng.toString() ).addTo(map);
+      }
+
+      map.on('locationfound', onLocationFound);
+
+      map.locate({setView: true, maxZoom: 12});
+
       var marker1 = L.marker([57, 14]).bindPopup('testmarker1'),
           marker2 = L.marker([58, 15]).bindPopup('testmarker2');
 
