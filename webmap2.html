@@ -82,17 +82,17 @@
 
       var hitta_friluft = L.tileLayer('https://static.hitta.se/tile/v3/4/{z}/{x}/{y}', {
         tms: true,
-        attribution: 'hitta'
+        attribution: 'hitta.se'
       });
 
       var hitta_karta = L.tileLayer('https://static.hitta.se/tile/v3/0/{z}/{x}/{y}', {
         tms: true,
-        attribution: 'hitta'
+        attribution: 'hitta.se'
       });
 
       var hitta_satellit = L.tileLayer('https://static.hitta.se/tile/v3/1/{z}/{x}/{y}', {
         tms: true,
-        attribution: 'hitta'
+        attribution: 'hitta.se'
       });
 
       var openstreetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -127,7 +127,7 @@
       style: 'registerkarta,registerkarta',
       });
 
-      var Trafikplatsnummer = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfoRoad_1_2?', {
+      var trafikplatsnummer = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfoRoad_1_2?', {
       layers: 'Trafikplatsnummer',
       transparent: true,
       format: 'image/png',
@@ -138,7 +138,7 @@
       format: 'image/png',
       });
 
-      var ATK_Matplats = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
+      var ATK_matplats = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
       layers: 'ATK_Matplats,Rastplats',
       transparent: true,
       format: 'image/png',
@@ -187,7 +187,7 @@
       // pmpfrekvent:temperature-2m_n-europe_rainbow_::2022-12-17T21:00:00Z
       // pmpfrekvent:precipitation-1h_n-europe_wpt::2022-12-17T21:00:00Z
 
-      var smhi = L.tileLayer.wms('https://wts1.smhi.se/tile/?', {
+      var smhi_radar = L.tileLayer.wms('https://wts1.smhi.se/tile/?', {
       layers: 'baltrad:radarcomp-lightning_scandinavia_wpt',
       format: 'image/png',
       crs: L.CRS.EPSG900913,
@@ -224,9 +224,9 @@
 
       function onLocationFound(e) {
         var radius = e.accuracy;
-
+        // L.circle(e.latlng, {radius, fillOpacity: 0.05, weight: 2}).addTo(map);
         L.marker(e.latlng).bindPopup('Du är här: ' + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "<br>+/- " + Math.round(radius) + "m").addTo(map);
-      }
+      };
 
       map.on('locationfound', onLocationFound);
 
@@ -258,15 +258,14 @@
         'Slitlagerkarta': slitlagerkarta,
         'Vägkarta': streetmap,
         'Lantmäteriet Topo' : topo,
-        'topo wmts' : topo_wmts,
         'Topo Nedtonad' : topowebb_nedtonad,
         'Lantmäteriet Orto 0.16' : ortofoto16,
         'Lantmäteriet Orto 0.25' : ortofoto25,
         'Lantmäteriet Orto 0.4' : ortofoto4,
         'Lantmäteriet Orto 0.5' : ortofoto5,
         'Lantmäteriet Orto IR' : ortofotoir,
-        'Flygfoto 60':topo_60,
-        'Flygfoto 75':topo_75,
+        'Flygfoto 1960':topo_60,
+        'Flygfoto 1975':topo_75,
         'Eniro Karta': eniromap,
         'Eniro Flygfoto': eniroaerial,
         'Eniro Historisk': enirohistorical,
@@ -280,16 +279,16 @@
       
       var overlayMaps = {
         'Eniro hybrid' : eniro_hybrid,
-        'terrangskuggning' : terrangskuggning,
-        'markers' : markers,
-        'gränser' : grans,
-        'Fartkamera/Rastplats' : ATK_Matplats,
-        'Trafikplatsnummer' : Trafikplatsnummer,
-        'SMHI nederbörd' : smhi,
+        'Terrängskuggning' : terrangskuggning,
+        'Markers' : markers,
+        'Gränser' : grans,
+        'Fartkamera/Rastplats' : ATK_matplats,
+        'Trafikplatsnummer' : trafikplatsnummer,
+        'SMHI nederbörd' : smhi_radar,
         'SMHI temp' : smhi_temp,
         'SMHI vind' : smhi_vind,
-        'tele2 5G' : tele2,
-        'slitlager' : nvdb_slitlager,
+        'Tele2 5G' : tele2,
+        'NVDB slitlager' : nvdb_slitlager,
         'Begränsning' : nvdb_begransning,
         'tileName' : tileName,
       };

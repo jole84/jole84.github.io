@@ -23,8 +23,7 @@
 <body>
   <div id="map"></div>
   <script>
-      // ip address to map server
-      
+
       var slitlagerkarta = L.tileLayer('https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta/{z}/{x}/{y}.jpg', {
         maxNativeZoom: 14,
         minZoom: 6,
@@ -51,11 +50,6 @@
         attribution: 'Lantmäteriet'
       });
 
-      var eniroaerial = L.tileLayer('http://map.eniro.se/geowebcache/service/tms1.0.0/aerial/{z}/{x}/{y}.jpeg', {
-        tms: true,
-        attribution: 'Eniro'
-      });
-
       var eniromap = L.tileLayer('http://map.eniro.se/geowebcache/service/tms1.0.0/map/{z}/{x}/{y}.png', {
         tms: true,
         attribution: 'Eniro'
@@ -66,24 +60,14 @@
         attribution: 'Eniro'
       });
 
-      var enirohistorical = L.tileLayer('https://map01.eniro.no/geowebcache/service/tms1.0.0/se_aerial_1950_60s/{z}/{x}/{y}.jpeg', {
-        tms: true,
-        attribution: 'Eniro'
-      });
-
       var hitta_friluft = L.tileLayer('https://static.hitta.se/tile/v3/4/{z}/{x}/{y}', {
         tms: true,
-        attribution: 'hitta'
+        attribution: 'hitta.se'
       });
 
       var hitta_karta = L.tileLayer('https://static.hitta.se/tile/v3/0/{z}/{x}/{y}', {
         tms: true,
-        attribution: 'hitta'
-      });
-
-      var hitta_satellit = L.tileLayer('https://static.hitta.se/tile/v3/1/{z}/{x}/{y}', {
-        tms: true,
-        attribution: 'hitta'
+        attribution: 'hitta.se'
       });
 
       var openstreetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -96,11 +80,11 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       });
 
-      var topo_60 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/historiskaortofoto/service?', {
+      var flyg_60 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/historiskaortofoto/service?', {
       layers: 'OI.Histortho_60'
       });
 
-      var topo_75 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/historiskaortofoto/service?', {
+      var flyg_75 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/historiskaortofoto/service?', {
       layers: 'OI.Histortho_75'
       });
 
@@ -118,8 +102,14 @@
       style: 'registerkarta,registerkarta',
       });
 
-      var Trafikplatsnummer = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfoRoad_1_2?', {
+      var trafikplatsnummer = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfoRoad_1_2?', {
       layers: 'Trafikplatsnummer',
+      transparent: true,
+      format: 'image/png',
+      });
+
+      var nvdb_slitlager = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
+      layers: 'Slitlager',
       transparent: true,
       format: 'image/png',
       });
@@ -134,12 +124,7 @@
       layers: 'Ortofoto_0.16',
       });
 
-      // var today = new Date();
-      // console.log(today.toISOString());
-      // pmpfrekvent:temperature-2m_n-europe_rainbow_::2022-12-17T21:00:00Z
-      // pmpfrekvent:precipitation-1h_n-europe_wpt::2022-12-17T21:00:00Z
-
-      var smhi = L.tileLayer.wms('https://wts1.smhi.se/tile/?', {
+      var smhi_radar = L.tileLayer.wms('https://wts1.smhi.se/tile/?', {
       layers: 'baltrad:radarcomp-lightning_scandinavia_wpt',
       format: 'image/png',
       crs: L.CRS.EPSG900913,
@@ -173,11 +158,6 @@
         zoom: 10,
         layers: [slitlagerkarta]
       });
-
-      var marker1 = L.marker([57, 14]).bindPopup('testmarker1'),
-          marker2 = L.marker([58, 15]).bindPopup('testmarker2');
-
-      var markers = L.layerGroup([marker1, marker2]);
       
       var baseLayers = {
         'Slitlagerkarta': slitlagerkarta,
@@ -185,26 +165,24 @@
         'Lantmäteriet Topo' : topo,
         'Topo Nedtonad' : topowebb_nedtonad,
         'Lantmäteriet Orto' : ortofoto,
-        'Flygfoto 60':topo_60,
-        'Flygfoto 75':topo_75,
+        'Flygfoto 1960':flyg_60,
+        'Flygfoto 1975':flyg_75,
         'Eniro Karta': eniromap,
-        'Eniro Flygfoto': eniroaerial,
-        'Eniro Historisk': enirohistorical,
         'Eniro Sjökort': enironautical,
         'Hitta Karta' : hitta_karta,
         'Hitta Friluft' : hitta_friluft,
-        'Hitta Satellit' : hitta_satellit,
         'OpenStreetMap' : openstreetmap,
         'OpenTopoMap' : opentopomap,
       };
       
       var overlayMaps = {
         'Eniro hybrid' : eniro_hybrid,
-        'terrangskuggning' : terrangskuggning,
-        'gränser' : grans,
+        'Terrängskuggning' : terrangskuggning,
+        'Gränser' : grans,
         'Fartkamera/Rastplats' : ATK_Matplats,
-        'Trafikplatsnummer' : Trafikplatsnummer,
-        'SMHI nederbörd' : smhi,
+        'Trafikplatsnummer' : trafikplatsnummer,
+        'NVDB slitlager' : nvdb_slitlager,
+        'SMHI nederbörd' : smhi_radar,
         'SMHI temp' : smhi_temp,
         'SMHI vind' : smhi_vind,
       };
