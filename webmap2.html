@@ -225,7 +225,7 @@
       function onLocationFound(e) {
         var radius = e.accuracy;
 
-        L.marker(e.latlng).bindPopup('Du är här: ' + e.latlng.lat.toString() + "," + e.latlng.lng.toString()).addTo(map);
+        L.marker(e.latlng).bindPopup('Du är här: ' + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "<br>+/- " + Math.round(radius) + "m").addTo(map);
       }
 
       map.on('locationfound', onLocationFound);
