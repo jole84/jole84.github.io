@@ -243,7 +243,8 @@
           tile.style.outline = '1px solid black';
           tile.style.fontWeight = 'bold';
           tile.style.fontSize = '16pt';
-          tile.innerHTML = [coords.z, coords.x, coords.y].join('/');
+          var tms_y = "TMS=" + (Math.pow(2, coords.z) - coords.y - 1);
+          tile.innerHTML = [coords.z, coords.x, coords.y + "<br />" + tms_y].join('/');
           return tile;
         },
       });
