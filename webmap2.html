@@ -162,12 +162,6 @@
       format: 'image/png',
       });
 
-      var trafiklage = L.tileLayer('https://maps.trafikinfo.trafikverket.se/TMS/.TMS/1.0.0/LPV/{z}/{x}/{y}.png', {
-      tms: true,
-      transparent: true,
-      format: 'image/png',
-      });
-
       var ortofoto16 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
       layers: 'Ortofoto_0.16',
       });
@@ -242,6 +236,23 @@
           marker2 = L.marker([58, 15]).bindPopup('testmarker2');
 
       var markers = L.layerGroup([marker1, marker2]);
+
+      L.GridLayer.GridDebug = L.GridLayer.extend({
+        createTile: function (coords) {
+          const tile = document.createElement('div');
+          tile.style.outline = '1px solid black';
+          tile.style.fontWeight = 'bold';
+          tile.style.fontSize = '16pt';
+          tile.innerHTML = [coords.z, coords.x, coords.y].join('/');
+          return tile;
+        },
+      });
+
+      L.gridLayer.gridDebug = function (opts) {
+        return new L.GridLayer.GridDebug(opts);
+      };
+
+      var tileName = L.gridLayer.gridDebug();
       
       var baseLayers = {
         'Slitlagerkarta': slitlagerkarta,
@@ -278,10 +289,9 @@
         'SMHI temp' : smhi_temp,
         'SMHI vind' : smhi_vind,
         'tele2 5G' : tele2,
-        'nvdb' : nvdb,
         'slitlager' : nvdb_slitlager,
         'Begränsning' : nvdb_begransning,
-        'trafikläge' : trafiklage,
+        'tileName' : tileName,
       };
 
 
