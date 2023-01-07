@@ -147,8 +147,8 @@
       format: 'image/png',
       });
 
-      var nvdb = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
-      layers: 'Vaghinder',
+      var nvdb_vagnummer = L.tileLayer.wms('https://nvdb2012.trafikverket.se/MapProxy.ashx?mapsvc=InternNetInfo', {
+      layers: 'VagnummerText',
       transparent: true,
       format: 'image/png',
       });
@@ -293,6 +293,7 @@
         'SMHI vind' : smhi_vind,
         'Tele2 5G' : tele2,
         'NVDB slitlager' : nvdb_slitlager,
+        'NVDB vägnummer' : nvdb_vagnummer,
         'Begränsning' : nvdb_begransning,
         'tileName' : tileName,
       };
