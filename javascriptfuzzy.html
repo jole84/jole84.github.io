@@ -29,9 +29,11 @@
 
     <script>
 
-        function getHours12(hour) {
+        function get12Hour(hour) {
             if (hour >= 13) {
                 return hour - 12;
+            } else {
+                return hour;
             }
         } 
             
@@ -70,7 +72,7 @@
             }
 
             const nuTid = new Date();
-            let timme = getHours12(nuTid.getHours());
+            let timme = get12Hour(nuTid.getHours());
             const minut = nuTid.getMinutes();
             const avrundadMinut = Math.floor(minut / 5) * 5;
             
