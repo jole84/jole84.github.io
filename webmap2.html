@@ -33,16 +33,6 @@
         layers: [slitlagerkarta]
       });
 
-      function onLocationFound(e) {
-        var radius = e.accuracy;
-        // L.circle(e.latlng, {radius, fillOpacity: 0.05, weight: 2}).addTo(map);
-        L.marker(e.latlng).bindPopup('Du är här: ' + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "<br>+/- " + Math.round(radius) + "m").addTo(map);
-      };
-
-      map.on('locationfound', onLocationFound);
-
-      map.locate({setView: true, maxZoom: 12});
-
       L.GridLayer.GridDebug = L.GridLayer.extend({
         createTile: function (coords) {
           const tile = document.createElement('div');
