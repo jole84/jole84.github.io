@@ -17,6 +17,9 @@
             max-width: 100%;
             height: auto;
         }
+        #webbkarta, #ruttplanering {
+            width: 300px;
+        }
     </style>
 
 </head>
@@ -30,10 +33,10 @@
 
               <p class="lead text-muted">Karta avsedd för ruttplanering och offline-navigering av motorcyklister. Baserad på Lantmäteriet Topografi 50. Geografisk täckning omfattar hela Sverige.</p>
           </section>
-        <a href="webmap.html" class="btn btn-primary my-2">Webbkarta</a><br>
+        <a href="webmap.html" class="btn btn-primary my-2" id="webbkarta">Webbkarta</a><br>
         <a href="webmap.html"><img class="rounded" src="slitlagerkarta.jpg"></a>
         <hr>
-        <a href="brouter-web/index.html" class="btn btn-primary my-2">Ruttplanerare</a><br>
+        <a href="brouter-web/index.html" class="btn btn-primary my-2" id="ruttplanering">Ruttplanerare</a><br>
         <a href="brouter-web/index.html"><img class="rounded" src="brouter-web.jpg"></a>
         
         <hr>
@@ -59,7 +62,8 @@
             <h2>Experiment:</h2>
         </p>
         
-        <h3><a class="btn btn-primary my-2" href="https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/live-track/index.html">Kartapp med realtidsspårning</a> - <a class="btn btn-primary my-2" href="https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/hastighet/index.html">Hastighetsmätare</a></h3>
+        <a class="btn btn-primary my-2" href="https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/live-track/index.html">Kartapp med realtidsspårning</a> - <a class="btn btn-primary my-2" href="https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/hastighet/index.html">Hastighetsmätare</a><br>
+        <a class="btn btn-danger my-2" href="https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/ol-tracklog/index.html">Kartapp med realtidsspårning och loggning</a>
         <hr>
         
         <pre>Kartorna är skapade av öppna data från Lantmäteriet och Trafikverket med datalicensen Creative Commons CC0.</pre>
