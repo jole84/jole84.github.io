@@ -91,7 +91,7 @@
         'tileName' : tileName,
       };
 
-      var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:true}).addTo(map);
+      var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:false}).addTo(map);
 
       map.on('contextmenu',(e) => {
         var streetviewlink = "<a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Streetview</a>"
