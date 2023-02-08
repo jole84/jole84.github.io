@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,8 +6,12 @@
   <meta name="description" content="Rekommenderade vägar för tyngre transporter, höjdhinder, fartkameror. Baserad på Lantmäteriets Vägkarta.">
   <meta charset="utf-8" />
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" ></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>
   <script src="mapLayers.js" ></script>
   <style type="text/css">
     body {
@@ -29,19 +32,44 @@
         zoom: 10,
         layers: [slitlagerkarta]
       });
+
+      L.GridLayer.GridDebug = L.GridLayer.extend({
+        createTile: function (coords) {
+          const tile = document.createElement('div');
+          tile.style.outline = '1px solid black';
+          tile.style.fontWeight = 'bold';
+          tile.style.fontSize = '16pt';
+          var tms_y = "TMS=" + (Math.pow(2, coords.z) - coords.y - 1);
+          tile.innerHTML = [coords.z, coords.x, coords.y + "<br />" + tms_y].join('/');
+          return tile;
+        },
+      });
+
+      L.gridLayer.gridDebug = function (opts) {
+        return new L.GridLayer.GridDebug(opts);
+      };
+
+      var tileName = L.gridLayer.gridDebug();
       
       var baseLayers = {
         'jole84 Terrängkarta': slitlagerkarta,
         'jole84 Vägkarta': streetmap,
         'Lantmäteriet Topo' : topo,
         'Topo Nedtonad' : topowebb_nedtonad,
-        'Lantmäteriet Orto' : ortofoto5,
-        'Flygfoto 1960':  flyg_60,
-        'Flygfoto 1975':  flyg_75,
+        'Lantmäteriet Orto 0.16' : ortofoto16,
+        'Lantmäteriet Orto 0.25' : ortofoto25,
+        'Lantmäteriet Orto 0.4' : ortofoto4,
+        'Lantmäteriet Orto 0.5' : ortofoto5,
+        'Lantmäteriet Orto IR' : ortofotoir,
+        'Flygfoto 1960' : flyg_60,
+        'Flygfoto 1975' : flyg_75,
         'Eniro Karta': eniromap,
+        'Eniro Flygfoto': eniroaerial,
+        'Eniro Historisk': enirohistorical,
         'Eniro Sjökort': enironautical,
         'Hitta Karta' : hitta_karta,
         'Hitta Friluft' : hitta_friluft,
+        'Hitta Satellit' : hitta_satellit,
         'OpenStreetMap' : openstreetmap,
         'OpenTopoMap' : opentopomap,
       };
@@ -49,13 +77,18 @@
       var overlayMaps = {
         'Eniro hybrid' : eniro_hybrid,
         'Terrängskuggning' : terrangskuggning,
+        'Markers' : markers,
         'Gränser' : grans,
         'Fartkamera/Rastplats' : ATK_matplats,
         'Trafikplatsnummer' : trafikplatsnummer,
-        'NVDB slitlager' : nvdb_slitlager,
         'SMHI nederbörd' : smhi_radar,
         'SMHI temp' : smhi_temp,
         'SMHI vind' : smhi_vind,
+        'Tele2 5G' : tele2,
+        'NVDB slitlager' : nvdb_slitlager,
+        'NVDB vägnummer' : nvdb_vagnummer,
+        'Begränsning' : nvdb_begransning,
+        'tileName' : tileName,
       };
 
       var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:true}).addTo(map);
