@@ -33,15 +33,6 @@
 
 
     <script>
-
-        function get12Hour(hour) {
-            if (hour >= 13) {
-                return hour - 12;
-            } else {
-                return hour;
-            }
-        } 
-            
         function fuzzy() {
             const timmar = [
                 "tolv", 
@@ -77,7 +68,7 @@
             }
 
             const nuTid = new Date();
-            let timme = get12Hour(nuTid.getHours());
+            let timme = nuTid.getHours()%12;
             const minut = nuTid.getMinutes();
             const avrundadMinut = Math.floor(minut / 5) * 5;
             
@@ -89,8 +80,9 @@
             document.getElementById("fuzzyText").innerHTML = texten;
         }
 
-        setInterval(fuzzy, 1000);
+        fuzzy();
 
+        setInterval(fuzzy, 1000);
 
     </script>
 
