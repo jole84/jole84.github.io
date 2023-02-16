@@ -30,6 +30,11 @@
       var map = L.map('map', {
         center: [57.78564196397448, 14.215799665093242],
         zoom: 10,
+        maxZoom: 18,
+        zoomSnap: 0.1,
+        wheelPxPerZoomLevel: 120,
+        inertiaDeceleration: 1500,
+        keyboardPanDelta: 200,
         layers: [slitlagerkarta]
       });
 
@@ -94,11 +99,12 @@
       var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:true}).addTo(map);
 
       map.on('contextmenu',(e) => {
-        var streetviewlink = "<a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Streetview</a>"
-        var gmaplink = "<a href=\"http://maps.google.com/maps?q=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Gmap</a>"
+        var streetviewlink = "<a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Streetview</a>";
+        var gmaplink = "<a href=\"http://maps.google.com/maps?q=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Gmap</a>";
         L.popup()
         .setLatLng(e.latlng)
-        .setContent(streetviewlink + " " + gmaplink)
+        .setContent(e.latlng.lat.toFixed(5).toString() + ", " + e.latlng.lng.toFixed(5).toString() + "<br>" + 
+          streetviewlink + " " + gmaplink)
         .addTo(map)
         .openOn(map);
       });
