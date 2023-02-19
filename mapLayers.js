@@ -169,6 +169,18 @@ var nvdb_begransning = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapS
     format: 'image/png',
 });
 
+var nvdb_stigningsfalt = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
+    layers: 'Stigningsfalt',
+    transparent: true,
+    format: 'image/png',
+});
+
+var nvdb_hastighetsgrans = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
+    layers: 'Hastighetsgrans',
+    transparent: true,
+    format: 'image/png',
+});
+
 // SMHI
 
 var smhi_radar = L.tileLayer.wms('https://wts1.smhi.se/tile/?', {
