@@ -22,13 +22,18 @@
        width: 100%;
        height: 100%;
     }
+    @media screen and (max-width: 30rem) {
+      #expanderaBtn {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
   <div id="map"></div>
 
   <div class="leaflet-bottom leaflet-left">
-    <button class="button-action leaflet-control" onclick="changeControl()">Expandera</button>
+    <button id="expanderaBtn" class="button-action leaflet-control" onclick="changeControl()">Expandera</button>
   </div>
 
   <script>
@@ -110,7 +115,6 @@
       function changeControl() {
         map.removeControl(layerControl);
         map.addControl(layerControl2);
-        document.getElementById=""
       } 
 
       map.on('contextmenu',(e) => {
