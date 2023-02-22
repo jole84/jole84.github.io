@@ -23,6 +23,10 @@
         .kartbild {
             max-width: 50%;
         }
+        #legend {
+            height: 50%;
+            width: 350px;
+        }
     </style>
 
 </head>
@@ -37,10 +41,8 @@
               <p class="lead text-muted">Karta avsedd för ruttplanering och offline-navigering av motorcyklister. Baserad på Lantmäteriet Topografi 50. Geografisk täckning omfattar hela Sverige.</p>
           </section>
         <a href="webmap.html" class="btn btn-primary my-2" id="webbkarta">Webbkarta</a><br>
-        <a href="webmap.html">
-            <img class="kartbild" src="https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta/14/8834/4935.jpg"><img class="kartbild" src="https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta/14/8835/4935.jpg">
-        </a>
-        <img class="rounded" src="legend.svg">
+        <a href="webmap.html"><img class="kartbild" src="https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta/14/8834/4935.jpg"><img class="kartbild" src="https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta/14/8835/4935.jpg"></a>
+        <img id="legend" class="rounded" src="legend.svg">
         <hr>
         <a href="brouter-web/index.html" class="btn btn-primary my-2" id="ruttplanering">Ruttplanerare</a><br>
         <a href="brouter-web/index.html"><img class="rounded" src="brouter-web.jpg"></a>

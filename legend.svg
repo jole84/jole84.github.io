@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="1.9209734"
-     inkscape:cx="120.7721"
-     inkscape:cy="98.127335"
+     inkscape:zoom="2"
+     inkscape:cx="309.5"
+     inkscape:cy="159.75"
      inkscape:window-width="2560"
      inkscape:window-height="1348"
      inkscape:window-x="0"
@@ -37,16 +37,16 @@
   <g
      id="g184">
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke-width:0.930946"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.848731"
        id="rect1288"
-       width="512"
-       height="260"
-       x="0"
-       y="0" />
+       width="466.78342"
+       height="237.03845"
+       x="-3.125e-09"
+       y="10.745056" />
     <g
        id="g426"
        style="fill:#ac7c45;fill-opacity:1"
-       transform="translate(0,-76.716339)">
+       transform="matrix(0.91168635,0,0,0.91168635,0,-59.196183)">
       <rect
          style="fill:#ac7c45;fill-opacity:1;stroke-width:0.73855"
          id="rect428"
@@ -70,17 +70,18 @@
          y="296.71634" />
       <text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
-         x="367.20956"
-         y="311.86609"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.17480807px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1"
+         x="497.99222"
+         y="314.78574"
          id="text1168"><tspan
            id="tspan1242"
-           x="367.20956"
-           y="311.86609">Traktorväg</tspan></text>
+           x="442.1694"
+           y="314.78574"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;font-size:32.17480807px">Traktorväg</tspan></text>
     </g>
     <g
        id="g410"
-       transform="translate(0,-70.160111)">
+       transform="matrix(0.91168635,0,0,0.91168635,0,-53.21896)">
       <rect
          style="fill:#000000;fill-opacity:1;stroke-width:0.867719"
          id="rect412"
@@ -111,20 +112,22 @@
          y="212.12755" />
       <text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
-         x="350.78049"
-         y="226.30986"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.1748px;line-height:29.6154px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1"
+         x="441.48172"
+         y="223.90753"
          id="text1038"><tspan
-           id="tspan1232"
-           x="350.78049"
-           y="226.30986">Grusväg med</tspan><tspan
-           id="tspan1234"
-           x="350.78049"
-           y="249.64323">statligt bidrag</tspan></text>
+           sodipodi:role="line"
+           id="tspan4349"
+           x="441.48172"
+           y="223.90753">Grusväg med </tspan><tspan
+           sodipodi:role="line"
+           id="tspan4351"
+           x="441.48172"
+           y="253.52293">statligt bidrag</tspan></text>
     </g>
     <g
        id="g1164"
-       transform="translate(0,-10)">
+       transform="matrix(0.91168635,0,0,0.91168635,0,1.6281926)">
       <rect
          style="fill:#ac7c45;fill-opacity:1;stroke-width:0.894424"
          id="rect400"
@@ -134,17 +137,18 @@
          y="90" />
       <text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
-         x="377.30853"
-         y="106.13152"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.17480807px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1"
+         x="484.32608"
+         y="109.04085"
          id="text1155"><tspan
            id="tspan1176"
-           x="377.30853"
-           y="106.13152">Grusväg</tspan></text>
+           x="441.30533"
+           y="109.04085"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;font-size:32.17480807px">Grusväg</tspan></text>
     </g>
     <g
        id="g1093"
-       transform="translate(0,-40)">
+       transform="matrix(0.91168635,0,0,0.91168635,0,-25.722398)">
       <rect
          style="fill:#000000;fill-opacity:1;stroke-width:0.894427"
          id="rect398"
@@ -154,14 +158,21 @@
          y="60" />
       <text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
-         x="363.49078"
-         y="76.14975"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.17480807px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1"
+         x="498.60776"
+         y="79.069412"
          id="text1097"><tspan
            id="tspan1095"
-           x="363.49078"
-           y="76.14975"
-           style="font-size:18.6667px;fill:#000000">Belagd väg</tspan></text>
+           x="440.69119"
+           y="79.069412"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;font-size:32.17480807px">Belagd väg</tspan></text>
     </g>
+    <rect
+       style="display:inline;fill:none;stroke-width:1.07107"
+       id="rect308"
+       width="220.26036"
+       height="260"
+       x="291.73962"
+       y="0" />
   </g>
 </svg>
