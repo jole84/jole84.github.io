@@ -4,9 +4,9 @@
 <svg
    version="1.1"
    id="svg178"
-   width="480"
+   width="512"
    height="260"
-   viewBox="0 0 480 260"
+   viewBox="0 0 512 260"
    sodipodi:docname="legend.svg"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -24,8 +24,8 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="1.9209734"
-     inkscape:cx="130.66292"
-     inkscape:cy="97.606764"
+     inkscape:cx="120.7721"
+     inkscape:cy="98.127335"
      inkscape:window-width="2560"
      inkscape:window-height="1348"
      inkscape:window-x="0"
@@ -37,9 +37,9 @@
   <g
      id="g184">
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke-width:0.901385"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.930946"
        id="rect1288"
-       width="480"
+       width="512"
        height="260"
        x="0"
        y="0" />
@@ -71,11 +71,11 @@
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
-         x="351.20956"
+         x="367.20956"
          y="311.86609"
          id="text1168"><tspan
            id="tspan1242"
-           x="351.20956"
+           x="367.20956"
            y="311.86609">Traktorväg</tspan></text>
     </g>
     <g
@@ -112,14 +112,14 @@
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
-         x="335.70468"
+         x="350.78049"
          y="226.30986"
          id="text1038"><tspan
            id="tspan1232"
-           x="335.70468"
+           x="350.78049"
            y="226.30986">Grusväg med</tspan><tspan
            id="tspan1234"
-           x="335.70468"
+           x="350.78049"
            y="249.64323">statligt bidrag</tspan></text>
     </g>
     <g
@@ -135,11 +135,11 @@
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
-         x="361.30853"
+         x="377.30853"
          y="106.13152"
          id="text1155"><tspan
            id="tspan1176"
-           x="361.30853"
+           x="377.30853"
            y="106.13152">Grusväg</tspan></text>
     </g>
     <g
@@ -155,11 +155,11 @@
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
-         x="347.49078"
+         x="363.49078"
          y="76.14975"
          id="text1097"><tspan
            id="tspan1095"
-           x="347.49078"
+           x="363.49078"
            y="76.14975"
            style="font-size:18.6667px;fill:#000000">Belagd väg</tspan></text>
     </g>
