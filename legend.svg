@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg178"
+   width="590.76923"
+   height="352"
+   viewBox="0 0 590.76923 352"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs182" />
+  <g
+     id="g184">
+    <rect
+       style="fill:#ffffff;fill-opacity:1"
+       id="rect1288"
+       width="590.76923"
+       height="352"
+       x="0"
+       y="0" />
+    <g
+       id="g426"
+       style="fill:#ac7c45;fill-opacity:1">
+      <rect
+         style="fill:#ac7c45;fill-opacity:1"
+         id="rect420"
+         width="110"
+         height="20"
+         x="0"
+         y="296.71634" />
+      <rect
+         style="fill:#ac7c45;fill-opacity:1"
+         id="rect422"
+         width="110"
+         height="20"
+         x="173.94693"
+         y="296.71634" />
+      <rect
+         style="fill:#ac7c45;fill-opacity:1;stroke-width:0.688253"
+         id="rect428"
+         width="52.10614"
+         height="20"
+         x="347.89386"
+         y="296.71634" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
+         x="439.19351"
+         y="311.86609"
+         id="text1168"><tspan
+           id="tspan1242"
+           x="439.19351"
+           y="311.86609">Traktorväg</tspan></text>
+    </g>
+    <g
+       id="g410">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:0.948683"
+         id="rect404"
+         width="85"
+         height="18"
+         x="0"
+         y="233.828" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:0.948683"
+         id="rect406"
+         width="85"
+         height="18"
+         x="132.65523"
+         y="233.828" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:0.948683"
+         id="rect412"
+         width="85"
+         height="18"
+         x="265.31046"
+         y="233.828" />
+      <rect
+         style="fill:#ac7c45;fill-opacity:1"
+         id="rect402"
+         width="400"
+         height="22"
+         x="0"
+         y="212.12755" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
+         x="422.76443"
+         y="227.61061"
+         id="text1038"><tspan
+           id="tspan1232"
+           x="422.76443"
+           y="227.61061">Grusväg med</tspan><tspan
+           id="tspan1234"
+           x="422.76443"
+           y="250.94398">statligt bidrag</tspan></text>
+    </g>
+    <g
+       id="g1164">
+      <rect
+         style="fill:#ac7c45;fill-opacity:1"
+         id="rect400"
+         width="400"
+         height="22"
+         x="0"
+         y="123.46099" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
+         x="449.29248"
+         y="139.59251"
+         id="text1155"><tspan
+           id="tspan1176"
+           x="449.29248"
+           y="139.59251">Grusväg</tspan></text>
+    </g>
+    <g
+       id="g1093">
+      <rect
+         style="fill:#000000;fill-opacity:1"
+         id="rect398"
+         width="400"
+         height="22"
+         x="0"
+         y="34.794437" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
+         x="442.8754"
+         y="50.944187"
+         id="text1097"><tspan
+           id="tspan1095"
+           x="442.8754"
+           y="50.944187"
+           style="font-size:18.6667px;fill:#000000">Belagd väg</tspan></text>
+    </g>
+  </g>
+</svg>
