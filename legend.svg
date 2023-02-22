@@ -4,136 +4,163 @@
 <svg
    version="1.1"
    id="svg178"
-   width="590.76923"
-   height="352"
-   viewBox="0 0 590.76923 352"
+   width="480"
+   height="260"
+   viewBox="0 0 480 260"
+   sodipodi:docname="legend.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview28"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.9209734"
+     inkscape:cx="130.66292"
+     inkscape:cy="97.606764"
+     inkscape:window-width="2560"
+     inkscape:window-height="1348"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g184" />
   <defs
      id="defs182" />
   <g
      id="g184">
     <rect
-       style="fill:#ffffff;fill-opacity:1"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.901385"
        id="rect1288"
-       width="590.76923"
-       height="352"
+       width="480"
+       height="260"
        x="0"
        y="0" />
     <g
        id="g426"
-       style="fill:#ac7c45;fill-opacity:1">
+       style="fill:#ac7c45;fill-opacity:1"
+       transform="translate(0,-76.716339)">
       <rect
-         style="fill:#ac7c45;fill-opacity:1"
+         style="fill:#ac7c45;fill-opacity:1;stroke-width:0.73855"
+         id="rect428"
+         width="60"
+         height="20"
+         x="260"
+         y="296.71634" />
+      <rect
+         style="fill:#ac7c45;fill-opacity:1;stroke-width:0.953463"
+         id="rect422"
+         width="100"
+         height="20"
+         x="110"
+         y="296.71634" />
+      <rect
+         style="fill:#ac7c45;fill-opacity:1;stroke-width:0.738545"
          id="rect420"
-         width="110"
+         width="60"
          height="20"
          x="0"
-         y="296.71634" />
-      <rect
-         style="fill:#ac7c45;fill-opacity:1"
-         id="rect422"
-         width="110"
-         height="20"
-         x="173.94693"
-         y="296.71634" />
-      <rect
-         style="fill:#ac7c45;fill-opacity:1;stroke-width:0.688253"
-         id="rect428"
-         width="52.10614"
-         height="20"
-         x="347.89386"
          y="296.71634" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
-         x="439.19351"
+         x="351.20956"
          y="311.86609"
          id="text1168"><tspan
            id="tspan1242"
-           x="439.19351"
+           x="351.20956"
            y="311.86609">Traktorväg</tspan></text>
     </g>
     <g
-       id="g410">
+       id="g410"
+       transform="translate(0,-70.160111)">
       <rect
-         style="fill:#000000;fill-opacity:1;stroke-width:0.948683"
-         id="rect404"
-         width="85"
-         height="18"
-         x="0"
-         y="233.828" />
-      <rect
-         style="fill:#000000;fill-opacity:1;stroke-width:0.948683"
-         id="rect406"
-         width="85"
-         height="18"
-         x="132.65523"
-         y="233.828" />
-      <rect
-         style="fill:#000000;fill-opacity:1;stroke-width:0.948683"
+         style="fill:#000000;fill-opacity:1;stroke-width:0.867719"
          id="rect412"
-         width="85"
-         height="18"
-         x="265.31046"
-         y="233.828" />
+         width="80"
+         height="15.999992"
+         x="240"
+         y="234.12755" />
       <rect
-         style="fill:#ac7c45;fill-opacity:1"
+         style="fill:#000000;fill-opacity:1;stroke-width:0.86772"
+         id="rect406"
+         width="80"
+         height="15.999992"
+         x="120"
+         y="234.12755" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:0.867718"
+         id="rect404"
+         width="80"
+         height="15.999992"
+         x="0"
+         y="234.12755" />
+      <rect
+         style="fill:#ac7c45;fill-opacity:1;stroke-width:0.956183"
          id="rect402"
-         width="400"
+         width="320"
          height="22"
          x="0"
          y="212.12755" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
-         x="422.76443"
-         y="227.61061"
+         x="335.70468"
+         y="226.30986"
          id="text1038"><tspan
            id="tspan1232"
-           x="422.76443"
-           y="227.61061">Grusväg med</tspan><tspan
+           x="335.70468"
+           y="226.30986">Grusväg med</tspan><tspan
            id="tspan1234"
-           x="422.76443"
-           y="250.94398">statligt bidrag</tspan></text>
+           x="335.70468"
+           y="249.64323">statligt bidrag</tspan></text>
     </g>
     <g
-       id="g1164">
+       id="g1164"
+       transform="translate(0,-10)">
       <rect
-         style="fill:#ac7c45;fill-opacity:1"
+         style="fill:#ac7c45;fill-opacity:1;stroke-width:0.894424"
          id="rect400"
-         width="400"
+         width="320"
          height="22"
          x="0"
-         y="123.46099" />
+         y="90" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
-         x="449.29248"
-         y="139.59251"
+         x="361.30853"
+         y="106.13152"
          id="text1155"><tspan
            id="tspan1176"
-           x="449.29248"
-           y="139.59251">Grusväg</tspan></text>
+           x="361.30853"
+           y="106.13152">Grusväg</tspan></text>
     </g>
     <g
-       id="g1093">
+       id="g1093"
+       transform="translate(0,-40)">
       <rect
-         style="fill:#000000;fill-opacity:1"
+         style="fill:#000000;fill-opacity:1;stroke-width:0.894427"
          id="rect398"
-         width="400"
+         width="320"
          height="22"
          x="0"
-         y="34.794437" />
+         y="60" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1"
-         x="442.8754"
-         y="50.944187"
+         x="347.49078"
+         y="76.14975"
          id="text1097"><tspan
            id="tspan1095"
-           x="442.8754"
-           y="50.944187"
+           x="347.49078"
+           y="76.14975"
            style="font-size:18.6667px;fill:#000000">Belagd väg</tspan></text>
     </g>
   </g>
