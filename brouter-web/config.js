@@ -14,7 +14,8 @@
 
 
 
-    BR.conf.profilesUrl = 'https://jole84.github.io/profiles2/';
+    // BR.conf.profilesUrl = 'https://jole84.github.io/profiles2/';
+    BR.conf.profilesUrl = 'https://brouter.de/brouter/profiles2/';
 
     BR.conf.privacyPolicyUrl = '/privacypolicy.html';
 
