@@ -15,6 +15,7 @@
 
 
     BR.conf.profilesUrl = 'https://jole84.github.io/profiles2/';
+    // BR.conf.profilesUrl = 'https://brouter.de/brouter/profiles2/';
 
     BR.conf.privacyPolicyUrl = '/privacypolicy.html';
 
@@ -23,11 +24,12 @@
     BR.conf.initialMapZoom = 10;
 
     BR.conf.profiles = [
+        // 'mc',
+        'car-fast',
+        'car-eco',
         'moped',
         'trekking',
         'fastbike',
-        'car-eco',
-        'car-fast',
         'safety',
         'shortest',
         'hiking-mountain',
