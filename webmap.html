@@ -111,10 +111,15 @@
       var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:true}).addTo(map);
       var layerControl2 = L.control.layers(baseLayers,overlayMaps,{collapsed:false});
 
-      if (window.matchMedia("(min-width: 30rem)").matches) {
-        map.removeControl(layerControl);
-        map.addControl(layerControl2);
-      } 
+      window.addEventListener("resize", function() {
+        if (window.matchMedia("(min-width: 30rem)").matches) {
+          map.removeControl(layerControl);
+          map.addControl(layerControl2);
+        } else {
+          map.removeControl(layerControl2);
+          map.addControl(layerControl);
+        }
+      }); 
 
       map.on('contextmenu',(e) => {
         var streetviewlink = "<a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Streetview</a>";
