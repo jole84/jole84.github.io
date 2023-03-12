@@ -21,19 +21,19 @@
         height: 100%;
         background-color: #bfe6ff;
     }
-    @media screen and (max-width: 30rem) {
+    /* @media screen and (max-width: 30rem) {
       #expanderaBtn {
         display: none;
       }
-    }
+    } */
   </style>
 </head>
 <body>
   <div id="map"></div>
 
-  <div class="leaflet-bottom leaflet-left">
+  <!-- <div class="leaflet-bottom leaflet-left">
     <button id="expanderaBtn" class="button-action leaflet-control" onclick="changeControl()">Expandera</button>
-  </div>
+  </div> -->
 
   <script>
       var map = L.map('map', {
@@ -111,7 +111,7 @@
       var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:true}).addTo(map);
       var layerControl2 = L.control.layers(baseLayers,overlayMaps,{collapsed:false});
 
-      function changeControl() {
+      if (window.matchMedia("(min-width: 30rem)").matches) {
         map.removeControl(layerControl);
         map.addControl(layerControl2);
       } 
