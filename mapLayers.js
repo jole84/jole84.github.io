@@ -1,13 +1,13 @@
 // slitlager
 
-var slitlagerkarta = L.tileLayer('https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta/{z}/{x}/{y}.jpg', {
+var slitlagerkarta = L.tileLayer('https://jole84.se/slitlagerkarta/{z}/{x}/{y}.jpg', {
     maxNativeZoom: 14,
     minZoom: 6,
     tms: false,
     attribution: 'jole84.github.io'
 });
 
-var streetmap = L.tileLayer('https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
+var streetmap = L.tileLayer('https://jole84.se/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
     maxNativeZoom: 14,
     minZoom: 6,
     tms: false,
