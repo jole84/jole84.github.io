@@ -50,8 +50,8 @@
         // 'display name': 'url'[,]
         // e.g. for offline tiles with https://github.com/develar/mapsforge-tile-server
         //'Mapsforge Tile Server': 'http://localhost:6090/{z}/{x}/{y}.png'
-        'jole84 Terrängkarta' : 'https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta/{z}/{x}/{y}.jpg',
-        'jole84 Vägkarta' : 'https://filedn.eu/lBi7OlMJML8z9XgfydjnDsm/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg',
+        'jole84 Terrängkarta' : 'https://jole84.se/slitlagerkarta/{z}/{x}/{y}.jpg',
+        'jole84 Vägkarta' : 'https://jole84.se/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg',
         'Lantmäteriet Topo' : 'https://minkarta.lantmateriet.se/map/topowebbcache/?layer=topowebb&style=default&tilematrixset=3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix={z}&TileCol={x}&TileRow={y}',
         'Eniro Karta' : 'http://map.eniro.se/geowebcache/service/tms1.0.0/map/{z}/{x}/{-y}.png',
         'Eniro Flygfoto' : 'http://map.eniro.se/geowebcache/service/tms1.0.0/aerial/{z}/{x}/{-y}.jpeg',
