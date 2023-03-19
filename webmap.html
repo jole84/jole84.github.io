@@ -22,11 +22,12 @@
         width: 100%;
         height: 100%;
         background-color: #bfe6ff;
+        cursor:crosshair;
     }
   </style>
 </head>
 <body>
-  <div id="map"></div>
+  <div id="map" class="map"></div>
 
   <div class="leaflet-bottom leaflet-left">
     <button id="expanderaBtn" class="button-action leaflet-control" onclick="exportGPX()">Exportera GPX</button>
@@ -160,10 +161,19 @@
         a.remove();  //afterwards we remove the element again         
       });
     }
-
+    
     var poiCount = 0;
     map.on('click', function(e) {
       control.spliceWaypoints(poiCount++, 1, e.latlng);
+
+      // console.log("x " + e.latlng.lat.toFixed(2));
+      
+      // for (var i = 0; i < control.getWaypoints().length; i++) {
+      //   if (e.latlng.lat.toFixed(2) == control.getWaypoints()[i].latLng.lat.toFixed(2)) {
+      //     console.log("match!")
+      //   }
+      //   console.log(i + " " +  control.getWaypoints()[i].latLng.lat.toFixed(2));
+      // }
     });
 
     </script>
