@@ -9,9 +9,11 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
     crossorigin=""/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
     crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
   <script src="mapLayers.js" ></script>
   <style type="text/css">
     html, body, #map{
@@ -21,112 +23,149 @@
         height: 100%;
         background-color: #bfe6ff;
     }
-    /* @media screen and (max-width: 30rem) {
-      #expanderaBtn {
-        display: none;
-      }
-    } */
   </style>
 </head>
 <body>
   <div id="map"></div>
 
-  <!-- <div class="leaflet-bottom leaflet-left">
-    <button id="expanderaBtn" class="button-action leaflet-control" onclick="changeControl()">Expandera</button>
-  </div> -->
+  <div class="leaflet-bottom leaflet-left">
+    <button id="expanderaBtn" class="button-action leaflet-control" onclick="exportGPX()">Exportera GPX</button>
+  </div>
 
   <script>
-      var map = L.map('map', {
-        center: [57.78564196397448, 14.215799665093242],
-        zoom: 10,
-        maxZoom: 18,
-        zoomSnap: 0,
-        wheelPxPerZoomLevel: 100,
-        inertiaDeceleration: 1500,
-        keyboardPanDelta: 200,
-        bounceAtZoomLimits: false,
-        layers: [slitlagerkarta]
+    var map = L.map('map', {
+      center: [57.78564196397448, 14.215799665093242],
+      zoom: 10,
+      maxZoom: 18,
+      zoomSnap: 0,
+      wheelPxPerZoomLevel: 100,
+      inertiaDeceleration: 1500,
+      keyboardPanDelta: 200,
+      bounceAtZoomLimits: false,
+      layers: [slitlagerkarta]
+    });
+
+    L.GridLayer.GridDebug = L.GridLayer.extend({
+      createTile: function (coords) {
+        const tile = document.createElement('div');
+        tile.style.outline = '1px solid black';
+        tile.style.fontWeight = 'bold';
+        tile.style.fontSize = '16pt';
+        var tms_y = "TMS=" + (Math.pow(2, coords.z) - coords.y - 1);
+        tile.innerHTML = [coords.z, coords.x, coords.y + "<br />" + tms_y].join('/');
+        return tile;
+      },
+    });
+
+    L.gridLayer.gridDebug = function (opts) {
+      return new L.GridLayer.GridDebug(opts);
+    };
+
+    var tileName = L.gridLayer.gridDebug();
+    
+    var baseLayers = {
+      'jole84 Terrängkarta': slitlagerkarta,
+      'jole84 Vägkarta': streetmap,
+      'Lantmäteriet Topo' : topo,
+      'Topo Nedtonad' : topowebb_nedtonad,
+      'Lantmäteriet Orto 0.16' : ortofoto16,
+      'Lantmäteriet Orto 0.25' : ortofoto25,
+      'Lantmäteriet Orto 0.4' : ortofoto4,
+      'Lantmäteriet Orto 0.5' : ortofoto5,
+      'Lantmäteriet Orto IR' : ortofotoir,
+      'Flygfoto 1960' : flyg_60,
+      'Flygfoto 1975' : flyg_75,
+      'Eniro Karta': eniromap,
+      'Eniro Flygfoto': eniroaerial,
+      'Eniro Historisk': enirohistorical,
+      'Eniro Sjökort': enironautical,
+      'Hitta Karta' : hitta_karta,
+      'Hitta Friluft' : hitta_friluft,
+      'Hitta Satellit' : hitta_satellit,
+      'OpenStreetMap' : openstreetmap,
+      'OpenTopoMap' : opentopomap,
+    };
+    
+    var overlayMaps = {
+      'Eniro hybrid' : eniro_hybrid,
+      'Terrängskuggning' : terrangskuggning,
+      'Markers' : markers,
+      'Gränser' : grans,
+      'Fartkamera/Rastplats' : ATK_matplats,
+      'Trafikplatsnummer' : trafikplatsnummer,
+      'SMHI nederbörd' : smhi_radar,
+      'SMHI temp' : smhi_temp,
+      'SMHI vind' : smhi_vind,
+      'Tele2 5G' : tele2,
+      'NVDB slitlager' : nvdb_slitlager,
+      'NVDB vägnummer' : nvdb_vagnummer,
+      'NVDB stigningsfält' : nvdb_stigningsfalt,
+      'NVDB hastighetsgräns' : nvdb_hastighetsgrans,
+      'Begränsning' : nvdb_begransning,
+      'tileName' : tileName,
+    };
+
+    var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:true}).addTo(map);
+    var layerControl2 = L.control.layers(baseLayers,overlayMaps,{collapsed:false});
+
+    if (window.matchMedia("(min-width: 30rem)").matches) {
+      map.removeControl(layerControl);
+      map.addControl(layerControl2);
+    };
+
+    map.on('contextmenu',(e) => {
+      var position = e.latlng.lat.toFixed(5).toString() + ", " + e.latlng.lng.toFixed(5).toString();
+      var streetviewlink = "<a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Streetview</a>";
+      var gmaplink = "<a href=\"http://maps.google.com/maps?q=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Gmap</a>";
+      L.popup()
+      .setLatLng(e.latlng)
+      .setContent(position + 
+      "<br>" + streetviewlink + " " + gmaplink)
+      .openOn(map);
+    });
+    
+    // very simple router
+    var control = L.Routing.control({
+      waypoints: [],
+      routeWhileDragging: false,
+      showAlternatives: false,
+      show: false,
+      fitSelectedRoutes: false,
+      language: 'sv'
+    }).addTo(map);
+
+    // downloads gpx file from brouter as test
+    function exportGPX() {
+      var waypointsLength = control.getWaypoints().length;
+      console.log(waypointsLength);
+      let coordinateList = [];
+      for (var i = 0; i < waypointsLength; i++) {
+        var lat = control.getWaypoints()[i].latLng.lat;
+        var lon = control.getWaypoints()[i].latLng.lng;
+        var cordsS = `${lon},${lat}`;
+        coordinateList.push(cordsS);
+      };
+      fetch('https://brouter.de/brouter' +
+        '?lonlats=' + coordinateList.join("|") +
+        '&profile=car-fast&alternativeidx=0&format=gpx'
+      ).then(response => response.blob())
+      .then(blob => {
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        var date = new Date();
+        a.href = url;
+        a.download = `${date.toLocaleString()}.gpx`;
+        document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+        a.click();    
+        a.remove();  //afterwards we remove the element again         
       });
+    }
 
-      L.GridLayer.GridDebug = L.GridLayer.extend({
-        createTile: function (coords) {
-          const tile = document.createElement('div');
-          tile.style.outline = '1px solid black';
-          tile.style.fontWeight = 'bold';
-          tile.style.fontSize = '16pt';
-          var tms_y = "TMS=" + (Math.pow(2, coords.z) - coords.y - 1);
-          tile.innerHTML = [coords.z, coords.x, coords.y + "<br />" + tms_y].join('/');
-          return tile;
-        },
-      });
+    var poiCount = 0;
+    map.on('click', function(e) {
+      control.spliceWaypoints(poiCount++, 1, e.latlng);
+    });
 
-      L.gridLayer.gridDebug = function (opts) {
-        return new L.GridLayer.GridDebug(opts);
-      };
-
-      var tileName = L.gridLayer.gridDebug();
-      
-      var baseLayers = {
-        'jole84 Terrängkarta': slitlagerkarta,
-        'jole84 Vägkarta': streetmap,
-        'Lantmäteriet Topo' : topo,
-        'Topo Nedtonad' : topowebb_nedtonad,
-        'Lantmäteriet Orto 0.16' : ortofoto16,
-        'Lantmäteriet Orto 0.25' : ortofoto25,
-        'Lantmäteriet Orto 0.4' : ortofoto4,
-        'Lantmäteriet Orto 0.5' : ortofoto5,
-        'Lantmäteriet Orto IR' : ortofotoir,
-        'Flygfoto 1960' : flyg_60,
-        'Flygfoto 1975' : flyg_75,
-        'Eniro Karta': eniromap,
-        'Eniro Flygfoto': eniroaerial,
-        'Eniro Historisk': enirohistorical,
-        'Eniro Sjökort': enironautical,
-        'Hitta Karta' : hitta_karta,
-        'Hitta Friluft' : hitta_friluft,
-        'Hitta Satellit' : hitta_satellit,
-        'OpenStreetMap' : openstreetmap,
-        'OpenTopoMap' : opentopomap,
-      };
-      
-      var overlayMaps = {
-        'Eniro hybrid' : eniro_hybrid,
-        'Terrängskuggning' : terrangskuggning,
-        'Markers' : markers,
-        'Gränser' : grans,
-        'Fartkamera/Rastplats' : ATK_matplats,
-        'Trafikplatsnummer' : trafikplatsnummer,
-        'SMHI nederbörd' : smhi_radar,
-        'SMHI temp' : smhi_temp,
-        'SMHI vind' : smhi_vind,
-        'Tele2 5G' : tele2,
-        'NVDB slitlager' : nvdb_slitlager,
-        'NVDB vägnummer' : nvdb_vagnummer,
-        'NVDB stigningsfält' : nvdb_stigningsfalt,
-        'NVDB hastighetsgräns' : nvdb_hastighetsgrans,
-        'Begränsning' : nvdb_begransning,
-        'tileName' : tileName,
-      };
-
-      var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:true}).addTo(map);
-      var layerControl2 = L.control.layers(baseLayers,overlayMaps,{collapsed:false});
-
-      if (window.matchMedia("(min-width: 30rem)").matches) {
-        map.removeControl(layerControl);
-        map.addControl(layerControl2);
-      };
-
-      map.on('contextmenu',(e) => {
-        var streetviewlink = "<a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Streetview</a>";
-        var gmaplink = "<a href=\"http://maps.google.com/maps?q=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Gmap</a>";
-        L.popup()
-        .setLatLng(e.latlng)
-        .setContent(e.latlng.lat.toFixed(5).toString() + ", " + e.latlng.lng.toFixed(5).toString() + "<br>" + 
-          streetviewlink + " " + gmaplink)
-        .addTo(map)
-        .openOn(map);
-      });
-
-      </script>
+    </script>
 </body>
 </html>
