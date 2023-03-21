@@ -22,16 +22,18 @@
         width: 100%;
         height: 100%;
         background-color: #bfe6ff;
-        cursor:crosshair;
+        /* cursor:crosshair; */
     }
   </style>
 </head>
 <body>
   <div id="map" class="map"></div>
 
-  <div class="leaflet-bottom leaflet-left">
-    <button id="expanderaBtn" class="button-action leaflet-control" onclick="exportGPX()">Exportera GPX</button>
-  </div>
+  <!-- <div style="scale: 1.3;padding: 10px;" class="leaflet-bottom leaflet-left">
+    <button id="exporteraBtn" class="button-action leaflet-control" onclick="exportGPX()">Exportera GPX</button>
+    <button id="removeBtn" class="button-action leaflet-control" onclick="removeGPX()">Rensa rutt</button>
+    <button id="removeLast" class="button-action leaflet-control" onclick="removeLast()">Ta bort sista</button>
+  </div> -->
 
   <script>
     var map = L.map('map', {
@@ -69,10 +71,7 @@
       'jole84 Vägkarta': streetmap,
       'Lantmäteriet Topo' : topo,
       'Topo Nedtonad' : topowebb_nedtonad,
-      'Lantmäteriet Orto 0.16' : ortofoto16,
-      'Lantmäteriet Orto 0.25' : ortofoto25,
-      'Lantmäteriet Orto 0.4' : ortofoto4,
-      'Lantmäteriet Orto 0.5' : ortofoto5,
+      'Lantmäteriet Ortofoto' : ortofoto,
       'Lantmäteriet Orto IR' : ortofotoir,
       'Flygfoto 1960' : flyg_60,
       'Flygfoto 1975' : flyg_75,
@@ -125,56 +124,61 @@
       .openOn(map);
     });
     
-    // very simple router
-    var control = L.Routing.control({
-      waypoints: [],
-      routeWhileDragging: false,
-      showAlternatives: false,
-      show: false,
-      fitSelectedRoutes: false,
-      language: 'sv'
-    }).addTo(map);
+    // // very simple route function
+    // var poiCount = 0;
+    // var control = L.Routing.control({
+    //   waypoints: [],
+    //   routeWhileDragging: false,
+    //   showAlternatives: false,
+    //   show: false,
+    //   fitSelectedRoutes: false,
+    //   language: 'sv'
+    // }).addTo(map);
 
-    // downloads gpx file from brouter as test
-    function exportGPX() {
-      var waypointsLength = control.getWaypoints().length;
-      console.log(waypointsLength);
-      let coordinateList = [];
-      for (var i = 0; i < waypointsLength; i++) {
-        var lat = control.getWaypoints()[i].latLng.lat;
-        var lon = control.getWaypoints()[i].latLng.lng;
-        var cordsS = `${lon},${lat}`;
-        coordinateList.push(cordsS);
-      };
-      fetch('https://brouter.de/brouter' +
-        '?lonlats=' + coordinateList.join("|") +
-        '&profile=car-fast&alternativeidx=0&format=gpx'
-      ).then(response => response.blob())
-      .then(blob => {
-        var url = window.URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        var date = new Date();
-        a.href = url;
-        a.download = `${date.toLocaleString()}.gpx`;
-        document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-        a.click();    
-        a.remove();  //afterwards we remove the element again         
-      });
-    }
+    // // downloads gpx file from brouter as test
+    // function exportGPX() {
+    //   var waypointsLength = control.getWaypoints().length;
+    //   console.log(waypointsLength);
+    //   let coordinateList = [];
+    //   for (var i = 0; i < waypointsLength; i++) {
+    //     var lat = control.getWaypoints()[i].latLng.lat;
+    //     var lon = control.getWaypoints()[i].latLng.lng;
+    //     var cordsS = `${lon},${lat}`;
+    //     coordinateList.push(cordsS);
+    //   };
+    //   fetch('https://brouter.de/brouter' +
+    //     '?lonlats=' + coordinateList.join("|") +
+    //     '&profile=car-fast&alternativeidx=0&format=gpx'
+    //   ).then(response => response.blob())
+    //   .then(blob => {
+    //     var url = window.URL.createObjectURL(blob);
+    //     var a = document.createElement('a');
+    //     var date = new Date();
+    //     a.href = url;
+    //     a.download = `Rutt_${date.toLocaleString()}.gpx`;
+    //     document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+    //     a.click();    
+    //     a.remove();  //afterwards we remove the element again         
+    //   });
+    // }
+
+    // function removeGPX() {
+    //   control.setWaypoints([]);
+    //   poiCount = 0;
+    // };
+
+    // function removeLast() {
+    //   control.spliceWaypoints(control.getWaypoints().length - 1, 1);
+    //   poiCount--;
+    // };
     
-    var poiCount = 0;
-    map.on('click', function(e) {
-      control.spliceWaypoints(poiCount++, 1, e.latlng);
+    // map.on('click', function(e) {
+    //   control.spliceWaypoints(poiCount++, 1, e.latlng);
+    // });
 
-      // console.log("x " + e.latlng.lat.toFixed(2));
-      
-      // for (var i = 0; i < control.getWaypoints().length; i++) {
-      //   if (e.latlng.lat.toFixed(2) == control.getWaypoints()[i].latLng.lat.toFixed(2)) {
-      //     console.log("match!")
-      //   }
-      //   console.log(i + " " +  control.getWaypoints()[i].latLng.lat.toFixed(2));
-      // }
-    });
+    // control.on('click', function(e) {
+    //   console.log(e);
+    // });
 
     </script>
 </body>

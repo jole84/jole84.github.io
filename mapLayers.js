@@ -60,20 +60,8 @@ var grans = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/fastighetsinde
     style: 'registerkarta,registerkarta',
 });
 
-var ortofoto16 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
-    layers: 'Ortofoto_0.16',
-});
-
-var ortofoto25 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
-    layers: 'Ortofoto_0.25',
-});
-
-var ortofoto4 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
-    layers: 'Ortofoto_0.4',
-});
-
-var ortofoto5 = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
-    layers: 'Ortofoto_0.5',
+var ortofoto = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
+    layers: 'Ortofoto_0.5,Ortofoto_0.4,Ortofoto_0.25,Ortofoto_0.16',
 });
 
 var ortofotoir = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/SERVICE?', {
