@@ -114,7 +114,7 @@
     };
 
     map.on('contextmenu',(e) => {
-      var position = e.latlng.lat.toFixed(5).toString() + ", " + e.latlng.lng.toFixed(5).toString();
+      var position = e.latlng.lat.toFixed(6).toString() + ", " + e.latlng.lng.toFixed(6).toString();
       var streetviewlink = "<a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Streetview</a>";
       var gmaplink = "<a href=\"http://maps.google.com/maps?q=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Gmap</a>";
       L.popup()
