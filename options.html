@@ -44,7 +44,7 @@
         <input type="checkbox" id="Lnt"> Aktivera Lantmäteriets kartor<br>
         <input type="checkbox" id="onunload"> Varna vid avstängning<br>
         <label for="defaultZoom">Zoom-nivå:</label>
-        <input type="text" id="defaultZoom" name="defaultZoom" required minlength="1" maxlength="50" size="5" placeholder="14.0"><br>
+        <input type="number" id="defaultZoom" name="defaultZoom" step="0.1" required min="1" max="20" size="5" placeholder="14.0"><br>
         <label for="infoText">Storlek på inforuta:</label>
         <input id="infoText" name="infoText" required minlength="1" maxlength="50" size="10" placeholder="1em, x-large"><br>
         <label for="karta">Vald karta:</label>
