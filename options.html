@@ -8,42 +8,131 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta charset="utf-8">
-    <title>Live-track options</title>
+    <title>Live-track</title>
+    <style>
+      #linkButton {
+        width: 400px;
+      }
+      .kartbild {
+        max-width: 50%;
+      }
+      #legend {
+        height: 50%;
+        width: 350px;
+      }
+    </style>
   </head>
   <body>
     <div class="container pt-5">
 
-      <h2>
-        Live-track options:<br>
-      </h2>
+      <h1>
+        Live-track webapp<br>
+      </h1>
+      <h4>
+        start-alternativ:
+      </h4>
 
-      <form onsubmit="myFunction()">
-        <input type="checkbox" id="Lnt">Lnt<br>
-        <input type="checkbox" id="onunload">onunload<br>
-        <label for="defaultZoom">defaultZoom:</label>
-        <input type="text" id="defaultZoom" name="defaultZoom" required minlength="1" maxlength="50" size="5" value="14"><br>
-        <label for="info">info text size:</label>
-        <input type="text" id="info" name="info" required minlength="1" maxlength="50" size="5" value="1em"><br>
+      <form onchange="myFunction()" id="theForm">
+        <input type="checkbox" id="Lnt"> Aktivera Lantmäteriets karta<br>
+        <input type="checkbox" id="onunload"> Varna vid avstängning<br>
+        <label for="defaultZoom">Zoom-nivå:</label>
+        <input type="text" id="defaultZoom" name="defaultZoom" required minlength="1" maxlength="50" size="5" placeholder="14"><br>
+        <label for="infoText">Storlek på inforuta:</label>
+        <input id="infoText" name="infoText" required minlength="1" maxlength="50" size="10" placeholder="1em, x-large"><br>
         <label for="karta">Vald karta:</label>
         <select name="karta" id="karta">
           <option value="terräng">Terrängkarta</option>
           <option value="vägkarta">Vägkarta</option>
-          <option value="dark mode">Dark mode</option>
+          <option value="dark mode">Mörk vägkarta</option>
           <option value="satellit">Satellit</option>
           <option value="topografisk">Topografisk</option>
         </select><br>
-        <input type='submit'/>
+        <label for="gpxUrl">Url till gpxfil:</label>
+        <a href="https://jole84.se/rutter" target="_blank">(Tillängliga rutter)</a>
+        <input id="gpxUrl" name="gpxUrl" size="20" placeholder=".gpx"><br>
       </form>
-      
-      <a id="ruttplanering" href="https://jole84.se/live-track/index.html?" class="btn btn-primary my-2">Link</a><br>
+
+      <button id="createLink" class="btn btn-primary my-2" onclick="myFunction()">Uppdatera länk</button><br>
+      <code id="linkCode"></code><br>
+      <a id="linkButton" href="https://jole84.se/live-track/index.html" class="btn btn-primary my-2">Live-track webapp</a><br>
+
+      <img class="kartbild" src="https://jole84.se/slitlagerkarta/14/8834/4935.jpg"><img class="kartbild" src="https://jole84.se/slitlagerkarta/14/8835/4935.jpg">
+      <img id="legend" class="rounded" src="https://jole84.github.io/legend.svg"><br>
+
+      <!-- <object data="https://jole84.se/live-track/index.html" width="50%" height="350px">Your browser doesn’t support the object tag.</object> -->
     </div>
 
     <script>
-
-      var link= document.getElementById('ruttplanering');
+      var Lnt = document.getElementById('Lnt');
+      var onUnload = document.getElementById('onunload');
+      var defaultZoom = document.getElementById('defaultZoom');
+      var infoText = document.getElementById('infoText');
+      var karta = document.getElementById('karta');
+      var linkUrl = document.getElementById('linkUrl');
+      var linkCode = document.getElementById('linkCode');
+      var linkButton= document.getElementById('linkButton');
+      var gpxUrl = document.getElementById('gpxUrl');
+      
+      var linkUrl = "https://jole84.se/live-track/index.html"
+      
       function myFunction() {
-        link.innerHTML = "test";
+        var newLinkUrl = linkUrl + '?';
+        if (karta.value == 'topografisk' || karta.value == 'satellit') {
+          Lnt.checked = true;
+        };
+
+        if (Lnt.checked) {
+          newLinkUrl += 'Lnt'
+        };
+
+        if (karta.value == 'vägkarta') {
+          newLinkUrl += '&switchMap';
+        }
+
+        if (karta.value == 'dark mode') {
+          newLinkUrl += '&switchMap';
+          newLinkUrl += '&switchMap';
+        }
+
+        if (karta.value == 'satellit') {
+          newLinkUrl += '&switchMap';
+          newLinkUrl += '&switchMap';
+          newLinkUrl += '&switchMap';
+        }
+        
+        if (karta.value == 'topografisk') {
+          newLinkUrl += '&switchMap';
+          newLinkUrl += '&switchMap';
+          newLinkUrl += '&switchMap';
+          newLinkUrl += '&switchMap';
+        }
+
+        if (onUnload.checked) {
+          newLinkUrl += "&onunload";
+        };
+
+        if (gpxUrl.value) {
+          newLinkUrl += '&' + gpxUrl.value;
+        }
+
+        if (infoText.value) {
+          newLinkUrl += '&info=' + infoText.value;
+        }
+
+        if (defaultZoom.value) {
+          newLinkUrl += '&zoom=' + defaultZoom.value;
+        }
+
+        if (newLinkUrl == linkUrl + '?') {
+          linkCode.innerHTML = linkUrl;
+          linkButton.setAttribute("href", linkUrl);
+        } else {
+          linkCode.innerHTML = newLinkUrl;
+          linkButton.setAttribute("href", newLinkUrl);
+        }
       }
+
+      myFunction();
     </script>
   </body>
 </html>
