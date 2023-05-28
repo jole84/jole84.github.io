@@ -6,8 +6,10 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="filesList.js"></script>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta charset="utf-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Live-track</title>
     <style>
       #linkButton {
@@ -15,6 +17,9 @@
       }
       .kartbild {
         max-width: 50%;
+      }
+      #webbkarta, #ruttplanering {
+        width: 300px;
       }
       #legend {
         height: 50%;
@@ -28,38 +33,54 @@
       <h1>
         Live-track webapp<br>
       </h1>
+      <p class="lead text-muted">Baserad på Lantmäteriet Topografi 50. Geografisk täckning omfattar hela Sverige.</p>
+      
+      <hr>
       <h4>
-        start-alternativ:
+        Start-alternativ:
       </h4>
 
       <form onchange="myFunction()" id="theForm">
-        <input type="checkbox" id="Lnt"> Aktivera Lantmäteriets karta<br>
+        <input type="checkbox" id="Lnt"> Aktivera Lantmäteriets kartor<br>
         <input type="checkbox" id="onunload"> Varna vid avstängning<br>
         <label for="defaultZoom">Zoom-nivå:</label>
-        <input type="text" id="defaultZoom" name="defaultZoom" required minlength="1" maxlength="50" size="5" placeholder="14"><br>
+        <input type="text" id="defaultZoom" name="defaultZoom" required minlength="1" maxlength="50" size="5" placeholder="14.0"><br>
         <label for="infoText">Storlek på inforuta:</label>
         <input id="infoText" name="infoText" required minlength="1" maxlength="50" size="10" placeholder="1em, x-large"><br>
         <label for="karta">Vald karta:</label>
         <select name="karta" id="karta">
           <option value="terräng">Terrängkarta</option>
           <option value="vägkarta">Vägkarta</option>
-          <option value="dark mode">Mörk vägkarta</option>
+          <option value="darkmode">Mörk vägkarta</option>
           <option value="satellit">Satellit</option>
           <option value="topografisk">Topografisk</option>
         </select><br>
         <label for="gpxUrl">Url till gpxfil:</label>
         <a href="https://jole84.se/rutter" target="_blank">(Tillängliga rutter)</a>
         <input id="gpxUrl" name="gpxUrl" size="20" placeholder=".gpx"><br>
+        <select id="selectFile">
+          <option>välj gpxfil</option>
+        </select>
       </form>
 
       <button id="createLink" class="btn btn-primary my-2" onclick="myFunction()">Uppdatera länk</button><br>
       <code id="linkCode"></code><br>
-      <a id="linkButton" href="https://jole84.se/live-track/index.html" class="btn btn-primary my-2">Live-track webapp</a><br>
+      <a id="linkButton" href="https://jole84.se/live-track/index.html" class="btn btn-danger my-2">Live-track webapp</a><br>
 
+      <hr>
+      <a href="https://jole84.github.io/webmap.html" class="btn btn-primary my-2" id="webbkarta">Webbkarta</a><br>
       <img class="kartbild" src="https://jole84.se/slitlagerkarta/14/8834/4935.jpg"><img class="kartbild" src="https://jole84.se/slitlagerkarta/14/8835/4935.jpg">
       <img id="legend" class="rounded" src="https://jole84.github.io/legend.svg"><br>
 
+      <hr>
+      <a href="https://jole84.github.io/brouter-web/index.html" class="btn btn-primary my-2" id="ruttplanering">Ruttplanerare</a><br>
+      <a href="https://jole84.github.io/brouter-web/index.html"><img class="rounded" src="https://jole84.github.io/brouter-web.jpg"></a>
+
       <!-- <object data="https://jole84.se/live-track/index.html" width="50%" height="350px">Your browser doesn’t support the object tag.</object> -->
+      
+      <hr>
+
+      <a href="https://github.com/jole84">Jole84 Github</a>
     </div>
 
     <script>
@@ -72,10 +93,19 @@
       var linkCode = document.getElementById('linkCode');
       var linkButton= document.getElementById('linkButton');
       var gpxUrl = document.getElementById('gpxUrl');
+      var selectFile = document.getElementById('selectFile');
       
       var linkUrl = "https://jole84.se/live-track/index.html"
       
       function myFunction() {
+        for (var i = 0; i < filesList.length; i++) {
+          var opt = filesList[i];
+          var el = document.createElement("option");
+          el.textContent = opt;
+          el.value = opt;
+          selectFile.appendChild(el);
+        }
+
         var newLinkUrl = linkUrl + '?';
         if (karta.value == 'topografisk' || karta.value == 'satellit') {
           Lnt.checked = true;
@@ -89,7 +119,7 @@
           newLinkUrl += '&switchMap';
         }
 
-        if (karta.value == 'dark mode') {
+        if (karta.value == 'darkmode') {
           newLinkUrl += '&switchMap';
           newLinkUrl += '&switchMap';
         }
@@ -113,6 +143,10 @@
 
         if (gpxUrl.value) {
           newLinkUrl += '&' + gpxUrl.value;
+        }
+
+        if (selectFile.value != 'välj gpxfil') {
+          newLinkUrl += '&' + selectFile.value;
         }
 
         if (infoText.value) {
