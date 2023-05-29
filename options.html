@@ -25,6 +25,9 @@
         height: 50%;
         width: 350px;
       }
+      #brouter-img {
+        max-width: 100%;
+      }
     </style>
   </head>
   <body>
@@ -44,7 +47,7 @@
         <input type="checkbox" id="Lnt"> Aktivera Lantmäteriets kartor<br>
         <input type="checkbox" id="onunload"> Varna vid avstängning<br>
         <label for="defaultZoom">Zoom-nivå:</label>
-        <input type="number" id="defaultZoom" name="defaultZoom" step="0.1" required min="1" max="20" size="5" placeholder="14.0"><br>
+        <input type="number" id="defaultZoom" name="defaultZoom" step="0.1" required min="6" max="20" size="5" placeholder="14.0"><br>
         <label for="infoText">Storlek på inforuta:</label>
         <input id="infoText" name="infoText" required minlength="1" maxlength="50" size="10" placeholder="1em, x-large"><br>
         <label for="karta">Vald karta:</label>
@@ -74,7 +77,7 @@
 
       <hr>
       <a href="https://jole84.github.io/brouter-web/index.html" class="btn btn-primary my-2" id="ruttplanering">Ruttplanerare</a><br>
-      <a href="https://jole84.github.io/brouter-web/index.html"><img class="rounded" src="https://jole84.github.io/brouter-web.jpg"></a>
+      <a href="https://jole84.github.io/brouter-web/index.html"><img id="brouter-img" class="rounded" src="https://jole84.github.io/brouter-web.jpg"></a>
 
       <!-- <object data="https://jole84.se/live-track/index.html" width="50%" height="350px">Your browser doesn’t support the object tag.</object> -->
       
@@ -120,21 +123,15 @@
         }
 
         if (karta.value == 'darkmode') {
-          newLinkUrl += '&switchMap';
-          newLinkUrl += '&switchMap';
+          newLinkUrl += '&switchMap'.repeat(2);
         }
 
         if (karta.value == 'satellit') {
-          newLinkUrl += '&switchMap';
-          newLinkUrl += '&switchMap';
-          newLinkUrl += '&switchMap';
+          newLinkUrl += '&switchMap'.repeat(3);
         }
         
         if (karta.value == 'topografisk') {
-          newLinkUrl += '&switchMap';
-          newLinkUrl += '&switchMap';
-          newLinkUrl += '&switchMap';
-          newLinkUrl += '&switchMap';
+          newLinkUrl += '&switchMap'.repeat(4);
         }
 
         if (onUnload.checked) {
