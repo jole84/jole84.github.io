@@ -13,10 +13,16 @@
     <title>Live-track</title>
     <style>
       #linkButton {
-        width: 400px;
+        width: 50%;
       }
-      .kartbild {
-        max-width: 50%;
+      #kartbild {
+        white-space: nowrap;
+        float: left;
+      }
+      #objectpreview {
+        width: 100%;
+        height: 350px;
+        border-radius: 5px;
       }
       #webbkarta, #ruttplanering {
         width: 300px;
@@ -46,11 +52,11 @@
       <form onchange="myFunction()" id="theForm">
         <input type="checkbox" id="Lnt"> Aktivera Lantmäteriets kartor<br>
         <input type="checkbox" id="onunload"> Varna vid avstängning<br>
-        <label for="defaultZoom">Zoom-nivå:</label>
+          <label for="defaultZoom">Zoom-nivå:</label>
         <input type="number" id="defaultZoom" name="defaultZoom" step="0.1" required min="6" max="20" size="5" placeholder="14.0"><br>
-        <label for="infoText">Storlek på inforuta:</label>
+          <label for="infoText">Storlek på inforuta:</label>
         <input id="infoText" name="infoText" required minlength="1" maxlength="50" size="10" placeholder="1em, x-large"><br>
-        <label for="karta">Vald karta:</label>
+          <label for="karta">Vald karta:</label>
         <select name="karta" id="karta">
           <option value="terräng">Terrängkarta</option>
           <option value="vägkarta">Vägkarta</option>
@@ -58,7 +64,7 @@
           <option value="satellit">Satellit</option>
           <option value="topografisk">Topografisk</option>
         </select><br>
-        <label for="gpxUrl">Url till gpxfil:</label>
+          <label for="gpxUrl">Url till gpxfil:</label>
         <a href="https://jole84.se/rutter" target="_blank">(Tillängliga rutter)</a>
         <input id="gpxUrl" name="gpxUrl" size="20" placeholder=".gpx"><br>
         <select id="selectFile">
@@ -67,20 +73,26 @@
       </form>
 
       <button id="createLink" class="btn btn-primary my-2" onclick="myFunction()">Uppdatera länk</button><br>
+      
       <code id="linkCode"></code><br>
+      
       <a id="linkButton" href="https://jole84.se/live-track/index.html" class="btn btn-danger my-2">Live-track webapp</a><br>
+      
+      <object id="objectpreview" data="https://jole84.se/live-track/index.html">Your browser doesn’t support the object tag.</object>
 
-      <hr>
-      <a href="https://jole84.github.io/webmap.html" class="btn btn-primary my-2" id="webbkarta">Webbkarta</a><br>
-      <img class="kartbild" src="https://jole84.se/slitlagerkarta/14/8834/4935.jpg"><img class="kartbild" src="https://jole84.se/slitlagerkarta/14/8835/4935.jpg">
+      <!-- <hr> -->
+      
+      <!-- <div id="kartbild">
+        <img src="https://jole84.se/slitlagerkarta/14/8834/4935.jpg"><img src="https://jole84.se/slitlagerkarta/14/8835/4935.jpg"><img src="https://jole84.se/slitlagerkarta/14/8836/4935.jpg">
+      </div> -->
+      
       <img id="legend" class="rounded" src="https://jole84.github.io/legend.svg"><br>
-
+      
       <hr>
-      <a href="https://jole84.github.io/brouter-web/index.html" class="btn btn-primary my-2" id="ruttplanering">Ruttplanerare</a><br>
+      
+      <a href="https://jole84.github.io/brouter-web/index.html" class="btn btn-primary my-2" id="ruttplanering">Ruttplanerare</a> <a href="https://jole84.github.io/webmap.html" class="btn btn-primary my-2" id="webbkarta">Webbkarta</a><br>
       <a href="https://jole84.github.io/brouter-web/index.html"><img id="brouter-img" class="rounded" src="https://jole84.github.io/brouter-web.jpg"></a>
 
-      <!-- <object data="https://jole84.se/live-track/index.html" width="50%" height="350px">Your browser doesn’t support the object tag.</object> -->
-      
       <hr>
 
       <a href="https://github.com/jole84">Jole84 Github</a>
@@ -109,11 +121,12 @@
           selectFile.appendChild(el);
         }
 
+        
         var newLinkUrl = linkUrl + '?';
         if (karta.value == 'topografisk' || karta.value == 'satellit') {
           Lnt.checked = true;
         };
-
+        
         if (Lnt.checked) {
           newLinkUrl += 'Lnt'
         };
@@ -121,7 +134,7 @@
         if (karta.value == 'vägkarta') {
           newLinkUrl += '&switchMap';
         }
-
+        
         if (karta.value == 'darkmode') {
           newLinkUrl += '&switchMap'.repeat(2);
         }
@@ -133,11 +146,11 @@
         if (karta.value == 'topografisk') {
           newLinkUrl += '&switchMap'.repeat(4);
         }
-
+        
         if (onUnload.checked) {
           newLinkUrl += "&onunload";
         };
-
+        
         if (gpxUrl.value) {
           newLinkUrl += '&' + gpxUrl.value;
         }
@@ -153,7 +166,7 @@
         if (defaultZoom.value) {
           newLinkUrl += '&zoom=' + defaultZoom.value;
         }
-
+        
         if (newLinkUrl == linkUrl + '?') {
           linkCode.innerHTML = linkUrl;
           linkButton.setAttribute("href", linkUrl);
@@ -161,9 +174,10 @@
           linkCode.innerHTML = newLinkUrl;
           linkButton.setAttribute("href", newLinkUrl);
         }
+        document.getElementById('objectpreview').setAttribute("data", newLinkUrl);
       }
 
       myFunction();
     </script>
   </body>
-</html>
+  </html>
