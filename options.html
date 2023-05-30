@@ -16,8 +16,11 @@
         width: 50%;
       }
       #kartbild {
+        height: 150px;
+        overflow: hidden;
         white-space: nowrap;
-        float: left;
+        font-size: 0;
+        background-color: #bfe6ff;
       }
       #objectpreview {
         width: 100%;
@@ -37,6 +40,12 @@
     </style>
   </head>
   <body>
+    <header id="kartbild">
+      <img src="https://jole84.se/slitlagerkarta/14/8834/4935.jpg">
+      <img src="https://jole84.se/slitlagerkarta/14/8835/4935.jpg">
+      <img src="https://jole84.se/slitlagerkarta/14/8836/4935.jpg">
+    </header>
+    
     <div class="container pt-5">
 
       <h1>
@@ -81,10 +90,6 @@
       <object id="objectpreview" data="https://jole84.se/live-track/index.html">Your browser doesn’t support the object tag.</object>
 
       <!-- <hr> -->
-      
-      <!-- <div id="kartbild">
-        <img src="https://jole84.se/slitlagerkarta/14/8834/4935.jpg"><img src="https://jole84.se/slitlagerkarta/14/8835/4935.jpg"><img src="https://jole84.se/slitlagerkarta/14/8836/4935.jpg">
-      </div> -->
       
       <img id="legend" class="rounded" src="https://jole84.github.io/legend.svg"><br>
       
