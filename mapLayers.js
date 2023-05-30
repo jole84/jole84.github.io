@@ -152,6 +152,12 @@ var nvdb_slitlager = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapSer
     format: 'image/png',
 });
 
+var nvdb_DriftbidragStatligt = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo?', {
+    layers: 'DriftbidragStatligt',
+    transparent: true,
+    format: 'image/png',
+});
+
 var nvdb_begransning = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
     layers: 'BegransatAxelBoggitryck,BegransadBruttovikt,BegransadFordonslangd',
     transparent: true,
