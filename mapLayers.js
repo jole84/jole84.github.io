@@ -85,6 +85,11 @@ var enironautical = L.tileLayer('http://map.eniro.se/geowebcache/service/tms1.0.
     attribution: 'Eniro'
 });
 
+var enironautical2x = L.tileLayer('http://map.eniro.se/geowebcache/service/tms1.0.0/nautical2x/{z}/{x}/{y}.png', {
+    tms: true,
+    attribution: 'Eniro'
+});
+
 var enirohistorical = L.tileLayer('https://map01.eniro.no/geowebcache/service/tms1.0.0/se_aerial_1950_60s/{z}/{x}/{y}.jpeg', {
     tms: true,
     attribution: 'Eniro'
