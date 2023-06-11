@@ -90,12 +90,12 @@ var enironautical2x = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1
     attribution: 'Eniro'
 });
 
-var enirohistorical = L.tileLayer('https://map01.eniro.no/geowebcache/service/tms1.0.0/se_aerial_1950_60s/{z}/{x}/{y}.jpeg', {
+var enirohistorical = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0.0/se_aerial_1950_60s/{z}/{x}/{y}.jpeg', {
     tms: true,
     attribution: 'Eniro'
 });
 
-var eniro_hybrid = L.tileLayer('https://map01.eniro.no/geowebcache/service/tms1.0.0/hybrid/{z}/{x}/{y}.png', {
+var eniro_hybrid = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0.0/hybrid/{z}/{x}/{y}.png', {
     tms: true,
     transparent: false,
     attribution: 'Eniro'
