@@ -70,22 +70,22 @@ var ortofotoir = L.tileLayer.wms('https://minkarta.lantmateriet.se/map/ortofoto/
 
 // Eniro
 
-var eniroaerial = L.tileLayer('http://map.eniro.se/geowebcache/service/tms1.0.0/aerial/{z}/{x}/{y}.jpeg', {
+var eniroaerial = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0.0/aerial/{z}/{x}/{y}.jpeg', {
     tms: true,
     attribution: 'Eniro'
 });
 
-var eniromap = L.tileLayer('http://map.eniro.se/geowebcache/service/tms1.0.0/map/{z}/{x}/{y}.png', {
+var eniromap = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0.0/map/{z}/{x}/{y}.png', {
     tms: true,
     attribution: 'Eniro'
 });
 
-var enironautical = L.tileLayer('http://map.eniro.se/geowebcache/service/tms1.0.0/nautical/{z}/{x}/{y}.png', {
+var enironautical = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0.0/nautical/{z}/{x}/{y}.png', {
     tms: true,
     attribution: 'Eniro'
 });
 
-var enironautical2x = L.tileLayer('http://map.eniro.se/geowebcache/service/tms1.0.0/nautical2x/{z}/{x}/{y}.png', {
+var enironautical2x = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0.0/nautical2x/{z}/{x}/{y}.png', {
     tms: true,
     attribution: 'Eniro'
 });
@@ -157,7 +157,7 @@ var nvdb_slitlager = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapSer
     format: 'image/png',
 });
 
-var nvdb_DriftbidragStatligt = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo?', {
+var nvdb_DriftbidragStatligt = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
     layers: 'DriftbidragStatligt',
     transparent: true,
     format: 'image/png',
