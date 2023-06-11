@@ -86,6 +86,7 @@ var enironautical = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0
 });
 
 var enironautical2x = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0.0/nautical2x/{z}/{x}/{y}.png', {
+    maxNativeZoom: 17,
     tms: true,
     attribution: 'Eniro'
 });
@@ -96,6 +97,7 @@ var enirohistorical = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1
 });
 
 var eniro_hybrid = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0.0/hybrid/{z}/{x}/{y}.png', {
+    maxNativeZoom: 17,
     tms: true,
     transparent: false,
     attribution: 'Eniro'
