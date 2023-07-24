@@ -88,19 +88,21 @@ var eniroaerial = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0.0
 });
 
 var eniromap = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0.0/map/{z}/{x}/{y}.png', {
+    maxNativeZoom: 17,
     tms: true,
     attribution: 'Eniro',
     maxZoom: 20,
 });
 
 var enironautical = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0.0/nautical/{z}/{x}/{y}.png', {
+    maxNativeZoom: 17,
     tms: true,
     attribution: 'Eniro',
     maxZoom: 20,
 });
 
 var enironautical2x = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0.0/nautical2x/{z}/{x}/{y}.png', {
-    // maxNativeZoom: 17,
+    maxNativeZoom: 17,
     tms: true,
     attribution: 'Eniro',
     maxZoom: 20,
