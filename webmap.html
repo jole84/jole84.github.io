@@ -109,10 +109,10 @@
     var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:true}).addTo(map);
     var layerControl2 = L.control.layers(baseLayers,overlayMaps,{collapsed:false});
 
-    if (window.matchMedia("(min-width: 30rem)").matches) {
-      map.removeControl(layerControl);
-      map.addControl(layerControl2);
-    };
+    // if (window.matchMedia("(min-width: 30rem)").matches) {
+    //   map.removeControl(layerControl);
+    //   map.addControl(layerControl2);
+    // };
 
     map.on('contextmenu',(e) => {
       var position = e.latlng.lat.toFixed(6).toString() + ", " + e.latlng.lng.toFixed(6).toString();
