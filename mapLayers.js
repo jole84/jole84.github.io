@@ -8,7 +8,7 @@ var slitlagerkarta = L.tileLayer('https://jole84.se/slitlagerkarta/{z}/{x}/{y}.j
     attribution: 'jole84.github.io'
 });
 
-var streetmap = L.tileLayer('https://jole84.se/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
+var slitlagerkarta_nedtonad = L.tileLayer('https://jole84.se/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg', {
     maxNativeZoom: 14,
     maxZoom: 20,
     minZoom: 6,
