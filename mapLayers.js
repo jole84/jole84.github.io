@@ -151,7 +151,7 @@ var openstreetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.
 });
 
 var opentopomap = L.tileLayer('https://opentopomap.org/{z}/{x}/{y}.png', {
-    maxNativeZoom: 17,
+    maxNativeZoom: 15,
     maxZoom: 20,
     tms: false,
     attribution: '&cop100 fy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
