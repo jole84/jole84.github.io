@@ -159,8 +159,8 @@ var opentopomap = L.tileLayer('https://opentopomap.org/{z}/{x}/{y}.png', {
 
 // NVDB
 
-var trafikplatsnummer = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfoRoad_1_2?', {
-    layers: 'Trafikplatsnummer',
+var trafikplatsnummer = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfoRoad_1_3?', {
+    layers: 'Trafikplats_Vag',
     transparent: true,
     format: 'image/png',
     maxZoom: 20,
@@ -180,6 +180,13 @@ var nvdb_vagnummer = L.tileLayer.wms('https://nvdb2012.trafikverket.se/MapProxy.
     maxZoom: 20,
 });
 
+var Vagnybyggnad = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_5?', {
+    layers: 'Vagnybyggnad',
+    transparent: true,
+    format: 'image/png',
+    maxZoom: 20,
+});
+
 var nvdb_slitlager = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
     layers: 'Slitlager',
     transparent: true,
@@ -193,6 +200,14 @@ var nvdb_DriftbidragStatligt = L.tileLayer.wms('https://geo-netinfo.trafikverket
     format: 'image/png',
     maxZoom: 20,
 });
+
+var nvdb_Huvudled = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfoRoad_1_3?', {
+    layers: 'Huvudled',
+    transparent: true,
+    format: 'image/png',
+    maxZoom: 20,
+});
+
 
 var nvdb_begransning = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
     layers: 'BegransatAxelBoggitryck,BegransadBruttovikt,BegransadFordonslangd',
