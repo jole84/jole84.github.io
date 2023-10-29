@@ -157,6 +157,14 @@ var opentopomap = L.tileLayer('https://opentopomap.org/{z}/{x}/{y}.png', {
     attribution: '&cop100 fy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 });
 
+var openseamap = L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', {
+    maxNativeZoom: 18,
+    maxZoom: 20,
+    tms: false,
+    transparent: true,
+    attribution: 'All maps © <a href="https://www.openseamap.org/">OpenSeaMap</a>'
+});
+
 // NVDB
 
 var trafikplatsnummer = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfoRoad_1_3?', {
