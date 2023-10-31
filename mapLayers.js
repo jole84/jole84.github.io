@@ -118,6 +118,7 @@ var eniro_hybrid = L.tileLayer('https://map.eniro.se/geowebcache/service/tms1.0.
     tms: true,
     transparent: false,
     attribution: 'Eniro',
+    maxNativeZoom: 17,
     maxZoom: 20,
 });
 
@@ -167,7 +168,7 @@ var openseamap = L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.p
 
 // NVDB
 
-var trafikplatsnummer = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfoRoad_1_3?', {
+var nvdb_trafikplatsnummer = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfoRoad_1_3?', {
     layers: 'Trafikplats_Vag',
     transparent: true,
     format: 'image/png',
@@ -176,6 +177,13 @@ var trafikplatsnummer = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/Map
 
 var ATK_matplats = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
     layers: 'ATK_Matplats,Rastplats',
+    transparent: true,
+    format: 'image/png',
+    maxZoom: 20,
+});
+
+var nvdb_rastplats = L.tileLayer.wms('https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?', {
+    layers: 'Rastplats',
     transparent: true,
     format: 'image/png',
     maxZoom: 20,

@@ -44,7 +44,7 @@
         const tile = document.createElement('div');
         tile.style.outline = '1px solid black';
         tile.style.fontWeight = 'bold';
-        tile.style.fontSize = '16pt';
+        tile.style.fontSize = '18pt';
         var tms_y = "TMS=" + (Math.pow(2, coords.z) - coords.y - 1);
         tile.innerHTML = [coords.z, coords.x, coords.y + "<br />" + tms_y].join('/');
         return tile;
@@ -84,21 +84,21 @@
       'Terrängskuggning' : terrangskuggning,
       'Markers' : markers,
       'Gränser' : grans,
-      'Fartkamera/Rastplats' : ATK_matplats,
-      'Trafikplatsnummer' : trafikplatsnummer,
       'SMHI nederbörd' : smhi_radar,
       'SMHI temp' : smhi_temp,
       'SMHI vind' : smhi_vind,
       'Tele2 5G' : tele2,
+      'NVDB Fartkamera' : ATK_matplats,
+      'NVDB Rastplats' : nvdb_rastplats,
+      'NVDB Trafikplatsnummer' : nvdb_trafikplatsnummer,
       'NVDB slitlager' : nvdb_slitlager,
       'NVDB DriftbidragStatligt' : nvdb_DriftbidragStatligt,
       'NVDB Huvudled' : nvdb_Huvudled,
       'NVDB vägnummer' : nvdb_vagnummer,
-      'Vagnybyggnad' : Vagnybyggnad,
       'NVDB stigningsfält' : nvdb_stigningsfalt,
       'NVDB hastighetsgräns' : nvdb_hastighetsgrans,
       'Begränsning' : nvdb_begransning,
-      'tileName' : tileName,
+      'gridDebug' : tileName,
     };
 
     var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:true}).addTo(map);
