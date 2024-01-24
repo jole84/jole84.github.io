@@ -79,6 +79,7 @@
 
       <form onchange="myFunction()" id="theForm">
         <input type="checkbox" id="Lnt"> Aktivera Lantmäteriets kartor<br>
+        <input type="checkbox" id="extraTrafik"> Extra Trafikinfo (vägarbete mm.) <br>
         <input type="checkbox" id="onunload"> Varna vid stängning<br>
           <label for="defaultZoom"><b>Zoom-nivå:</b></label>
         <input class="form-control" type="number" id="defaultZoom" name="defaultZoom" step="0.1" required min="6" max="20" size="5" placeholder="14.0"><br>
@@ -126,6 +127,7 @@
 
     <script>
       var Lnt = document.getElementById('Lnt');
+      var extraTrafik = document.getElementById('extraTrafik');
       var onUnload = document.getElementById('onunload');
       var defaultZoom = document.getElementById('defaultZoom');
       var infoText = document.getElementById('infoText');
@@ -156,6 +158,10 @@
         
         if (Lnt.checked) {
           newLinkUrl += 'Lnt'
+        };
+
+        if (extraTrafik.checked) {
+          newLinkUrl += '&extraTrafik'
         };
 
         if (karta.value == 'vägkarta') {
