@@ -26,6 +26,7 @@
         width: 100%;
         height: 350px;
         border-radius: 5px;
+        pointer-events: none;
       }
       #webbkarta, #ruttplanering {
         width: 300px;
@@ -72,14 +73,17 @@
       <a id="linkButton" href="https://jole84.se/nav-app/index.html" class="btn btn-danger my-2">Webbaserad navigationsapp</a>
       <a href="https://jole84.se/route-planner/index.html" class="btn btn-warning my-2">jole84 ruttplanerare (beta)</a>
       <a href="https://jole84.github.io/webmap.html" class="btn btn-primary my-2" id="webbkarta">Webbkarta</a>
-      
-      <object id="objectpreview" data="https://jole84.se/nav-app/index.html">Your browser doesn’t support the object tag.</object>
-      
+
+      <a id="linkButton3" href="https://jole84.se/nav-app/index.html">
+        <div>
+          <object id="objectpreview" data="https://jole84.se/nav-app/index.html">Your browser doesn’t support the object tag.</object>
+        </div>
+      </a>
       <h4>Start-alternativ:</h4>
 
       <form onchange="myFunction()" id="theForm">
         <input type="checkbox" id="Lnt"> Aktivera Lantmäteriets kartor<br>
-        <input type="checkbox" id="extraTrafik"> Extra Trafikinfo (vägarbete mm.) <br>
+        <input type="checkbox" id="extraTrafik"> Extra trafikinformation (vägarbete mm.) <br>
         <input type="checkbox" id="onunload"> Varna vid stängning<br>
           <label for="defaultZoom"><b>Zoom-nivå:</b></label>
         <input class="form-control" type="number" id="defaultZoom" name="defaultZoom" step="0.1" required min="6" max="20" size="5" placeholder="14.0"><br>
@@ -210,10 +214,12 @@
           linkCode.innerHTML = linkUrl;
           linkButton.setAttribute("href", linkUrl);
           linkButton2.setAttribute("href", linkUrl);
+          document.getElementById("linkButton3").setAttribute("href", linkUrl);
         } else {
           linkCode.innerHTML = newLinkUrl;
           linkButton.setAttribute("href", newLinkUrl);
           linkButton2.setAttribute("href", newLinkUrl);
+          document.getElementById("linkButton3").setAttribute("href", newLinkUrl);
         }
         document.getElementById('objectpreview').setAttribute("data", newLinkUrl);
       }
