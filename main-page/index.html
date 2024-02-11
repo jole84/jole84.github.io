@@ -142,6 +142,17 @@
       var gpx2imgLink= document.getElementById('gpx2imgLink');
       var gpxUrl = document.getElementById('gpxUrl');
       var selectFile = document.getElementById('selectFile');
+
+      var mapModes = {
+        0: "terräng",
+        1: "vägkarta",
+        2: "darkmode",
+        3: "osm",
+        4: "topografisk",
+        5: "orto",
+      }
+
+      karta.value = mapModes[localStorage.getItem("mapMode")] || mapModes[0];
       
       var linkUrl = "https://jole84.se/nav-app/index.html"
       
@@ -167,6 +178,10 @@
         if (extraTrafik.checked) {
           newLinkUrl += '&extraTrafik'
         };
+
+        if (karta.value == 'terräng') {
+          localStorage.setItem("mapMode", 0);
+        }
 
         if (karta.value == 'vägkarta') {
           newLinkUrl += '&mapMode=1';
