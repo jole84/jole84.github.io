@@ -91,6 +91,7 @@
         <input class="form-control" id="infoText" name="infoText" required minlength="1" maxlength="50" size="10" placeholder="1em, x-large"><br>
           <label for="karta"><b>Vald karta:</b></label>
         <select class="form-select" name="karta" id="karta">
+          <option>välj karta</option>
           <option value="terräng">Jole84 Terrängkarta</option>
           <option value="vägkarta">Jole84 Vägkarta</option>
           <option value="darkmode">Jole84 Nattläge</option>
@@ -108,7 +109,7 @@
 
       <button id="createLink" class="btn btn-primary my-2" onclick="myFunction()">Uppdatera länk</button><br>
       <p><b>Länk för delning:</b><br>
-        <code id="linkCode"></code><br>
+        <code id="linkCode">https://jole84.se/nav-app/index.html</code><br>
       </p>
 
       <a id="linkButton2" href="https://jole84.se/nav-app/index.html" class="btn btn-danger my-2">Webbaserad navigationsapp</a>
@@ -142,19 +143,9 @@
       var gpx2imgLink= document.getElementById('gpx2imgLink');
       var gpxUrl = document.getElementById('gpxUrl');
       var selectFile = document.getElementById('selectFile');
-
-      var mapModes = {
-        0: "terräng",
-        1: "vägkarta",
-        2: "darkmode",
-        3: "osm",
-        4: "topografisk",
-        5: "orto",
-      }
-
-      karta.value = mapModes[localStorage.getItem("mapMode")] || mapModes[0];
       
       var linkUrl = "https://jole84.se/nav-app/index.html"
+      Lnt.checked = (localStorage.enableLnt == 'true');
       
       function myFunction() {
         for (var i = 0; i < filesList.length; i++) {
@@ -174,33 +165,40 @@
         if (Lnt.checked) {
           newLinkUrl += 'Lnt'
         };
+        localStorage.enableLnt = Lnt.checked;
 
         if (extraTrafik.checked) {
           newLinkUrl += '&extraTrafik'
         };
 
         if (karta.value == 'terräng') {
+          newLinkUrl += '&mapMode=0';
           localStorage.setItem("mapMode", 0);
         }
 
         if (karta.value == 'vägkarta') {
           newLinkUrl += '&mapMode=1';
+          localStorage.setItem("mapMode", 1);
         }
         
         if (karta.value == 'darkmode') {
           newLinkUrl += '&mapMode=2';
+          localStorage.setItem("mapMode", 2);
         }
 
         if (karta.value == 'osm') {
           newLinkUrl += '&mapMode=3';
+          localStorage.setItem("mapMode", 3);
         }
         
         if (karta.value == 'topografisk') {
           newLinkUrl += '&mapMode=4';
+          localStorage.setItem("mapMode", 4);
         }
 
         if (karta.value == 'orto') {
           newLinkUrl += '&mapMode=5';
+          localStorage.setItem("mapMode", 5);
         }
         
         if (onUnload.checked) {
