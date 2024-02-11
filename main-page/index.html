@@ -114,10 +114,6 @@
 
       <a id="linkButton2" href="https://jole84.se/nav-app/index.html" class="btn btn-danger my-2">Webbaserad navigationsapp</a>
 
-      <!-- <hr> -->
-      
-
-      
       <hr>
       
       <a href="https://jole84.github.io/brouter-web/index.html" class="btn btn-primary my-2" id="ruttplanering">Ruttplanerare</a><br>
@@ -145,7 +141,10 @@
       var selectFile = document.getElementById('selectFile');
       
       var linkUrl = "https://jole84.se/nav-app/index.html"
-      Lnt.checked = (localStorage.enableLnt == 'true');
+      Lnt.checked = localStorage.enableLnt == 'true';
+      extraTrafik.checked = localStorage.extraTrafik == 'true'
+      infoText.value = localStorage.preferredFontSize || "";
+      defaultZoom.value = localStorage.defaultZoom || "";
       
       function myFunction() {
         for (var i = 0; i < filesList.length; i++) {
@@ -165,11 +164,11 @@
         if (Lnt.checked) {
           newLinkUrl += 'Lnt'
         };
-        localStorage.enableLnt = Lnt.checked;
 
-        if (extraTrafik.checked) {
-          newLinkUrl += '&extraTrafik'
-        };
+        localStorage.enableLnt = Lnt.checked;
+        localStorage.extraTrafik = extraTrafik.checked;
+        localStorage.preferredFontSize = infoText.value;
+        localStorage.defaultZoom = defaultZoom.value || 14;
 
         if (karta.value == 'terräng') {
           newLinkUrl += '&mapMode=0';
@@ -219,9 +218,9 @@
           newLinkUrl += '&info=' + infoText.value;
         }
 
-        if (defaultZoom.value) {
-          newLinkUrl += '&zoom=' + defaultZoom.value;
-        }
+        // if (defaultZoom.value) {
+        //   newLinkUrl += '&zoom=' + defaultZoom.value;
+        // }
         
         if (newLinkUrl == linkUrl + '?') {
           linkCode.innerHTML = linkUrl;
