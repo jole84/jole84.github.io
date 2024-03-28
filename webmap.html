@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>jole84 Terrängkarta med slitlager</title>
+  <title>jole84 webmap</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Rekommenderade vägar för tyngre transporter, höjdhinder, fartkameror. Baserad på Lantmäteriets Vägkarta.">
+  <meta name="description"
+    content="Rekommenderade vägar för tyngre transporter, höjdhinder, fartkameror. Baserad på Lantmäteriets Vägkarta.">
   <meta charset="utf-8" />
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-    crossorigin=""/>
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-    crossorigin=""></script>
-  <script src="mapLayers.js" ></script>
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+  <script src="mapLayers.js"></script>
   <style type="text/css">
-    html, body, #map{
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #bfe6ff;
+    html,
+    body,
+    #map {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #bfe6ff;
     }
   </style>
 </head>
+
 <body>
   <div id="map" class="map"></div>
 
   <script>
     var map = L.map('map', {
-      center: [57.78564196397448, 14.215799665093242],
-      zoom: 10,
+      center: JSON.parse(localStorage.webmapCenter || '{"lat": 57.5,"lon": 14}'),
+      zoom: JSON.parse(localStorage.webmapZoom || 8),
       maxZoom: 20,
       zoomSnap: 0,
       wheelPxPerZoomLevel: 100,
@@ -38,6 +41,11 @@
       bounceAtZoomLimits: false,
       layers: [slitlagerkarta]
     });
+
+    window.onbeforeunload = function () {
+      localStorage.webmapCenter = JSON.stringify(map.getCenter());
+      localStorage.webmapZoom = JSON.stringify(map.getZoom());
+    };
 
     L.GridLayer.GridDebug = L.GridLayer.extend({
       createTile: function (coords) {
@@ -56,69 +64,70 @@
     };
 
     var tileName = L.gridLayer.gridDebug();
-    
+
     var baseLayers = {
       'jole84 Terrängkarta': slitlagerkarta,
       'jole84 Vägkarta': slitlagerkarta_nedtonad,
-      'Lantmäteriet Topo' : topo,
-      'Topo Nedtonad' : topowebb_nedtonad,
-      'Lantmäteriet Ortofoto' : ortofoto,
-      'Lantmäteriet Orto IR' : ortofotoir,
-      'Flygfoto 1960' : flyg_60,
-      'Flygfoto 1975' : flyg_75,
+      'Lantmäteriet Topo': topo,
+      'Topo Nedtonad': topowebb_nedtonad,
+      'Lantmäteriet Ortofoto': ortofoto,
+      'Lantmäteriet Orto IR': ortofotoir,
+      'Flygfoto 1960': flyg_60,
+      'Flygfoto 1975': flyg_75,
       'Eniro Karta': eniromap,
       'Eniro Flygfoto': eniroaerial,
       'Eniro Historisk': enirohistorical,
       'Eniro Sjökort': enironautical,
       'Eniro Sjökort2x': enironautical2x,
-      'Hitta Karta' : hitta_karta,
-      'Hitta Friluft' : hitta_friluft,
-      'Hitta Satellit' : hitta_satellit,
-      'OpenStreetMap' : openstreetmap,
-      'OpenTopoMap' : opentopomap,
-    };
-    
-    var overlayMaps = {
-      'Eniro hybrid' : eniro_hybrid,
-      'OpenSeaMap' : openseamap,
-      'Terrängskuggning' : terrangskuggning,
-      'Markers' : markers,
-      'Gränser' : grans,
-      'SMHI nederbörd' : smhi_radar,
-      'SMHI temp' : smhi_temp,
-      'SMHI vind' : smhi_vind,
-      'Tele2 5G' : tele2,
-      'NVDB Fartkamera' : ATK_matplats,
-      'NVDB Rastplats' : nvdb_rastplats,
-      'NVDB Trafikplatsnummer' : nvdb_trafikplatsnummer,
-      'NVDB slitlager' : nvdb_slitlager,
-      'NVDB DriftbidragStatligt' : nvdb_DriftbidragStatligt,
-      'NVDB Huvudled' : nvdb_Huvudled,
-      'NVDB vägnummer' : nvdb_vagnummer,
-      'NVDB stigningsfält' : nvdb_stigningsfalt,
-      'NVDB hastighetsgräns' : nvdb_hastighetsgrans,
-      'Begränsning' : nvdb_begransning,
-      'gridDebug' : tileName,
+      'Hitta Karta': hitta_karta,
+      'Hitta Friluft': hitta_friluft,
+      'Hitta Satellit': hitta_satellit,
+      'OpenStreetMap': openstreetmap,
+      'OpenTopoMap': opentopomap,
     };
 
-    var layerControl = L.control.layers(baseLayers,overlayMaps,{collapsed:true}).addTo(map);
-    var layerControl2 = L.control.layers(baseLayers,overlayMaps,{collapsed:false});
+    var overlayMaps = {
+      'Eniro hybrid': eniro_hybrid,
+      'OpenSeaMap': openseamap,
+      'Terrängskuggning': terrangskuggning,
+      'Markers': markers,
+      'Gränser': grans,
+      'SMHI nederbörd': smhi_radar,
+      'SMHI temp': smhi_temp,
+      'SMHI vind': smhi_vind,
+      'Tele2 5G': tele2,
+      'NVDB Fartkamera': ATK_matplats,
+      'NVDB Rastplats': nvdb_rastplats,
+      'NVDB Trafikplatsnummer': nvdb_trafikplatsnummer,
+      'NVDB slitlager': nvdb_slitlager,
+      'NVDB DriftbidragStatligt': nvdb_DriftbidragStatligt,
+      'NVDB Huvudled': nvdb_Huvudled,
+      'NVDB vägnummer': nvdb_vagnummer,
+      'NVDB stigningsfält': nvdb_stigningsfalt,
+      'NVDB hastighetsgräns': nvdb_hastighetsgrans,
+      'Begränsning': nvdb_begransning,
+      'gridDebug': tileName,
+    };
+
+    var layerControl = L.control.layers(baseLayers, overlayMaps, { collapsed: true }).addTo(map);
+    var layerControl2 = L.control.layers(baseLayers, overlayMaps, { collapsed: false });
 
     if (window.matchMedia("(min-width: 30rem)").matches) {
       map.removeControl(layerControl);
       map.addControl(layerControl2);
     };
 
-    map.on('contextmenu',(e) => {
+    map.on('contextmenu', (e) => {
       var position = e.latlng.lat.toFixed(6).toString() + ", " + e.latlng.lng.toFixed(6).toString();
       var streetviewlink = "<a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Streetview</a>";
       var gmaplink = "<a href=\"http://maps.google.com/maps?q=" + e.latlng.lat.toString() + "," + e.latlng.lng.toString() + "\" target=\"_blank\">Gmap</a>";
       L.popup()
-      .setLatLng(e.latlng)
-      .setContent(position + 
-      "<br>" + streetviewlink + " " + gmaplink)
-      .openOn(map);
+        .setLatLng(e.latlng)
+        .setContent(position +
+          "<br>" + streetviewlink + " " + gmaplink)
+        .openOn(map);
     });
-    </script>
+  </script>
 </body>
+
 </html>
