@@ -175,15 +175,15 @@
         const pois = xmlData.getElementsByTagName("wpt");
         for (const poi of pois) {
           const name = poi.childNodes[0].textContent;
-          const lon = poi.getAttribute("lon");
-          const lat = poi.getAttribute("lat");
+          const lon = Number(poi.getAttribute("lon"));
+          const lat = Number(poi.getAttribute("lat"));
           poiPoints.push([[lon, lat], name]);
         }
 
         const trkpts = xmlData.getElementsByTagName("trkpt");
         for (const trkpt of trkpts) {
-          const lon = trkpt.getAttribute("lon");
-          const lat = trkpt.getAttribute("lat");
+          const lon = Number(trkpt.getAttribute("lon"));
+          const lat = Number(trkpt.getAttribute("lat"));
           trackPoints.push([lon, lat]);
         }
 
