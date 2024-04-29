@@ -6,6 +6,7 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
   <!-- MDB -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/ol/dist/ol.js"></script>
   <link rel="icon" type="image/svg" href="https://jole84.se/84.png" />
   <script src="https://jole84.se/filesList.js"></script>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -125,7 +126,7 @@
     </form>
 
     <!-- <button id="createLink" class="btn btn-primary my-2" onclick="myFunction()">Uppdatera länk</button><br> -->
-    <input type="file" id="customFileButton" accept=".gpx,application/gpx+xml" />
+    <input type="file" id="customFileButton" accept=".gpx,application/gpx+xml, .kml" />
     <p><b>Länk för delning:</b><br>
       <code class="user-select-all link" id="linkCode">https://jole84.se/nav-app/index.html</code><br>
     </p>
@@ -159,33 +160,46 @@
 
     var linkUrl = "https://jole84.se/nav-app/index.html"
 
+    function toCoordinateString(coordinate) {
+      return [(Number(coordinate[0].toFixed(5))), Number(coordinate[1].toFixed(5))];
+    }
+
     customFileButton.addEventListener("change", (evt) => {
       // linkCode
-      const files = evt.target.files; // FileList object
-      const parser = new DOMParser();
+      const files = evt.target.files;
+      const fileExtention = files[0].name.split(".").pop().toLowerCase();
       const poiPoints = [];
+      const simplifyInt = 0.0001;
       const trackPoints = [];
+      let gpxFormat;
       let linkText = "";
-
+      if (fileExtention === "gpx") {
+        gpxFormat = new ol.format.GPX();
+      } else if (fileExtention === "kml") {
+        gpxFormat = new ol.format.KML({ extractStyles: false });
+      }
+      
+      
       const reader = new FileReader();
       reader.readAsText(files[0], "UTF-8");
-      reader.onload = function (event) {
-        const xmlData = parser.parseFromString(event.target.result, "text/xml");
-
-        const pois = xmlData.getElementsByTagName("wpt");
-        for (const poi of pois) {
-          const name = poi.childNodes[0].textContent;
-          const lon = Number(poi.getAttribute("lon"));
-          const lat = Number(poi.getAttribute("lat"));
-          poiPoints.push([[lon, lat], name]);
-        }
-
-        const trkpts = xmlData.getElementsByTagName("trkpt");
-        for (const trkpt of trkpts) {
-          const lon = Number(trkpt.getAttribute("lon"));
-          const lat = Number(trkpt.getAttribute("lat"));
-          trackPoints.push([lon, lat]);
-        }
+      reader.onload = function (evt) {
+        const gpxFeatures = gpxFormat.readFeatures(evt.target.result);
+        gpxFeatures.forEach(function (element) {
+          if (element.getGeometry().getType() === "Point") {
+            poiPoints.push([toCoordinateString(element.getGeometry().getCoordinates()), element.get("name")]);
+          }
+          else if (element.getGeometry().getType() === "MultiLineString") {
+            element.getGeometry().getLineString().simplify(simplifyInt).getCoordinates().forEach(function (coordinate) {
+              trackPoints.push(toCoordinateString(coordinate));
+            });
+          }
+          else if (element.getGeometry().getType() === "LineString") {
+            console.log(element.getGeometry().getCoordinates());
+            element.getGeometry().simplify(simplifyInt).getCoordinates().forEach(function (coordinate) {
+              trackPoints.push(toCoordinateString(coordinate));
+            });
+          }
+        });
 
         if (trackPoints.length > 0) {
           linkText += "trackPoints=" + JSON.stringify(trackPoints);
