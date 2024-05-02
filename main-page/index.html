@@ -169,7 +169,7 @@
       const files = evt.target.files;
       const fileExtention = files[0].name.split(".").pop().toLowerCase();
       const poiPoints = [];
-      const simplifyInt = 0.0001;
+      const simplifyTolerance = 0.0001;
       const trackPoints = [];
       let gpxFormat;
       let linkText = "";
@@ -189,13 +189,15 @@
             poiPoints.push([toCoordinateString(element.getGeometry().getCoordinates()), element.get("name")]);
           }
           else if (element.getGeometry().getType() === "MultiLineString") {
-            element.getGeometry().getLineString().simplify(simplifyInt).getCoordinates().forEach(function (coordinate) {
+            element.getGeometry().getLineString().simplify(simplifyTolerance).getCoordinates().forEach(function (coordinate) {
               trackPoints.push(toCoordinateString(coordinate));
             });
+            poiPoints.push([toCoordinateString(element.getGeometry().getFirstCoordinate()), "Start"]);
+            poiPoints.push([toCoordinateString(element.getGeometry().getLastCoordinate()), "Slut"]);
           }
           else if (element.getGeometry().getType() === "LineString") {
             console.log(element.getGeometry().getCoordinates());
-            element.getGeometry().simplify(simplifyInt).getCoordinates().forEach(function (coordinate) {
+            element.getGeometry().simplify(simplifyTolerance).getCoordinates().forEach(function (coordinate) {
               trackPoints.push(toCoordinateString(coordinate));
             });
           }
