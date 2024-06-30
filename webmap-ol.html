@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <script src="https://cdn.jsdelivr.net/npm/ol@8.2.0/dist/ol.js"></script>
+  <script src="mapLayers-ol.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol/ol.css">
+  <title>Karta</title>
+  <style>
+    html,
+    body,
+    #map {
+      font-family: "Roboto", Courier, monospace;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #bfe6ff;
+    }
+
+    .saturated {
+      filter: saturate(2);
+    }
+
+    #layerSelectorContainer {
+      background-color: white;
+      border-radius: 5px;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      color: rgb(32, 32, 32);
+      line-height: 1.5;
+      font-size: 0.8em;
+      padding-left: 5px;
+      padding-right: 5px;
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      z-index: 10;
+      max-width: 70%;
+      word-wrap: break-word;
+      white-space: nowrap;
+      overflow: auto;
+      max-height: calc(100% - 15px);
+      /* max-height: 50%; */
+    }
+
+    #layersImg {
+      padding: 5px;
+    }
+
+    #layerSelector {
+      display: none;
+    }
+
+    #layerSelectorContainer:hover #layersImg {
+      display: none;
+    }
+
+    #layerSelectorContainer:hover #layerSelector {
+      max-width: fit-content;
+      transition: all 0.5s;
+      display: block;
+    }
+
+    @media screen and (min-width: 600px) {
+      #layerSelector {
+        display: block;
+      }
+
+      #layersImg {
+        display: none;
+      }
+    }
+
+    hr {
+      border-top: 1px solid #ddd;
+      margin: 1px;
+    }
+
+    /* contextmenu */
+    #contextPopup {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px;
+      color: rgb(32, 32, 32);
+      padding: 15px 0px 0px 0px;
+    }
+
+    #contextPopupContent {
+      font-weight: bold;
+      padding: 10px 20px 10px 20px;
+    }
+
+    #contextPopupContent:empty {
+      display: none;
+    }
+
+    #contextPopupCloser {
+      font-size: larger;
+      position: absolute;
+      top: 2px;
+      right: 5px;
+      cursor: pointer;
+    }
+
+    .routeControl {
+      padding: 10px 20px 10px 20px;
+      cursor: pointer;
+    }
+
+    .routeControl:hover {
+      background-color: lightgrey;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+  <div id="layerSelectorContainer">
+    <img id="layersImg" src="https://unpkg.com/leaflet@1.9.4/dist/images/layers.png">
+    <div id="layerSelector">
+      <div id="info"><b>Välj karta:</b></div>
+      <form id="layerSelectorButtons"></form>
+    </div>
+  </div>
+
+  <div id="contextPopup">
+    <div id="contextPopupCloser">✖</div>
+    <div id="contextPopupContent"></div>
+    <div class="routeControl" id="gmaplink">Visa på Google Maps</div>
+    <div class="routeControl" id="streetviewlink">Visa Streetview</div>
+    <div class="routeControl" id="navAppRoute">Navigera hit med Nav-app</div>
+    <!-- <div class="routeControl" id="contextAddPositionButton">Lägg till ruttpunkt</div>
+    <div class="routeControl" id="contextAddPoiButton">Lägg till waypoint</div>
+    <div class="routeControl" id="changeStraightButton">Växla rakpunkt</div> -->
+  </div>
+
+  <script type="text/javascript">
+    const layerSelectorButtons = document.getElementById("layerSelectorButtons");
+
+    window.onbeforeunload = function () {
+      localStorage.webmapOlCenter = JSON.stringify(view.getCenter());
+      localStorage.webmapOlZoom = JSON.stringify(view.getZoom());
+    };
+
+    const view = new ol.View({
+      center: JSON.parse(localStorage.webmapOlCenter || '[1580736,7925420]'),
+      zoom: JSON.parse(localStorage.webmapOlZoom || 10),
+      enableRotation: false,
+    });
+
+    const map = new ol.Map({
+      target: 'map',
+      layers: layers,
+      view: view,
+      keyboardEventTarget: document
+    });
+
+    // numpad selects layer
+    for (let i = 0; i < 10; i++) {
+      document.addEventListener("keydown", function (event) {
+        if (event.key == i) {
+          document.forms[0].getElementsByTagName("input")[i].click();
+        }
+      });
+    }
+
+    layerSelectorButtons.addEventListener("change", function () {
+      const inputs = layerSelectorButtons.getElementsByTagName("input");
+      map.getLayers().forEach(function (layer) {
+        for (const input of inputs) {
+          if (layer.get("layerName") == input.value) {
+            layer.setVisible(input.checked);
+          }
+        }
+      });
+    });
+
+    // adds layer selector for each layers
+    let groupName = layers[0].get("groupName");
+    map.getLayers().forEach(function (layer, index) {
+      const input = document.createElement("input");
+      input.type = layer.get("baseLayer") ? "radio" : "checkbox";
+      input.value = layer.get("layerName");
+      input.id = layer.get("layerName");
+      input.name = "mapLayer";
+
+      const label = document.createElement("label");
+      label.htmlFor = layer.get("layerName");
+
+      if (!layer.get("baseLayer")) {
+        layer.setZIndex(10);
+      }
+
+      if (index < 10) {
+        label.appendChild(document.createTextNode("(" + index + ") " + layer.get("name")));
+      } else {
+        label.appendChild(document.createTextNode(layer.get("name")));
+      }
+
+      if (groupName != layer.get("groupName")) {
+        layerSelectorButtons.appendChild(document.createElement('hr'));
+        groupName = layer.get("groupName");
+      }
+
+      input.checked = layer.getVisible();
+      layerSelectorButtons.appendChild(input);
+      layerSelectorButtons.appendChild(label);
+      layerSelectorButtons.appendChild(document.createElement('br'));
+    });
+
+    // add extra layer for testing
+    // const vectorLayer = new ol.layer.Vector({
+    //   source: new ol.source.Vector({
+    //     features: [
+    //       // new ol.Feature({
+    //       //   geometry: new ol.geom.Point(
+    //       //     ol.proj.fromLonLat([14.2, 57.8])
+    //       //   ),
+    //       //   name: "singlePoint",
+    //       //   straight: false,
+    //       // }),
+    //       // new ol.Feature({
+    //       //   geometry: new ol.geom.LineString([
+    //       //     ol.proj.fromLonLat([14.3, 57.7]),
+    //       //     ol.proj.fromLonLat([14.4, 57.6]),
+    //       //     ol.proj.fromLonLat([14.3, 57.6]),
+    //       //   ]),
+    //       //   name: "LineString",
+    //       // }),
+    //     ],
+    //   }),
+    //   style: function (feature) {
+    //     return [
+    //       new ol.style.Style({
+    //         image: new ol.style.Circle({
+    //           fill: new ol.style.Fill({
+    //             color: 'rgba(255,0,0,0.4)',
+    //           }),
+    //           radius: 5,
+    //           stroke: new ol.style.Stroke({
+    //             color: 'red',
+    //             width: 1,
+    //           }),
+    //         }),
+    //         text: new ol.style.Text({
+    //           text: feature.get("name"),
+    //           font: "bold 16px Roboto,monospace",
+    //           textAlign: "center",
+    //           textBaseline: "top",
+    //           offsetY: 10,
+    //           padding: [-20, -20, -20, -20],
+    //           fill: new ol.style.Fill({
+    //             color: "#b41412",
+    //           }),
+    //           stroke: new ol.style.Stroke({
+    //             color: "yellow",
+    //             width: 4,
+    //           }),
+    //         }),
+    //         stroke: new ol.style.Stroke({
+    //           color: "red",
+    //           width: 6,
+    //         }),
+    //       }),
+    //     ];
+    //   },
+    //   visible: true,
+    //   layerName: "vectorLayer",
+    //   name: "Vector layer",
+    //   groupName: "",
+    //   baseLayer: false,
+    // });
+    // map.addLayer(vectorLayer);
+
+    function getPixelDistance(pixel, pixel2) {
+      return Math.sqrt((pixel[1] - pixel2[1]) * (pixel[1] - pixel2[1]) + (pixel[0] - pixel2[0]) * (pixel[0] - pixel2[0]));
+    }
+
+    // add context menu popup
+    const contextPopupDiv = document.getElementById('contextPopup');
+    const contextPopupContent = document.getElementById("contextPopupContent");
+    const contextPopup = new ol.Overlay({
+      element: contextPopupDiv,
+      positioning: "bottom-left",
+    });
+    map.addOverlay(contextPopup);
+
+    document.getElementById("contextPopupCloser").addEventListener("click", function () {
+      contextPopup.setPosition(undefined);
+    });
+
+    map.addEventListener("click", function (event) {
+      contextPopup.setPosition(undefined);
+    });
+
+    // const tempDivs = [];
+    map.addEventListener("contextmenu", function (event) {
+      event.preventDefault();
+
+      contextPopupContent.innerHTML = ol.coordinate.toStringXY(ol.proj.toLonLat(event.coordinate).reverse(), 5);
+      contextPopup.setPosition(event.coordinate);
+      contextPopup.panIntoView({ animation: { duration: 250 }, margin: 10 });
+
+      // for (let i = 0; i < tempDivs.length; i++) {
+      //   if (document.getElementById(tempDivs[i]) != null) {
+      //     contextPopupDiv.removeChild(document.getElementById(tempDivs[i]));
+      //     tempDivs.splice(i, 1);
+      //   }
+      // }
+
+      // try {
+      //   const closestFeature = vectorLayer.getSource().getClosestFeatureToCoordinate(event.coordinate);
+      //   const closestFeatureCoordinates = closestFeature.getGeometry().getCoordinates();
+      //   const closestFeaturePixel = map.getPixelFromCoordinate(closestFeatureCoordinates);
+      //   const closestFeatureDistance = getPixelDistance(event.pixel, closestFeaturePixel);
+
+      //   contextPopupContent.innerHTML += "<br>Närmsta objekt: " + closestFeature.get("name");
+
+      //   if (closestFeatureDistance < 40) {
+      //     // creates new div and corresponding onclick function
+      //     const newDiv = document.createElement("div");
+      //     newDiv.innerHTML = "Ta bort " + closestFeature.get("name");
+      //     newDiv.classList.add("routeControl");
+      //     newDiv.id = "newDiv";
+      //     tempDivs.push(newDiv.id);
+      //     contextPopupDiv.appendChild(newDiv);
+      //     newDiv.onclick = function () {
+      //       vectorLayer.getSource().removeFeature(closestFeature);
+      //       contextPopup.setPosition(undefined);
+      //     }
+      //     contextPopup.setPosition(closestFeatureCoordinates);
+      //   }
+
+      // } catch {
+      //   console.log("no position is close");
+      // }
+    });
+
+    document.getElementById("gmaplink").addEventListener("click", function () {
+      var gmaplink = "http://maps.google.com/maps?q=" + ol.proj.toLonLat(contextPopup.getPosition()).reverse();
+      window.open(gmaplink);
+    });
+
+
+    document.getElementById("streetviewlink").addEventListener("click", function () {
+      var gmaplink = "http://maps.google.com/maps?layer=c&cbll=" + ol.proj.toLonLat(contextPopup.getPosition()).reverse();
+      window.open(gmaplink);
+    });
+
+    document.getElementById("navAppRoute").addEventListener("click", function () {
+      var navapplink = "https://jole84.se/nav-app/index.html?destinationPoints=" + JSON.stringify([ol.proj.toLonLat(contextPopup.getPosition())]);
+      window.open(navapplink);
+    });
+
+    // document.getElementById("contextAddPositionButton").addEventListener("click", function () {
+    //   var feature = new ol.Feature({
+    //     geometry: new ol.geom.Point(
+    //       contextPopup.getPosition(),
+    //     ),
+    //     name: String(vectorLayer.getSource().getFeatures().length),
+    //     straight: false,
+    //   });
+    //   vectorLayer.getSource().addFeature(feature);
+    //   contextPopup.setPosition(undefined);
+    // });
+
+    // document.getElementById("contextAddPoiButton").addEventListener("click", function () {
+    //   var feature = new ol.Feature({
+    //     geometry: new ol.geom.Point(
+    //       contextPopup.getPosition(),
+    //     ),
+    //     name: String(ol.coordinate.toStringXY(ol.proj.toLonLat(contextPopup.getPosition()).reverse(), 5)),
+    //   });
+    //   vectorLayer.getSource().addFeature(feature);
+    //   contextPopup.setPosition(undefined);
+    // });
+
+    // document.getElementById("changeStraightButton").addEventListener("click", function () {
+    //   const closestFeature = vectorLayer.getSource().getClosestFeatureToCoordinate(contextPopup.getPosition());
+    //   closestFeature.set("straight", !closestFeature.get("straight"));
+    //   contextPopupContent.innerHTML += "<br>" + closestFeature.get("straight");
+    // });
+  </script>
+
+</body>
+
+</html>
