@@ -1,5 +1,5 @@
-const layers = [
 
+const layers = [
     // Jole84
     slitlagerkarta = new ol.layer.Tile({
         source: new ol.source.XYZ({
@@ -296,7 +296,7 @@ const layers = [
     //     visible: false,
     //     layerName: "localMap",
     //     name: "Local",
-    // groupName: "local",
+    //     groupName: "local",
     //     baseLayer: true,
     // }),
 
@@ -358,4 +358,4 @@ const layers = [
         groupName: "",
         baseLayer: false,
     }),
-]
+];

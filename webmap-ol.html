@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <script src="https://cdn.jsdelivr.net/npm/ol@8.2.0/dist/ol.js"></script>
   <script src="mapLayers-ol.js"></script>
+  <script src="webmap-ol-extra.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol/ol.css">
   <title>Karta</title>
   <style>
@@ -65,7 +66,7 @@
       display: block;
     }
 
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: 600px) and (min-height: 400px) {
       #layerSelector {
         display: block;
       }
@@ -161,7 +162,12 @@
       keyboardEventTarget: document
     });
 
-    // numpad selects layer
+    // add layers from webmap-ol-extra.js
+    extraLayers.forEach(function (element) {
+      map.addLayer(element);
+    })
+
+    // add numpad keys to select layer
     for (let i = 0; i < 10; i++) {
       document.addEventListener("keydown", function (event) {
         if (event.key == i) {
