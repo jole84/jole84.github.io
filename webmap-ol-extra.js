@@ -87,18 +87,32 @@ const extraLayers = [
 
 // wait until page has loaded
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("layerSelectorButtons").addEventListener("change", function () {
-        const inputs = layerSelectorButtons.getElementsByTagName("input");
-        map.getLayers().forEach(function (layer) {
-            if (layer.get("layerName") === "roadAccidents" && inputs[layer.get("layerName")].checked) {
-                getAccidents();
-            }
+    // extraLayers.forEach(function (element) {
+    //     console.log(element.get("layerName"));
+    // });
 
-            if (layer.get("layerName") === "roadCondition" && inputs[layer.get("layerName")].checked) {
-                fetchRoadCondition();
-            }
-        });
+    document.getElementById("roadAccidents").addEventListener("change", function () {
+        if (document.getElementById("roadAccidents").checked) {
+            getAccidents();
+        }
     });
+
+    document.getElementById("roadCondition").addEventListener("change", function () {
+        if (document.getElementById("roadCondition").checked) {
+            fetchRoadCondition();
+        }
+    });
+
+    // map.addEventListener("pointermove", function (event) {
+    //     map.forEachFeatureAtPixel(event.pixel, function (feature) {
+    //         console.log(feature.get("name"));
+    //     })
+
+    //     if (map.hasFeatureAtPixel(event.pixel)) {
+    //         const featureAtPixel = map.getFeaturesAtPixel(event.pixel);
+    //         console.log(featureAtPixel[0]);
+    //     }
+    // });
 });
 
 

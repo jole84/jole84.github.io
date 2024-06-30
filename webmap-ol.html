@@ -6,7 +6,7 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <script src="https://cdn.jsdelivr.net/npm/ol@8.2.0/dist/ol.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ol@9.2.4/dist/ol.js"></script>
   <script src="mapLayers-ol.js"></script>
   <script src="webmap-ol-extra.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol/ol.css">
@@ -116,6 +116,10 @@
 
     .routeControl:hover {
       background-color: lightgrey;
+    }
+
+    .accident:hover {
+      filter: blur(5px);
     }
   </style>
 </head>
