@@ -89,7 +89,6 @@
       border-radius: 5px;
       box-shadow: 0px 0px 10px;
       color: rgb(32, 32, 32);
-      padding: 15px 0px 0px 0px;
     }
 
     #contextPopupContent {
@@ -129,7 +128,6 @@
   <div id="layerSelectorContainer">
     <img id="layersImg" src="https://unpkg.com/leaflet@1.9.4/dist/images/layers.png">
     <div id="layerSelector">
-      <div id="info"><b>Välj karta:</b></div>
       <form id="layerSelectorButtons"></form>
     </div>
   </div>
@@ -140,9 +138,6 @@
     <div class="routeControl" id="gmaplink">Visa på Google Maps</div>
     <div class="routeControl" id="streetviewlink">Visa Streetview</div>
     <div class="routeControl" id="navAppRoute">Navigera hit med Nav-app</div>
-    <!-- <div class="routeControl" id="contextAddPositionButton">Lägg till ruttpunkt</div>
-    <div class="routeControl" id="contextAddPoiButton">Lägg till waypoint</div>
-    <div class="routeControl" id="changeStraightButton">Växla rakpunkt</div> -->
   </div>
 
   <script type="text/javascript">
@@ -169,7 +164,71 @@
     // add layers from webmap-ol-extra.js
     extraLayers.forEach(function (element) {
       map.addLayer(element);
-    })
+    });
+
+    // add extra layer for testing
+    // const vectorLayer = new ol.layer.Vector({
+    //   source: new ol.source.Vector({
+    //     features: [
+    //       new ol.Feature({
+    //         geometry: new ol.geom.Point(
+    //           ol.proj.fromLonLat([14.2, 57.8])
+    //         ),
+    //         name: "singlePoint",
+    //         straight: false,
+    //       }),
+    //       new ol.Feature({
+    //         geometry: new ol.geom.LineString([
+    //           ol.proj.fromLonLat([14.3, 57.7]),
+    //           ol.proj.fromLonLat([14.4, 57.6]),
+    //           ol.proj.fromLonLat([14.3, 57.6]),
+    //         ]),
+    //         name: "LineString",
+    //       }),
+    //     ],
+    //   }),
+    //   style: function (feature) {
+    //     return [
+    //       new ol.style.Style({
+    //         image: new ol.style.Circle({
+    //           fill: new ol.style.Fill({
+    //             color: 'rgba(255,0,0,0.4)',
+    //           }),
+    //           radius: 5,
+    //           stroke: new ol.style.Stroke({
+    //             color: 'red',
+    //             width: 1,
+    //           }),
+    //         }),
+    //         text: new ol.style.Text({
+    //           text: feature.get("name"),
+    //           font: "bold 16px Roboto,monospace",
+    //           textAlign: "center",
+    //           textBaseline: "top",
+    //           offsetY: 10,
+    //           padding: [-20, -20, -20, -20],
+    //           fill: new ol.style.Fill({
+    //             color: "#b41412",
+    //           }),
+    //           stroke: new ol.style.Stroke({
+    //             color: "yellow",
+    //             width: 4,
+    //           }),
+    //         }),
+    //         stroke: new ol.style.Stroke({
+    //           color: "red",
+    //           width: 6,
+    //         }),
+    //       }),
+    //     ];
+    //   },
+    //   visible: true,
+    //   layerName: "vectorLayer",
+    //   name: "Vector layer",
+    //   groupName: "",
+    //   baseLayer: false,
+    // });
+    // map.addLayer(vectorLayer);
 
     // add numpad keys to select layer
     for (let i = 0; i < 10; i++) {
@@ -224,74 +283,6 @@
       layerSelectorButtons.appendChild(document.createElement('br'));
     });
 
-    // add extra layer for testing
-    // const vectorLayer = new ol.layer.Vector({
-    //   source: new ol.source.Vector({
-    //     features: [
-    //       // new ol.Feature({
-    //       //   geometry: new ol.geom.Point(
-    //       //     ol.proj.fromLonLat([14.2, 57.8])
-    //       //   ),
-    //       //   name: "singlePoint",
-    //       //   straight: false,
-    //       // }),
-    //       // new ol.Feature({
-    //       //   geometry: new ol.geom.LineString([
-    //       //     ol.proj.fromLonLat([14.3, 57.7]),
-    //       //     ol.proj.fromLonLat([14.4, 57.6]),
-    //       //     ol.proj.fromLonLat([14.3, 57.6]),
-    //       //   ]),
-    //       //   name: "LineString",
-    //       // }),
-    //     ],
-    //   }),
-    //   style: function (feature) {
-    //     return [
-    //       new ol.style.Style({
-    //         image: new ol.style.Circle({
-    //           fill: new ol.style.Fill({
-    //             color: 'rgba(255,0,0,0.4)',
-    //           }),
-    //           radius: 5,
-    //           stroke: new ol.style.Stroke({
-    //             color: 'red',
-    //             width: 1,
-    //           }),
-    //         }),
-    //         text: new ol.style.Text({
-    //           text: feature.get("name"),
-    //           font: "bold 16px Roboto,monospace",
-    //           textAlign: "center",
-    //           textBaseline: "top",
-    //           offsetY: 10,
-    //           padding: [-20, -20, -20, -20],
-    //           fill: new ol.style.Fill({
-    //             color: "#b41412",
-    //           }),
-    //           stroke: new ol.style.Stroke({
-    //             color: "yellow",
-    //             width: 4,
-    //           }),
-    //         }),
-    //         stroke: new ol.style.Stroke({
-    //           color: "red",
-    //           width: 6,
-    //         }),
-    //       }),
-    //     ];
-    //   },
-    //   visible: true,
-    //   layerName: "vectorLayer",
-    //   name: "Vector layer",
-    //   groupName: "",
-    //   baseLayer: false,
-    // });
-    // map.addLayer(vectorLayer);
-
-    function getPixelDistance(pixel, pixel2) {
-      return Math.sqrt((pixel[1] - pixel2[1]) * (pixel[1] - pixel2[1]) + (pixel[0] - pixel2[0]) * (pixel[0] - pixel2[0]));
-    }
-
     // add context menu popup
     const contextPopupDiv = document.getElementById('contextPopup');
     const contextPopupContent = document.getElementById("contextPopupContent");
@@ -309,54 +300,18 @@
       contextPopup.setPosition(undefined);
     });
 
-    // const tempDivs = [];
     map.addEventListener("contextmenu", function (event) {
       event.preventDefault();
 
       contextPopupContent.innerHTML = ol.coordinate.toStringXY(ol.proj.toLonLat(event.coordinate).reverse(), 5);
       contextPopup.setPosition(event.coordinate);
       contextPopup.panIntoView({ animation: { duration: 250 }, margin: 10 });
-
-      // for (let i = 0; i < tempDivs.length; i++) {
-      //   if (document.getElementById(tempDivs[i]) != null) {
-      //     contextPopupDiv.removeChild(document.getElementById(tempDivs[i]));
-      //     tempDivs.splice(i, 1);
-      //   }
-      // }
-
-      // try {
-      //   const closestFeature = vectorLayer.getSource().getClosestFeatureToCoordinate(event.coordinate);
-      //   const closestFeatureCoordinates = closestFeature.getGeometry().getCoordinates();
-      //   const closestFeaturePixel = map.getPixelFromCoordinate(closestFeatureCoordinates);
-      //   const closestFeatureDistance = getPixelDistance(event.pixel, closestFeaturePixel);
-
-      //   contextPopupContent.innerHTML += "<br>Närmsta objekt: " + closestFeature.get("name");
-
-      //   if (closestFeatureDistance < 40) {
-      //     // creates new div and corresponding onclick function
-      //     const newDiv = document.createElement("div");
-      //     newDiv.innerHTML = "Ta bort " + closestFeature.get("name");
-      //     newDiv.classList.add("routeControl");
-      //     newDiv.id = "newDiv";
-      //     tempDivs.push(newDiv.id);
-      //     contextPopupDiv.appendChild(newDiv);
-      //     newDiv.onclick = function () {
-      //       vectorLayer.getSource().removeFeature(closestFeature);
-      //       contextPopup.setPosition(undefined);
-      //     }
-      //     contextPopup.setPosition(closestFeatureCoordinates);
-      //   }
-
-      // } catch {
-      //   console.log("no position is close");
-      // }
     });
 
     document.getElementById("gmaplink").addEventListener("click", function () {
       var gmaplink = "http://maps.google.com/maps?q=" + ol.proj.toLonLat(contextPopup.getPosition()).reverse();
       window.open(gmaplink);
     });
-
 
     document.getElementById("streetviewlink").addEventListener("click", function () {
       var gmaplink = "http://maps.google.com/maps?layer=c&cbll=" + ol.proj.toLonLat(contextPopup.getPosition()).reverse();
@@ -367,35 +322,6 @@
       var navapplink = "https://jole84.se/nav-app/index.html?destinationPoints=" + JSON.stringify([ol.proj.toLonLat(contextPopup.getPosition())]);
       window.open(navapplink);
     });
-
-    // document.getElementById("contextAddPositionButton").addEventListener("click", function () {
-    //   var feature = new ol.Feature({
-    //     geometry: new ol.geom.Point(
-    //       contextPopup.getPosition(),
-    //     ),
-    //     name: String(vectorLayer.getSource().getFeatures().length),
-    //     straight: false,
-    //   });
-    //   vectorLayer.getSource().addFeature(feature);
-    //   contextPopup.setPosition(undefined);
-    // });
-
-    // document.getElementById("contextAddPoiButton").addEventListener("click", function () {
-    //   var feature = new ol.Feature({
-    //     geometry: new ol.geom.Point(
-    //       contextPopup.getPosition(),
-    //     ),
-    //     name: String(ol.coordinate.toStringXY(ol.proj.toLonLat(contextPopup.getPosition()).reverse(), 5)),
-    //   });
-    //   vectorLayer.getSource().addFeature(feature);
-    //   contextPopup.setPosition(undefined);
-    // });
-
-    // document.getElementById("changeStraightButton").addEventListener("click", function () {
-    //   const closestFeature = vectorLayer.getSource().getClosestFeatureToCoordinate(contextPopup.getPosition());
-    //   closestFeature.set("straight", !closestFeature.get("straight"));
-    //   contextPopupContent.innerHTML += "<br>" + closestFeature.get("straight");
-    // });
   </script>
 
 </body>

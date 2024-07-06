@@ -50,14 +50,18 @@ const styleFunctionRoadAccidents = function (feature) {
                 fill: new ol.style.Fill({
                     color: "black",
                 }),
-                backgroundFill: new ol.style.Fill({
-                    color: [252, 208, 30, 1],
+                stroke: new ol.style.Stroke({
+                    color: "yellow",
+                    width: 5,
                 }),
-                backgroundStroke: new ol.style.Stroke({
-                    color: [238, 41, 61, 1],
-                    width: 3,
-                }),
-                padding: [2, 2, 2, 2],
+                // backgroundFill: new ol.style.Fill({
+                //     color: [252, 208, 30, 1],
+                // }),
+                // backgroundStroke: new ol.style.Stroke({
+                //     color: [238, 41, 61, 1],
+                //     width: 3,
+                // }),
+                // padding: [2, 2, 2, 2],
             }),
         }),
     ];

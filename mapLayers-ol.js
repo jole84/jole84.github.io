@@ -13,7 +13,7 @@ const layers = [
         groupName: "jole84",
         baseLayer: true,
     }),
-
+    
     slitlagerkarta_nedtonad = new ol.layer.Tile({
         source: new ol.source.XYZ({
             url: 'https://jole84.se/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg',
@@ -26,6 +26,20 @@ const layers = [
         groupName: "jole84",
         baseLayer: true,
     }),
+
+    // local map
+    // localMap = new ol.layer.Tile({
+    //     source: new ol.source.XYZ({
+    //         url: '{z}/{x}/{y}.jpg',
+    //         minZoom: 6,
+    //         maxZoom: 14
+    //     }),
+    //     visible: false,
+    //     layerName: "localMap",
+    //     name: "Local",
+    //     groupName: "jole84",
+    //     baseLayer: true,
+    // }),
 
     // Lantmäteriet
     topo = new ol.layer.Tile({
@@ -287,18 +301,6 @@ const layers = [
     }),
 
     // Övrig
-    // localMap = new ol.layer.Tile({
-    //     source: new ol.source.XYZ({
-    //         url: '{z}/{x}/{y}.jpg',
-    //         minZoom: 6,
-    //         maxZoom: 14
-    //     }),
-    //     visible: false,
-    //     layerName: "localMap",
-    //     name: "Local",
-    //     groupName: "local",
-    //     baseLayer: true,
-    // }),
 
     // SMHI
     // smhi_radar = new ol.layer.Tile({
