@@ -24,7 +24,7 @@
     }
 
     .saturated {
-      filter: saturate(2);
+      filter: saturate(1.5);
     }
 
     #layerSelectorContainer {
@@ -45,7 +45,6 @@
       white-space: nowrap;
       overflow: auto;
       max-height: calc(100% - 15px);
-      /* max-height: 50%; */
     }
 
     #layersImg {
@@ -120,11 +119,44 @@
     .accident:hover {
       filter: blur(5px);
     }
+
+    #buttons {
+      position: absolute;
+      left: 5px;
+      bottom: 5px;
+      z-index: 10;
+    }
+
+    #buttons:fullscreen {
+      display: none;
+    }
+
+    #customFileButton {
+      display: none;
+    }
+
+    .btn {
+      background-color: white;
+      border-radius: 5px;
+      border: 2px solid rgba(0, 0, 0, 0.5);
+      color: rgb(32, 32, 32);
+      /* font-size: 1em; */
+      z-index: 10;
+      white-space: nowrap;
+      padding: 10px;
+    }
   </style>
 </head>
 
 <body>
   <div id="map"></div>
+  <div id="buttons">
+    <button id="export-png" class="btn btn-outline-dark" role="button"><i class="fa fa-download"></i> Download PNG</button>
+    <a id="image-download" download="map.png"></a>
+    <button class="btn btn-info" id="clickFileButton">Ladda GPX</button>
+    <input type="file" class="form-control" id="customFileButton" multiple
+      accept=".gpx,application/gpx+xml,.kml,.geojson" />
+  </div>
   <div id="layerSelectorContainer">
     <img id="layersImg" src="https://unpkg.com/leaflet@1.9.4/dist/images/layers.png">
     <div id="layerSelector">
@@ -141,6 +173,9 @@
   </div>
 
   <script type="text/javascript">
+    document.getElementById("clickFileButton").onclick = function () {
+      customFileButton.click();
+    };
     const layerSelectorButtons = document.getElementById("layerSelectorButtons");
 
     window.onbeforeunload = function () {
@@ -160,6 +195,201 @@
       view: view,
       keyboardEventTarget: document
     });
+
+    const gpxStyle = {
+      'Point': new ol.style.Style({
+        image: new ol.style.Icon({
+          anchor: [0.5, 1],
+          opacity: 0.85,
+          src: 'https://jole84.se/poi-marker.svg',
+        }),
+        text: new ol.style.Text({
+          font: '14px Roboto,monospace',
+          textAlign: 'left',
+          offsetX: 10,
+          fill: new ol.style.Fill({
+            color: '#b41412',
+          }),
+          stroke: new ol.style.Stroke({
+            color: 'white',
+            width: 4,
+          }),
+        }),
+      }),
+      'LineString': new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          color: [0, 0, 255, 0.6],
+          width: 10,
+        }),
+      })
+    };
+    gpxStyle['MultiLineString'] = gpxStyle['LineString'];
+
+    const gpxSource = new ol.source.Vector({
+      useSpatialIndex: true
+    });
+
+    gpxSource.addEventListener("addfeature", function () {
+      if (gpxSource.getState() === "ready") {
+        const padding = 100;
+        lastInteraction = new Date();
+        view.fit(gpxSource.getExtent(), {
+          padding: [padding, padding, padding, padding],
+          duration: 500,
+          maxZoom: 15,
+        });
+      }
+    });
+
+    function getFileFormat(fileExtention) {
+      if (fileExtention === "gpx") {
+        return new ol.format.GPX();
+      } else if (fileExtention === "kml") {
+        return new ol.format.KML({ extractStyles: false });
+      } else if (fileExtention === "geojson") {
+        return new ol.format.GeoJSON();
+      }
+    }
+
+    const gpxLayer = new ol.layer.Vector({
+      source: gpxSource,
+      layerName: "gpxLayer",
+      name: "GPX spår",
+      groupName: "gpx",
+      baseLayer: false,
+      visible: false,
+      declutter: true,
+      style: function (feature) {
+        gpxStyle['Point'].getText().setText(feature.get('name'));
+        return gpxStyle[feature.getGeometry().getType()];
+      },
+    });
+    map.addLayer(gpxLayer);
+
+    const gpxLayerPoints = new ol.layer.Vector({
+      source: new ol.source.Vector({
+        useSpatialIndex: true,
+      }),
+      layerName: "gpxLayerPoints",
+      name: "Spårpunkt",
+      groupName: "gpx",
+      baseLayer: false,
+      visible: false,
+      declutter: true,
+      style: function (feature) {
+        gpxStyle['Point'].getText().setText(feature.get('name'));
+        return gpxStyle[feature.getGeometry().getType()];
+      },
+    });
+    map.addLayer(gpxLayerPoints);
+
+    // gpx loader
+    let gpxFeatures;
+    function gpxSourceLoader(gpxFile) {
+      const reader = new FileReader();
+      reader.readAsText(gpxFile, "UTF-8");
+      console.log(gpxFile.name);
+      const fileExtention = gpxFile.name.split(".").pop().toLowerCase();
+      reader.onload = function (evt) {
+        gpxFeatures = getFileFormat(fileExtention).readFeatures(evt.target.result, {
+          dataProjection: 'EPSG:4326',
+          featureProjection: 'EPSG:3857'
+        });
+
+        gpxFeatures.forEach(function (geom) {
+          if (geom.getGeometry().getType() == "MultiLineString") {
+            geom.getGeometry().getLineString().forEachSegment(function (startCoord, endCoord) {
+              if (!!startCoord[3]) {
+                const startTime = new Date(startCoord[3] * 1000);
+                const endTime = new Date(endCoord[3] * 1000);
+
+                const startLonlat = ol.proj.toLonLat([startCoord[0], startCoord[1]]);
+                const endLonlat = ol.proj.toLonLat([endCoord[0], endCoord[1]]);
+
+                const distanceM = ol.sphere.getDistance(startLonlat, endLonlat);
+                const segmentTimeS = (endCoord[3] - startCoord[3]);
+
+                const speedKmh = (distanceM / segmentTimeS) * 3.6;
+
+                const marker = new ol.Feature({
+                  geometry: new ol.geom.Point([startCoord[0], startCoord[1]]),
+                  name: startTime.toLocaleString() + " - " + String(Math.round(speedKmh)) + " km/h",
+                });
+                gpxLayerPoints.getSource().addFeature(marker);
+              }
+            });
+          }
+        });
+
+        document.getElementById("gpxLayer").checked = true;
+        gpxLayer.setVisible(true);
+        // document.getElementById("gpxLayerPoints").checked = true;
+        // gpxLayerPoints.setVisible(true);
+        gpxSource.addFeatures(gpxFeatures);
+      }
+    };
+
+    function handleFileSelect(evt) {
+      const files = evt.target.files; // FileList object
+      gpxSource.clear();
+      for (var i = 0; i < files.length; i++) {
+        gpxSourceLoader(files[i]);
+      }
+    }
+    document.getElementById("customFileButton").addEventListener('change', handleFileSelect, false);
+
+    document.getElementById('export-png').addEventListener('click', function () {
+      map.once('rendercomplete', function () {
+        const mapCanvas = document.createElement('canvas');
+        const size = map.getSize();
+        mapCanvas.width = size[0];
+        mapCanvas.height = size[1];
+        const mapContext = mapCanvas.getContext('2d');
+        Array.prototype.forEach.call(
+          map.getViewport().querySelectorAll('.ol-layer canvas, canvas.ol-layer'),
+          function (canvas) {
+            if (canvas.width > 0) {
+              const opacity =
+                canvas.parentNode.style.opacity || canvas.style.opacity;
+              mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
+              let matrix;
+              const transform = canvas.style.transform;
+              if (transform) {
+                // Get the transform parameters from the style's transform matrix
+                matrix = transform
+                  .match(/^matrix\(([^\(]*)\)$/)[1]
+                  .split(',')
+                  .map(Number);
+              } else {
+                matrix = [
+                  parseFloat(canvas.style.width) / canvas.width,
+                  0,
+                  0,
+                  parseFloat(canvas.style.height) / canvas.height,
+                  0,
+                  0,
+                ];
+              }
+              // Apply the transform to the export map context
+              CanvasRenderingContext2D.prototype.setTransform.apply(
+                mapContext,
+                matrix,
+              );
+              mapContext.fillStyle = "#bfe6ff";
+              mapContext.fillRect(0, 0, canvas.width, canvas.height);
+              mapContext.drawImage(canvas, 0, 0);
+            }
+          },
+        );
+        mapContext.globalAlpha = 1;
+        mapContext.setTransform(1, 0, 0, 1, 0, 0);
+        const link = document.getElementById('image-download');
+        link.href = mapCanvas.toDataURL();
+        link.click();
+      });
+      map.renderSync();
+    });
+
 
     // add layers from webmap-ol-extra.js
     extraLayers.forEach(function (element) {
