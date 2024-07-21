@@ -290,6 +290,7 @@
       reader.readAsText(gpxFile, "UTF-8");
       console.log(gpxFile.name);
       const fileExtention = gpxFile.name.split(".").pop().toLowerCase();
+      document.getElementById("image-download").download = gpxFile.name + ".png";
       reader.onload = function (evt) {
         gpxFeatures = getFileFormat(fileExtention).readFeatures(evt.target.result, {
           dataProjection: 'EPSG:4326',
