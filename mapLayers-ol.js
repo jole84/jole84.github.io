@@ -46,6 +46,7 @@ const layers = [
         source: new ol.source.XYZ({
             url: 'https://minkarta.lantmateriet.se/map/topowebbcache/?layer=topowebb&style=default&tilematrixset=3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix={z}&TileCol={x}&TileRow={y}',
             maxZoom: 17,
+            crossOrigin: 'anonymous',
         }),
         visible: false,
         layerName: "topo",
@@ -61,6 +62,7 @@ const layers = [
                 layers: "OI.Histortho_60",
                 TILED: true,
             },
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         layerName: "flyg_60",
@@ -76,6 +78,7 @@ const layers = [
                 layers: "OI.Histortho_75",
                 TILED: true,
             },
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         layerName: "flyg_75",
@@ -91,6 +94,7 @@ const layers = [
                 layers: "OI.Histortho_bw_1994,OI.Histortho_bw_1995,OI.Histortho_bw_1996,OI.Histortho_bw_1997,OI.Histortho_bw_1998,OI.Histortho_bw_1999,OI.Histortho_bw_2000",
                 TILED: true,
             },
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         layerName: "historiskaortofoto97",
@@ -106,6 +110,7 @@ const layers = [
                 layers: "OI.Histortho_bw_2001,OI.Histortho_bw_2003,OI.Histortho_color_2003,OI.Histortho_bw_2004",
                 TILED: true,
             },
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         layerName: "historiskaortofoto2003",
@@ -121,6 +126,7 @@ const layers = [
                 layers: "Ortofoto_0.5,Ortofoto_0.4,Ortofoto_0.25,Ortofoto_0.16",
                 TILED: true,
             },
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         layerName: "ortofoto",
@@ -136,6 +142,7 @@ const layers = [
                 layers: "granser,text,fiske",
                 TILED: true,
             },
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         layerName: "grans",
@@ -147,7 +154,9 @@ const layers = [
     // osm
     osm = new ol.layer.Tile({
         className: "saturated",
-        source: new ol.source.OSM(),
+        source: new ol.source.OSM({
+            crossOrigin: 'Anonymous',
+        }),
         visible: false,
         layerName: "osm",
         name: "Open Street Map",
@@ -159,6 +168,7 @@ const layers = [
         source: new ol.source.OSM({
             url: "https://tile.opentopomap.org/{z}/{x}/{y}.png",
             maxZoom: 15,
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         layerName: "openTopoMap",
@@ -171,6 +181,7 @@ const layers = [
         source: new ol.source.OSM({
             url: "https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",
             maxZoom: 18,
+            crossOrigin: 'Anonymous',
         }),
         opacity: 0.9,
         visible: false,
@@ -186,6 +197,7 @@ const layers = [
         source: new ol.source.XYZ({
             url: 'https://map.eniro.se/geowebcache/service/tms1.0.0/nautical2x/{z}/{x}/{-y}.png',
             maxZoom: 17,
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         layerName: "eniro_nautical",
@@ -198,6 +210,7 @@ const layers = [
         source: new ol.source.XYZ({
             url: 'https://map.eniro.se/geowebcache/service/tms1.0.0/hybrid/{z}/{x}/{-y}.png',
             maxZoom: 17,
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         layerName: "eniro_hybrid",
@@ -214,6 +227,7 @@ const layers = [
                 layers: "Slitlager",
                 TILED: true,
             },
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         minZoom: 9,
@@ -230,6 +244,7 @@ const layers = [
                 layers: "ATK_Matplats",
                 TILED: true,
             },
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         layerName: "atk_matplats",
@@ -245,6 +260,7 @@ const layers = [
                 layers: "Rastplats",
                 TILED: true,
             },
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         layerName: "rastplats",
@@ -260,6 +276,7 @@ const layers = [
                 layers: "Hastighetsgrans",
                 TILED: true,
             },
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         minZoom: 12,
@@ -291,6 +308,7 @@ const layers = [
                 layers: "Trafikplats_Vag",
                 TILED: true,
             },
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         minZoom: 11,
@@ -341,7 +359,7 @@ const layers = [
 
     tileDebug = new ol.layer.Tile({
         source: new ol.source.TileDebug({
-            template: 'z:{z} x:{x} y:{y} -y:{-y}'
+            template: 'z:{z} x:{x} y:{y} -y:{-y}',
         }),
         visible: false,
         layerName: "tileDebug",

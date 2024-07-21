@@ -1,5 +1,9 @@
-const roadConditionSource = new ol.source.Vector();
-const roadAccidentsSource = new ol.source.Vector();
+const roadConditionSource = new ol.source.Vector({
+    crossOrigin: 'anonymous',
+});
+const roadAccidentsSource = new ol.source.Vector({
+    crossOrigin: 'anonymous',
+});
 
 function breakSentence(sentence) {
     sentence = sentence.replaceAll(".:", ":").replaceAll("\n", "").trim();
@@ -40,6 +44,7 @@ const styleFunctionRoadAccidents = function (feature) {
             image: new ol.style.Icon({
                 anchor: [0.5, 0.5],
                 src: "https://api.trafikinfo.trafikverket.se/v2/icons/" + feature.get("iconId") + "?type=png32x32",
+                crossOrigin: 'anonymous',
             }),
             text: new ol.style.Text({
                 text: feature.get("name"),

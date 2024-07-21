@@ -152,7 +152,7 @@
   <div id="map"></div>
   <div id="buttons">
     <button id="export-png" class="btn btn-outline-dark" role="button"><i class="fa fa-download"></i> Download PNG</button>
-    <a id="image-download" download="map.png"></a>
+    <a id="image-download" download="karta.png"></a>
     <button class="btn btn-info" id="clickFileButton">Ladda GPX</button>
     <input type="file" class="form-control" id="customFileButton" multiple
       accept=".gpx,application/gpx+xml,.kml,.geojson" />
@@ -173,9 +173,6 @@
   </div>
 
   <script type="text/javascript">
-    document.getElementById("clickFileButton").onclick = function () {
-      customFileButton.click();
-    };
     const layerSelectorButtons = document.getElementById("layerSelectorButtons");
 
     window.onbeforeunload = function () {
@@ -226,7 +223,8 @@
     gpxStyle['MultiLineString'] = gpxStyle['LineString'];
 
     const gpxSource = new ol.source.Vector({
-      useSpatialIndex: true
+      useSpatialIndex: true,
+      crossOrigin: 'anonymous',
     });
 
     gpxSource.addEventListener("addfeature", function () {
@@ -269,6 +267,7 @@
     const gpxLayerPoints = new ol.layer.Vector({
       source: new ol.source.Vector({
         useSpatialIndex: true,
+        crossOrigin: 'anonymous',
       }),
       layerName: "gpxLayerPoints",
       name: "Spårpunkt",
@@ -330,14 +329,17 @@
       }
     };
 
+    document.getElementById("clickFileButton").onclick = function () {
+      customFileButton.click();
+      gpxSource.clear();
+    };
+    document.getElementById("customFileButton").addEventListener('change', handleFileSelect, false);
     function handleFileSelect(evt) {
       const files = evt.target.files; // FileList object
-      gpxSource.clear();
       for (var i = 0; i < files.length; i++) {
         gpxSourceLoader(files[i]);
       }
     }
-    document.getElementById("customFileButton").addEventListener('change', handleFileSelect, false);
 
     document.getElementById('export-png').addEventListener('click', function () {
       map.once('rendercomplete', function () {
