@@ -302,18 +302,14 @@
               if (!!startCoord[3]) {
                 const startTime = new Date(startCoord[3] * 1000);
                 const endTime = new Date(endCoord[3] * 1000);
-
-                const startLonlat = ol.proj.toLonLat([startCoord[0], startCoord[1]]);
-                const endLonlat = ol.proj.toLonLat([endCoord[0], endCoord[1]]);
-
-                const distanceM = ol.sphere.getDistance(startLonlat, endLonlat);
+                const startLonlat = ol.proj.toLonLat(startCoord);
+                const endLonlat = ol.proj.toLonLat(endCoord);
+                const segmentDistanceM = ol.sphere.getDistance(startLonlat, endLonlat);
                 const segmentTimeS = (endCoord[3] - startCoord[3]);
-
-                const speedKmh = (distanceM / segmentTimeS) * 3.6;
-
+                const speedKmh = (segmentDistanceM / segmentTimeS) * 3.6;
                 const marker = new ol.Feature({
-                  geometry: new ol.geom.Point([startCoord[0], startCoord[1]]),
-                  name: startTime.toLocaleString() + " - " + String(Math.round(speedKmh)) + " km/h",
+                  geometry: new ol.geom.Point(startCoord),
+                  name: startTime.toLocaleString() + " - " + Math.round(speedKmh) + " km/h",
                 });
                 gpxLayerPoints.getSource().addFeature(marker);
               }
@@ -323,14 +319,15 @@
 
         document.getElementById("gpxLayer").checked = true;
         gpxLayer.setVisible(true);
-        // document.getElementById("gpxLayerPoints").checked = true;
-        // gpxLayerPoints.setVisible(true);
+        document.getElementById("gpxLayerPoints").checked = true;
+        gpxLayerPoints.setVisible(true);
         gpxSource.addFeatures(gpxFeatures);
       }
     };
 
     document.getElementById("clickFileButton").onclick = function () {
       customFileButton.click();
+      gpxLayerPoints.getSource().clear();
       gpxSource.clear();
     };
     document.getElementById("customFileButton").addEventListener('change', handleFileSelect, false);
