@@ -92,7 +92,6 @@
 
     #contextPopupContent {
       font-weight: bold;
-      padding: 10px 20px 10px 20px;
     }
 
     #contextPopupContent:empty {
@@ -168,7 +167,7 @@
 
   <div id="contextPopup">
     <div id="contextPopupCloser">✖</div>
-    <div id="contextPopupContent"></div>
+    <div title="Kopiera koordinater" class="routeControl" id="contextPopupContent"></div>
     <div class="routeControl" id="gmaplink">Visa på Google Maps</div>
     <div class="routeControl" id="streetviewlink">Visa Streetview</div>
     <div class="routeControl" id="navAppRoute">Navigera hit med Nav-app</div>
@@ -530,6 +529,10 @@
 
     map.addEventListener("click", function (event) {
       contextPopup.setPosition(undefined);
+    });
+
+    contextPopupContent.addEventListener("click", function (event) {
+      navigator.clipboard.writeText(contextPopupContent.innerHTML);
     });
 
     map.addEventListener("contextmenu", function (event) {
