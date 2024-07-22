@@ -257,7 +257,7 @@
       groupName: "gpx",
       baseLayer: false,
       visible: false,
-      declutter: true,
+      declutter: false,
       style: function (feature) {
         gpxStyle['Point'].getText().setText(feature.get('name'));
         return gpxStyle[feature.getGeometry().getType()];
