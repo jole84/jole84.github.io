@@ -88,7 +88,7 @@ const extraLayers = [
         style: styleFunctionRoadAccidents,
         visible: false,
         layerName: "roadAccidents",
-        name: "Olyckor",
+        name: "Olyckor, vägarbeten",
         groupName: "trafikverket",
         baseLayer: false,
     }),
@@ -173,7 +173,6 @@ function getAccidents() {
           <OR>
             <ELEMENTMATCH>
               <EQ name='Deviation.ManagedCause' value='true' />
-              <EQ name='Deviation.MessageType' value='Olycka' />
               <GTE name='Deviation.EndTime' value='$now'/>
             </ELEMENTMATCH>
           </OR>
