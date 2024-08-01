@@ -145,6 +145,13 @@
     .btn:hover {
       background-color: lightgray;
     }
+
+    .controlImage {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      height: 1em;
+    }
   </style>
 </head>
 
@@ -172,6 +179,7 @@
     <div class="routeControl" id="navAppRoute">Navigera hit med Nav-app</div>
   </div>
 
+  <img src="https://jole84.se/jole84.svg" class="controlImage" id="controlImage">
   <script type="text/javascript">
     const layerSelectorButtons = document.getElementById("layerSelectorButtons");
 
@@ -556,6 +564,9 @@
       var navapplink = "https://jole84.se/nav-app/index.html?destinationPoints=" + JSON.stringify([ol.proj.toLonLat(contextPopup.getPosition())]);
       window.open(navapplink);
     });
+
+    const myControl = new ol.control.Control({element: document.getElementById("controlImage")});
+    map.addControl(myControl);
   </script>
 
 </body>
