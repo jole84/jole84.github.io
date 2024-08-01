@@ -266,11 +266,29 @@
       visible: false,
       declutter: false,
       style: function (feature) {
-        gpxStyle['Point'].getText().setText(feature.get('name'));
-        return gpxStyle[feature.getGeometry().getType()];
+        if (feature.getGeometry().getType() != "Point") {
+          return gpxStyle[feature.getGeometry().getType()];
+        }
       },
     });
     map.addLayer(gpxLayer);
+    
+    const gpxLayerWaypoints = new ol.layer.Vector({
+      source: gpxSource,
+      layerName: "gpxLayerWaypoints",
+      name: "GPX waypoints",
+      groupName: "gpx",
+      baseLayer: false,
+      visible: false,
+      declutter: false,
+      style: function (feature) {
+        gpxStyle['Point'].getText().setText(feature.get('name'));
+        if (feature.getGeometry().getType() == "Point") {
+          return gpxStyle["Point"];
+        }
+      },
+    });
+    map.addLayer(gpxLayerWaypoints);
 
     const gpxLayerPoints = new ol.layer.Vector({
       source: new ol.source.Vector({
@@ -278,7 +296,7 @@
         crossOrigin: 'anonymous',
       }),
       layerName: "gpxLayerPoints",
-      name: "Spårpunkt",
+      name: "Spårdatapunkt",
       groupName: "gpx",
       baseLayer: false,
       visible: false,
@@ -327,8 +345,8 @@
 
         document.getElementById("gpxLayer").checked = true;
         gpxLayer.setVisible(true);
-        // document.getElementById("gpxLayerPoints").checked = true;
-        // gpxLayerPoints.setVisible(true);
+        document.getElementById("gpxLayerWaypoints").checked = true;
+        gpxLayerWaypoints.setVisible(true);
         gpxSource.addFeatures(gpxFeatures);
       }
     };
