@@ -1,5 +1,19 @@
 
 const layers = [
+    // local map
+    // localMap = new ol.layer.Tile({
+    //     source: new ol.source.XYZ({
+    //         url: '{z}/{x}/{y}.jpg',
+    //         minZoom: 6,
+    //         maxZoom: 14
+    //     }),
+    //     visible: false,
+    //     layerName: "localMap",
+    //     name: "Local",
+    //     groupName: "jole84",
+    //     baseLayer: true,
+    // }),
+
     // Jole84
     slitlagerkarta = new ol.layer.Tile({
         source: new ol.source.XYZ({
@@ -26,20 +40,6 @@ const layers = [
         groupName: "jole84",
         baseLayer: true,
     }),
-
-    // local map
-    // localMap = new ol.layer.Tile({
-    //     source: new ol.source.XYZ({
-    //         url: '{z}/{x}/{y}.jpg',
-    //         minZoom: 6,
-    //         maxZoom: 14
-    //     }),
-    //     visible: false,
-    //     layerName: "localMap",
-    //     name: "Local",
-    //     groupName: "jole84",
-    //     baseLayer: true,
-    // }),
 
     // Lantmäteriet
     topo = new ol.layer.Tile({
