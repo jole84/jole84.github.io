@@ -8,7 +8,6 @@
 </head>
 
 <body>
-
     <form method="post">
         <input type="submit" name="button1" class="button" value="Delete locationData" />
     </form>
@@ -20,11 +19,17 @@
     function clearData()
     {
         $filename = 'locationData.json';
-        unlink($filename);
-        echo "$filename removed";
+        $emptyArray = [];
+        chown("/var/www/html/locationHandler", "www-data");
+        try {
+            file_put_contents($filename, json_encode($emptyArray));
+        } catch (Exception $ex) {
+            echo $ex;
+            unlink($filename);
+        }
+        echo "$filename cleared!";
     }
     ?>
-
 </body>
 
 </html>
