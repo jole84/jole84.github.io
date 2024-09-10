@@ -324,6 +324,7 @@
 
         gpxFeatures.forEach(function (geom) {
           if (geom.getGeometry().getType() == "MultiLineString") {
+            let totalDistance = 0;
             geom.getGeometry().getLineString().forEachSegment(function (startCoord, endCoord) {
               if (!!startCoord[3]) {
                 const startTime = new Date(startCoord[3] * 1000);
@@ -331,11 +332,13 @@
                 const startLonlat = ol.proj.toLonLat(startCoord);
                 const endLonlat = ol.proj.toLonLat(endCoord);
                 const segmentDistanceM = ol.sphere.getDistance(startLonlat, endLonlat);
+                totalDistance += segmentDistanceM;
                 const segmentTimeS = (endCoord[3] - startCoord[3]);
                 const speedKmh = (segmentDistanceM / segmentTimeS) * 3.6;
                 const marker = new ol.Feature({
                   geometry: new ol.geom.Point(startCoord),
-                  name: startTime.toLocaleString() + " - " + Math.round(speedKmh) + " km/h",
+                  name: startTime.toLocaleString() + "\n" 
+                  + (totalDistance / 1000).toFixed(1) + "km - " + Math.round(speedKmh) + " km/h",
                 });
                 gpxLayerPoints.getSource().addFeature(marker);
               }
