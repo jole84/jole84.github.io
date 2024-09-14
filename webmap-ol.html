@@ -215,10 +215,18 @@
           fill: new ol.style.Fill({
             color: '#b41412',
           }),
-          stroke: new ol.style.Stroke({
-            color: 'white',
-            width: 4,
+          // stroke: new ol.style.Stroke({
+          //   color: 'white',
+          //   width: 4,
+          // }),
+          backgroundFill: new ol.style.Fill({
+            color: [255, 255, 255, 0.9],
           }),
+          backgroundStroke: new ol.style.Stroke({
+            color: [0, 0, 0, 0.9],
+            width: 1.5,
+          }),
+          padding: [1, 0, 0, 1],
         }),
       }),
       'LineString': new ol.style.Style({
@@ -272,7 +280,7 @@
       },
     });
     map.addLayer(gpxLayer);
-    
+
     const gpxLayerWaypoints = new ol.layer.Vector({
       source: gpxSource,
       layerName: "gpxLayerWaypoints",
@@ -337,8 +345,8 @@
                 const speedKmh = (segmentDistanceM / segmentTimeS) * 3.6;
                 const marker = new ol.Feature({
                   geometry: new ol.geom.Point(startCoord),
-                  name: startTime.toLocaleString() + "\n" 
-                  + (totalDistance / 1000).toFixed(1) + "km - " + Math.round(speedKmh) + " km/h",
+                  name: startTime.toLocaleString() + "\n"
+                    + (totalDistance / 1000).toFixed(1) + "km - " + Math.round(speedKmh) + " km/h",
                 });
                 gpxLayerPoints.getSource().addFeature(marker);
               }
@@ -587,7 +595,7 @@
       window.open(navapplink);
     });
 
-    const myControl = new ol.control.Control({element: document.getElementById("controlImage")});
+    const myControl = new ol.control.Control({ element: document.getElementById("controlImage") });
     map.addControl(myControl);
   </script>
 
