@@ -55,6 +55,22 @@ const layers = [
         baseLayer: true,
     }),
 
+    ortofoto = new ol.layer.Tile({
+        source: new ol.source.TileWMS({
+            url: "https://minkarta.lantmateriet.se/map/ortofoto/",
+            params: {
+                layers: "Ortofoto_0.5,Ortofoto_0.4,Ortofoto_0.25,Ortofoto_0.16",
+                TILED: true,
+            },
+            crossOrigin: 'Anonymous',
+        }),
+        visible: false,
+        layerName: "ortofoto",
+        name: "Lantmäteriet Ortofoto",
+        groupName: "lantm",
+        baseLayer: true,
+    }),
+
     flyg_60 = new ol.layer.Tile({
         source: new ol.source.TileWMS({
             url: "https://minkarta.lantmateriet.se/map/historiskaortofoto/service?",
@@ -115,22 +131,6 @@ const layers = [
         visible: false,
         layerName: "historiskaortofoto2003",
         name: "Lantmäteriet 2001-2004",
-        groupName: "lantm",
-        baseLayer: true,
-    }),
-
-    ortofoto = new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-            url: "https://minkarta.lantmateriet.se/map/ortofoto/",
-            params: {
-                layers: "Ortofoto_0.5,Ortofoto_0.4,Ortofoto_0.25,Ortofoto_0.16",
-                TILED: true,
-            },
-            crossOrigin: 'Anonymous',
-        }),
-        visible: false,
-        layerName: "ortofoto",
-        name: "Lantmäteriet Ortofoto",
         groupName: "lantm",
         baseLayer: true,
     }),
