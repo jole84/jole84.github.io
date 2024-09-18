@@ -24,9 +24,14 @@
                     result[i]["localTime"] = new Date(result[i]["timeStamp"]).toLocaleString();
                     result[i]["coordinates"] = convert3857to4326(result[i]["coords"]);
                     result[i]["lastUpdate"] = msToTime(Date.now() - result[i]["timeStamp"]);
+                    result[i]["heading"] = Math.round(radToDeg(result[i]["heading"]));
                 }
                 pre1.innerHTML = JSON.stringify(result, undefined, 2);
             });
+
+        function radToDeg(rad) {
+            return rad * (180 / Math.PI);
+        }
 
         function convert3857to4326(coord) {
             const e_value = 2.7182818284;
