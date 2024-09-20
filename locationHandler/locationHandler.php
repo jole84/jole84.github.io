@@ -1,5 +1,6 @@
 <?php
 // php --server localhost:8080/locationHandler.php
+// sudo chown -R www-data /var/www/html/locationHandler
 // ?q={"timeStamp":1725555864869,"userName":"Test user","coords":[1601556.5673312724,8264789.643593338],"heading":1,"speed":55}
 
 $q = $_REQUEST["q"]; // load data from current user

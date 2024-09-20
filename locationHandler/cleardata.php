@@ -20,7 +20,6 @@
     {
         $filename = 'locationData.json';
         $emptyArray = [];
-        chown("/var/www/html/locationHandler", "www-data");
         try {
             file_put_contents($filename, json_encode($emptyArray));
         } catch (Exception $ex) {
