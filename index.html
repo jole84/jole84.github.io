@@ -8,7 +8,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/ol/dist/ol.js"></script>
   <link rel="icon" type="image/svg" href="https://jole84.se/84.svg" />
-  <script src="https://jole84.se/filesList.js"></script>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <meta charset="utf-8">
   <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -99,8 +98,7 @@
     <p class="lead text-muted">Skräddarsydd karta baserad på öppna data från Lantmäteriet (Topografi 50) och vägdata
       från Trafikverket. Enkel webbaserad applikation för navigering utan behov av app-installation samt oberoende av
       operativsystem.</p>
-    <a href="https://jole84.se/legend.svg"><img id="legend" class="rounded"
-        src="https://jole84.se/legend.svg"></a><br>
+    <a href="https://jole84.se/legend.svg"><img id="legend" class="rounded" src="https://jole84.se/legend.svg"></a><br>
     <hr>
 
     <a id="linkButton" href="https://jole84.se/nav-app/index.html" class="btn btn-danger my-2">Webbaserad
@@ -177,8 +175,8 @@
       } else if (fileExtention === "kml") {
         gpxFormat = new ol.format.KML({ extractStyles: false });
       }
-      
-      
+
+
       const reader = new FileReader();
       reader.readAsText(files[0], "UTF-8");
       reader.onload = function (evt) {
@@ -217,13 +215,19 @@
     });
 
     function myFunction() {
-      for (var i = 0; i < filesList.length; i++) {
-        var opt = filesList[i];
-        var el = document.createElement("option");
-        el.textContent = opt;
-        el.value = opt;
-        selectFile.appendChild(el);
-      }
+      fetch("https://jole84.se/filesList.json")
+        .then((response) => response.json())
+        .then((filesList) => {
+          for (var i = 0; i < filesList.length; i++) {
+            var opt = filesList[i];
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            selectFile.appendChild(el);
+          }
+        }).catch(function (err) {
+          console.log('error: ' + err);
+        });
 
 
       var newLinkUrl = linkUrl + '?';
