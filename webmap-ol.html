@@ -234,9 +234,31 @@
           color: [0, 0, 255, 0.6],
           width: 10,
         }),
+      }),
+      'Polygon': new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          color: [0, 0, 255, 0.7],
+          width: 5,
+        }),
+        fill: new ol.style.Fill({
+          color: [0, 0, 255, 0.2],
+        }),
+        text: new ol.style.Text({
+          // text: feature.get("name"),
+          font: "13px B612, sans-serif",
+          overflow: true,
+          fill: new ol.style.Fill({
+            color: "#b41412",
+          }),
+          stroke: new ol.style.Stroke({
+            color: "white",
+            width: 4,
+          }),
+        }),
       })
     };
     gpxStyle['MultiLineString'] = gpxStyle['LineString'];
+    gpxStyle['MultiPolygon'] = gpxStyle['Polygon'];
 
     const gpxSource = new ol.source.Vector({
       useSpatialIndex: true,
