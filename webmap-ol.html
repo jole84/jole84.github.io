@@ -595,6 +595,7 @@
     });
 
     map.addEventListener("contextmenu", function (event) {
+      console.log(event.coordinate);
       event.preventDefault();
 
       contextPopupContent.innerHTML = ol.coordinate.toStringXY(ol.proj.toLonLat(event.coordinate).reverse(), 5);

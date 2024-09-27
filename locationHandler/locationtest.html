@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input id="userNameInput" type="text" placeholder="userName" value="test user">
+    <div id="dateSelector">
+        <input id="date" type="date">
+        <input id="time" type="time">
+    </div>
+    <input id="speedInput" type="number" placeholder="speed">
+    <input id="headingInput" type="number" min="0" max="6.28" placeholder="heading">
+    <p>
+        <input id="xInput" type="number" placeholder="x" value=1655000>
+        <input id="yInput" type="number" placeholder="y" value=8130000>
+    </p>
+    <div id="text1"></div>
+    <pre id="pre1"></pre>
+    <button id="runbutton" onclick="updateUserPosition()">update user</button>
+    <button id="removebutton" onclick="removeUserPosition()">remove user</button>
+    <script>
+        const date = document.getElementById("date");
+        const time = document.getElementById("time");
+        const userNameInput = document.getElementById("userNameInput");
+        const speedInput = document.getElementById("speedInput");
+        const headingInput = document.getElementById("headingInput");
+        const xInput = document.getElementById("xInput");
+        const yInput = document.getElementById("yInput");
+        const text1 = document.getElementById("text1");
+        const pre1 = document.getElementById("pre1");
+        const runbutton = document.getElementById("runbutton");
+        let setDate = new Date();
+        const dateSelector = document.getElementById("dateSelector");
+        date.value = (new Date().toLocaleDateString());
+        time.value = (new Date().toLocaleTimeString());
+
+        text1.innerHTML = setDate.getTime();
+
+        dateSelector.addEventListener("change", function () {
+            setDate = new Date(date.value + "T" + time.value);
+            clientPositionArray["timeStamp"] = setDate.getTime();
+            text1.innerHTML = setDate.getTime();
+        });
+
+        userNameInput.addEventListener("change", function () {
+            clientPositionArray["userName"] = userNameInput.value;
+        });
+
+        speedInput.addEventListener("change", function () {
+            clientPositionArray["speed"] = speedInput.value;
+        });
+
+        headingInput.addEventListener("change", function () {
+            clientPositionArray["heading"] = headingInput.value;
+        });
+
+        xInput.addEventListener("change", function () {
+            clientPositionArray["coords"][0] = parseFloat(xInput.value);
+        });
+
+        yInput.addEventListener("change", function () {
+            clientPositionArray["coords"][1] = parseFloat(yInput.value);
+            console.log(clientPositionArray)
+        });
+
+        const clientPositionArray = {
+            "coords" : [],
+        };
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+            try {
+                const userList = JSON.parse(this.responseText);
+                pre1.innerHTML = JSON.stringify(userList, undefined, 2);
+            } catch {
+                console.log(this.responseText);
+            }
+        }
+        xhttp.open("POST", "https://jole84.se/locationHandler/sql-location-handler.php");
+        xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhttp.send();
+
+        function removeUserPosition() {
+            setDate = new Date(0);
+            date.value = (setDate.toLocaleDateString());
+            time.value = (setDate.toLocaleTimeString());
+            updateUserPosition();
+        }
+
+        function updateUserPosition() {
+            const xhttp = new XMLHttpRequest();
+            clientPositionArray["userName"] = userNameInput.value;
+            clientPositionArray["timeStamp"] = setDate.getTime();
+            clientPositionArray["coords"] = [parseFloat(xInput.value), parseFloat(yInput.value)];
+            clientPositionArray["heading"] = headingInput.value || 0;
+            clientPositionArray["accuracy"] = 10;
+            clientPositionArray["speed"] = speedInput.value || 0;
+            xhttp.onload = function () {
+                try {
+                    const userList = JSON.parse(this.responseText);
+                    pre1.innerHTML = JSON.stringify(userList, undefined, 2);
+                } catch {
+                    console.log(this.responseText);
+                }
+            }
+            xhttp.open("POST", "https://jole84.se/locationHandler/sql-location-handler.php");
+            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhttp.send("q=" + JSON.stringify(clientPositionArray));
+        }
+    </script>
+</body>
+
+</html>
