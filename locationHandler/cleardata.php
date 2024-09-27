@@ -18,15 +18,9 @@
     }
     function clearData()
     {
-        $filename = 'locationData.json';
-        $emptyArray = [];
-        try {
-            file_put_contents($filename, json_encode($emptyArray));
-        } catch (Exception $ex) {
-            echo $ex;
-            unlink($filename);
-        }
-        echo "$filename cleared!";
+        $filename = 'db.sqlite';
+        unlink($filename);
+        echo "$filename removed!";
     }
     ?>
 </body>

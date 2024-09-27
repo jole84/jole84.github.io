@@ -17,7 +17,7 @@
     <pre id="pre1"></pre>
     <script>
         const pre1 = document.getElementById("pre1");
-        fetch("locationData.json", { mode: "no-cors" })
+        fetch("https://jole84.se/locationHandler/sql-location-handler.php", { mode: "no-cors" })
             .then(response => response.json())
             .then(result => {
                 for (let i = 0; i < result.length; i++) {
@@ -53,9 +53,8 @@
 
             return { lat: lat4326.toFixed(5), lng: long4326.toFixed(5) };
         }
-
         function msToTime(milliseconds) {
-            return Math.round(milliseconds / 1000 / 60) + " min sedan";
+            return milliseconds < 120000 ? "alldeles nyss" : (Math.ceil(milliseconds / 1000 / 60) + " min sedan");
         }
     </script>
 </body>
