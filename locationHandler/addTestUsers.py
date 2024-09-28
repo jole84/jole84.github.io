@@ -5,7 +5,7 @@ from os import system
 try:
     con = sqlite3.connect("/home/johan/git/jole84.github.io/locationHandler/db.sqlite")
 except:
-    con = sqlite3.connect("/var/html/www/locationHandler/db.sqlite")
+    con = sqlite3.connect("/var/www/html/locationHandler/db.sqlite")
 
 cur = con.cursor()
 
