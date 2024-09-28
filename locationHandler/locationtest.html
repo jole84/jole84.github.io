@@ -13,8 +13,9 @@
         <input id="date" type="date">
         <input id="time" type="time">
     </div>
-    <input id="speedInput" type="number" placeholder="speed">
     <input id="headingInput" type="number" min="0" max="6.28" placeholder="heading">
+    <input id="accuracyInput" type="number" placeholder="accuracy">
+    <input id="speedInput" type="number" placeholder="speed">
     <p>
         <input id="xInput" type="number" placeholder="x" value=1655000>
         <input id="yInput" type="number" placeholder="y" value=8130000>
@@ -28,6 +29,7 @@
         const time = document.getElementById("time");
         const userNameInput = document.getElementById("userNameInput");
         const speedInput = document.getElementById("speedInput");
+        const accuracyInput = document.getElementById("accuracyInput");
         const headingInput = document.getElementById("headingInput");
         const xInput = document.getElementById("xInput");
         const yInput = document.getElementById("yInput");
@@ -53,6 +55,10 @@
 
         speedInput.addEventListener("change", function () {
             clientPositionArray["speed"] = speedInput.value;
+        });
+
+        accuracyInput.addEventListener("change", function () {
+            clientPositionArray["accuracy"] = accuracyInput.value;
         });
 
         headingInput.addEventListener("change", function () {
@@ -123,7 +129,7 @@
             return { lat: lat4326.toFixed(5), lng: long4326.toFixed(5) };
         }
         function msToTime(milliseconds) {
-            return milliseconds < 120000 ? "alldeles nyss" : (Math.ceil(milliseconds / 1000 / 60) + " min sedan");
+            return Math.ceil(milliseconds / 1000 / 60) + " min sedan";
         }
 
         function updateUserPosition() {
@@ -132,7 +138,7 @@
             clientPositionArray["timeStamp"] = setDate.getTime();
             clientPositionArray["coords"] = [parseFloat(xInput.value), parseFloat(yInput.value)];
             clientPositionArray["heading"] = headingInput.value || 0;
-            clientPositionArray["accuracy"] = 10;
+            clientPositionArray["accuracy"] = accuracyInput.value || 10;
             clientPositionArray["speed"] = speedInput.value || 0;
             xhttp.onload = function () {
                 try {
