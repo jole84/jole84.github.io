@@ -14,7 +14,7 @@
         <input id="date" type="date">
         <input id="time" type="time">
     </div>
-    <input id="headingInput" type="number" min="0" max="6.28" placeholder="heading">
+    <input id="headingInput" type="number" min="0" max="360" placeholder="heading">
     <input id="accuracyInput" type="number" placeholder="accuracy">
     <input id="speedInput" type="number" placeholder="speed">
     <p>
@@ -73,7 +73,7 @@
         });
 
         headingInput.addEventListener("change", function () {
-            clientPositionArray["heading"] = headingInput.value;
+            clientPositionArray["heading"] = degToRad(headingInput.value);
         });
 
         xInput.addEventListener("change", function () {
@@ -140,6 +140,10 @@
             return rad * (180 / Math.PI);
         }
 
+        function degToRad(deg) {
+            return (deg * Math.PI * 2) / 360;
+        }
+
         // longitude = 14
         // latitude = 57
         // [14, 57]
@@ -157,7 +161,7 @@
             clientPositionArray["userName"] = userNameInput.value;
             clientPositionArray["timeStamp"] = setDate.getTime();
             clientPositionArray["coords"] = [parseFloat(xInput.value), parseFloat(yInput.value)];
-            clientPositionArray["heading"] = headingInput.value || 0;
+            clientPositionArray["heading"] = degToRad(headingInput.value) || 0;
             clientPositionArray["accuracy"] = accuracyInput.value || 10;
             clientPositionArray["speed"] = speedInput.value || 0;
             xhttp.onload = function () {
