@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/ol@9.2.4/dist/ol.js"></script>
     <title>Document</title>
 </head>
 
@@ -17,8 +18,16 @@
     <input id="accuracyInput" type="number" placeholder="accuracy">
     <input id="speedInput" type="number" placeholder="speed">
     <p>
-        <input id="xInput" type="number" placeholder="x" value=1655000>
-        <input id="yInput" type="number" placeholder="y" value=8130000>
+        <input id="xInput" type="number" placeholder="x" value=1558472.8711058302 step="100">
+        <label for="xInput">x</label>
+        <input id="yInput" type="number" placeholder="y" value=7760118.6729024565 step="100">
+        <label for="yInput">y</label>
+    </p>
+    <p>
+        <input id="latInput" type="number" placeholder="x" value=57.00 step="0.01">
+        <label for="latInput">lat</label>
+        <input id="lngInput" type="number" placeholder="y" value=14.00 step="0.01">
+        <label for="lngInput    ">lng</label>
     </p>
     <div id="text1"></div>
     <button id="runbutton" onclick="updateUserPosition()">update user</button>
@@ -33,6 +42,8 @@
         const headingInput = document.getElementById("headingInput");
         const xInput = document.getElementById("xInput");
         const yInput = document.getElementById("yInput");
+        const latInput = document.getElementById("latInput");
+        const lngInput = document.getElementById("lngInput");
         const text1 = document.getElementById("text1");
         const pre1 = document.getElementById("pre1");
         const runbutton = document.getElementById("runbutton");
@@ -67,11 +78,31 @@
 
         xInput.addEventListener("change", function () {
             clientPositionArray["coords"][0] = parseFloat(xInput.value);
+
+            lngInput.value = ol.proj.toLonLat([xInput.value, yInput.value])[0];
+            latInput.value = ol.proj.toLonLat([xInput.value, yInput.value])[1];
         });
 
         yInput.addEventListener("change", function () {
             clientPositionArray["coords"][1] = parseFloat(yInput.value);
-            console.log(clientPositionArray)
+
+            lngInput.value = ol.proj.toLonLat([xInput.value, yInput.value])[0];
+            latInput.value = ol.proj.toLonLat([xInput.value, yInput.value])[1];
+        });
+
+        latInput.addEventListener("change", function () {
+            clientPositionArray["coords"][0] = parseFloat(xInput.value);
+
+            xInput.value = ol.proj.fromLonLat([lngInput.value, latInput.value])[0];
+            yInput.value = ol.proj.fromLonLat([lngInput.value, latInput.value])[1];
+        });
+        console.log(ol.proj.fromLonLat([14, 57]))
+
+        lngInput.addEventListener("change", function () {
+            clientPositionArray["coords"][1] = parseFloat(yInput.value);
+
+            xInput.value = ol.proj.fromLonLat([lngInput.value, latInput.value])[0];
+            yInput.value = ol.proj.fromLonLat([lngInput.value, latInput.value])[1];
         });
 
         const clientPositionArray = {
@@ -80,19 +111,19 @@
 
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
-                try {
-                    const userList = JSON.parse(this.responseText);
-                    for (let i = 0; i < userList.length; i++) {
-                        userList[i]["localTime"] = new Date(userList[i]["timeStamp"]).toLocaleString();
-                        userList[i]["coordinates"] = convert3857to4326(userList[i]["coords"]);
-                        userList[i]["lastUpdate"] = msToTime(Date.now() - userList[i]["timeStamp"]);
-                        userList[i]["heading"] = Math.round(radToDeg(userList[i]["heading"]));
-                    }
-                    pre1.innerHTML = JSON.stringify(userList, undefined, 2);
-                } catch {
-                    console.log(this.responseText);
+            try {
+                const userList = JSON.parse(this.responseText);
+                for (let i = 0; i < userList.length; i++) {
+                    userList[i]["localTime"] = new Date(userList[i]["timeStamp"]).toLocaleString();
+                    userList[i]["coordinates"] = ol.proj.toLonLat(userList[i]["coords"]);
+                    userList[i]["lastUpdate"] = msToTime(Date.now() - userList[i]["timeStamp"]);
+                    userList[i]["heading"] = Math.round(radToDeg(userList[i]["heading"]));
                 }
+                pre1.innerHTML = JSON.stringify(userList, undefined, 2);
+            } catch {
+                console.log(this.responseText);
             }
+        }
         xhttp.open("POST", "https://jole84.se/locationHandler/sql-location-handler.php");
         xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhttp.send();
@@ -102,32 +133,21 @@
             date.value = (setDate.toLocaleDateString());
             time.value = (setDate.toLocaleTimeString());
             updateUserPosition();
+            text1.innerHTML = setDate.getTime();
         }
 
         function radToDeg(rad) {
             return rad * (180 / Math.PI);
         }
 
-        function convert3857to4326(coord) {
-            const e_value = 2.7182818284;
-            const X = 20037508.34;
+        // longitude = 14
+        // latitude = 57
+        // [14, 57]
 
-            const lat3857 = coord[1];
-            const long3857 = coord[0];
+        // x = 1 558 472.87110583
+        // y = 7 760 118.672902454
+        // [1558849.778967426, 7760325.17864454]
 
-            //converting the longitute from epsg 3857 to 4326
-            const long4326 = (long3857 * 180) / X;
-
-            //converting the latitude from epsg 3857 to 4326 split in multiple lines for readability        
-            let lat4326 = lat3857 / (X / 180);
-            const exponent = (Math.PI / 180) * lat4326;
-
-            lat4326 = Math.atan(Math.pow(e_value, exponent));
-            lat4326 = lat4326 / (Math.PI / 360); // Here is the fixed line
-            lat4326 = lat4326 - 90;
-
-            return { lat: lat4326.toFixed(5), lng: long4326.toFixed(5) };
-        }
         function msToTime(milliseconds) {
             return Math.ceil(milliseconds / 1000 / 60) + " min sedan";
         }
@@ -145,7 +165,7 @@
                     const userList = JSON.parse(this.responseText);
                     for (let i = 0; i < userList.length; i++) {
                         userList[i]["localTime"] = new Date(userList[i]["timeStamp"]).toLocaleString();
-                        userList[i]["coordinates"] = convert3857to4326(userList[i]["coords"]);
+                        userList[i]["coordinates"] = ol.proj.toLonLat(userList[i]["coords"]);
                         userList[i]["lastUpdate"] = msToTime(Date.now() - userList[i]["timeStamp"]);
                         userList[i]["heading"] = Math.round(radToDeg(userList[i]["heading"]));
                     }

@@ -54,7 +54,7 @@
             return { lat: lat4326.toFixed(5), lng: long4326.toFixed(5) };
         }
         function msToTime(milliseconds) {
-            return milliseconds < 120000 ? "alldeles nyss" : (Math.ceil(milliseconds / 1000 / 60) + " min sedan");
+            return Math.ceil(milliseconds / 1000 / 60) + " min sedan";
         }
     </script>
 </body>
