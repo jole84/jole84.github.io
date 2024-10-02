@@ -6,37 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/ol@9.2.4/dist/ol.js"></script>
     <title>Document</title>
+    <style>
+        #container {
+            padding: 3rem;
+        }
+    </style>
 </head>
 
 <body>
-    <input id="userNameInput" type="text" placeholder="userName" value="test user">
-    <div id="dateSelector">
-        <input id="date" type="date">
-        <input id="time" type="time">
+    <div id="container">
+
+        <input id="userNameInput" type="text" placeholder="userName">
+        <p>
+            <input id="groupNameInput" type="text" placeholder="groupName">
+        </p>
+        <div id="dateSelector">
+            <input id="date" type="date">
+            <input id="time" type="time">
+        </div>
+        <p>
+            <input id="headingInput" type="number" min="0" max="360" placeholder="heading">
+            <input id="accuracyInput" type="number" placeholder="accuracy">
+            <input id="speedInput" type="number" placeholder="speed">
+        </p>
+        <p>
+            <input id="xInput" type="number" placeholder="1558472.8711058302" step="100">
+            <label for="xInput">x</label>
+            <input id="yInput" type="number" placeholder="7760118.6729024565" step="100">
+            <label for="yInput">y</label>
+        </p>
+        <p>
+            <input id="latInput" type="number" placeholder="57.00" step="0.01">
+            <label for="latInput">lat</label>
+            <input id="lngInput" type="number" placeholder="14.00" step="0.01">
+            <label for="lngInput    ">lng</label>
+        </p>
+        <div id="text1"></div>
+        <button id="runbutton" onclick="updateUserPosition()">update user</button>
+        <button id="removebutton" onclick="removeUserPosition()">remove user</button>
+        <pre id="pre1"></pre>
     </div>
-    <input id="headingInput" type="number" min="0" max="360" placeholder="heading">
-    <input id="accuracyInput" type="number" placeholder="accuracy">
-    <input id="speedInput" type="number" placeholder="speed">
-    <p>
-        <input id="xInput" type="number" placeholder="x" value=1558472.8711058302 step="100">
-        <label for="xInput">x</label>
-        <input id="yInput" type="number" placeholder="y" value=7760118.6729024565 step="100">
-        <label for="yInput">y</label>
-    </p>
-    <p>
-        <input id="latInput" type="number" placeholder="x" value=57.00 step="0.01">
-        <label for="latInput">lat</label>
-        <input id="lngInput" type="number" placeholder="y" value=14.00 step="0.01">
-        <label for="lngInput    ">lng</label>
-    </p>
-    <div id="text1"></div>
-    <button id="runbutton" onclick="updateUserPosition()">update user</button>
-    <button id="removebutton" onclick="removeUserPosition()">remove user</button>
-    <pre id="pre1"></pre>
+
+
     <script>
         const date = document.getElementById("date");
         const time = document.getElementById("time");
         const userNameInput = document.getElementById("userNameInput");
+        const groupNameInput = document.getElementById("groupNameInput");
         const speedInput = document.getElementById("speedInput");
         const accuracyInput = document.getElementById("accuracyInput");
         const headingInput = document.getElementById("headingInput");
@@ -62,6 +78,10 @@
 
         userNameInput.addEventListener("change", function () {
             clientPositionArray["userName"] = userNameInput.value;
+        });
+
+        groupNameInput.addEventListener("change", function () {
+            clientPositionArray["groupName"] = groupNameInput.value;
         });
 
         speedInput.addEventListener("change", function () {
@@ -96,7 +116,6 @@
             xInput.value = ol.proj.fromLonLat([lngInput.value, latInput.value])[0];
             yInput.value = ol.proj.fromLonLat([lngInput.value, latInput.value])[1];
         });
-        console.log(ol.proj.fromLonLat([14, 57]))
 
         lngInput.addEventListener("change", function () {
             clientPositionArray["coords"][1] = parseFloat(yInput.value);
@@ -108,25 +127,6 @@
         const clientPositionArray = {
             "coords": [],
         };
-
-        const xhttp = new XMLHttpRequest();
-        xhttp.onload = function () {
-            try {
-                const userList = JSON.parse(this.responseText);
-                for (let i = 0; i < userList.length; i++) {
-                    userList[i]["localTime"] = new Date(userList[i]["timeStamp"]).toLocaleString();
-                    userList[i]["coordinates"] = ol.proj.toLonLat(userList[i]["coords"]);
-                    userList[i]["lastUpdate"] = msToTime(Date.now() - userList[i]["timeStamp"]);
-                    userList[i]["heading"] = Math.round(radToDeg(userList[i]["heading"]));
-                }
-                pre1.innerHTML = JSON.stringify(userList, undefined, 2);
-            } catch {
-                console.log(this.responseText);
-            }
-        }
-        xhttp.open("POST", "https://jole84.se/locationHandler/sql-location-handler.php");
-        xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhttp.send();
 
         function removeUserPosition() {
             setDate = new Date(0);
@@ -157,8 +157,10 @@
         }
 
         function updateUserPosition() {
+            console.log(clientPositionArray);
             const xhttp = new XMLHttpRequest();
             clientPositionArray["userName"] = userNameInput.value;
+            clientPositionArray["groupName"] = groupNameInput.value;
             clientPositionArray["timeStamp"] = setDate.getTime();
             clientPositionArray["coords"] = [parseFloat(xInput.value), parseFloat(yInput.value)];
             clientPositionArray["heading"] = degToRad(headingInput.value) || 0;
@@ -178,9 +180,9 @@
                     console.log(this.responseText);
                 }
             }
-            xhttp.open("POST", "https://jole84.se/locationHandler/sql-location-handler.php");
+            xhttp.open("POST", "sql-location-handler.php");
             xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhttp.send("q=" + JSON.stringify(clientPositionArray));
+            xhttp.send(!!clientPositionArray["userName"] ? ("q=" + JSON.stringify(clientPositionArray)) : "");
         }
     </script>
 </body>
