@@ -7,6 +7,9 @@
     <script src="https://cdn.jsdelivr.net/npm/ol@9.2.4/dist/ol.js"></script>
     <title>Document</title>
     <style>
+        html, body {
+            font-family: monospace;
+        }
         #container {
             padding: 3rem;
         }
@@ -52,13 +55,15 @@
         </p>
         <p>
             <label for="latInput">lat:</label>
-            <input id="latInput" type="number" placeholder="57.00" step="0.01">
+            <input id="latInput" type="number" placeholder="57.00000" step="0.0001">
             <label for="lngInput">lng:</label>
-            <input id="lngInput" type="number" placeholder="14.00" step="0.01">
+            <input id="lngInput" type="number" placeholder="14.00000" step="0.0001">
         </p>
 
         <button id="clearInput">clear inputs</button>
-        <div id="text1"></div>
+        <p>
+            <div id="text1"></div>
+        </p>
         <button id="runbutton" onclick="updateUserPosition()">update user</button>
         <button id="removebutton" onclick="removeUserPosition()">remove user</button>
 
@@ -132,29 +137,29 @@
         xInput.addEventListener("change", function () {
             clientPositionArray["coords"][0] = parseFloat(xInput.value);
 
-            lngInput.value = ol.proj.toLonLat([xInput.value, yInput.value])[0];
-            latInput.value = ol.proj.toLonLat([xInput.value, yInput.value])[1];
+            lngInput.value = (ol.proj.toLonLat([xInput.value, yInput.value])[0]).toFixed(5);
+            latInput.value = (ol.proj.toLonLat([xInput.value, yInput.value])[1]).toFixed(5);
         });
 
         yInput.addEventListener("change", function () {
             clientPositionArray["coords"][1] = parseFloat(yInput.value);
 
-            lngInput.value = ol.proj.toLonLat([xInput.value, yInput.value])[0];
-            latInput.value = ol.proj.toLonLat([xInput.value, yInput.value])[1];
+            lngInput.value = (ol.proj.toLonLat([xInput.value, yInput.value])[0]).toFixed(5);
+            latInput.value = (ol.proj.toLonLat([xInput.value, yInput.value])[1]).toFixed(5);
         });
 
         latInput.addEventListener("change", function () {
             clientPositionArray["coords"][0] = parseFloat(xInput.value);
 
-            xInput.value = ol.proj.fromLonLat([lngInput.value, latInput.value])[0];
-            yInput.value = ol.proj.fromLonLat([lngInput.value, latInput.value])[1];
+            xInput.value = (ol.proj.fromLonLat([lngInput.value, latInput.value])[0]).toFixed(5);
+            yInput.value = (ol.proj.fromLonLat([lngInput.value, latInput.value])[1]).toFixed(5);
         });
 
         lngInput.addEventListener("change", function () {
             clientPositionArray["coords"][1] = parseFloat(yInput.value);
 
-            xInput.value = ol.proj.fromLonLat([lngInput.value, latInput.value])[0];
-            yInput.value = ol.proj.fromLonLat([lngInput.value, latInput.value])[1];
+            xInput.value = (ol.proj.fromLonLat([lngInput.value, latInput.value])[0]).toFixed(5);
+            yInput.value = (ol.proj.fromLonLat([lngInput.value, latInput.value])[1]).toFixed(5);
         });
 
         const clientPositionArray = {
@@ -225,10 +230,10 @@
                             const speedInputValue = userList[i]["speed"];
                             const accuracyInputValue = userList[i]["accuracy"];
                             const headingInputValue = userList[i]["heading"];
-                            const xInputValue = userList[i]["coords"][0];
-                            const yInputValue = userList[i]["coords"][1];
-                            const latInputValue = userList[i]["coordinates"][1];
-                            const lngInputValue = userList[i]["coordinates"][0];
+                            const xInputValue = (userList[i]["coords"][0]).toFixed(5);
+                            const yInputValue = (userList[i]["coords"][1]).toFixed(5);
+                            const latInputValue = (userList[i]["coordinates"][1]).toFixed(5);
+                            const lngInputValue = (userList[i]["coordinates"][0]).toFixed(5);
                             userNameInput.value = userNameInputValue;
                             groupNameInput.value = groupNameInputValue;
                             speedInput.value = speedInputValue;
