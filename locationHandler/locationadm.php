@@ -198,7 +198,6 @@
         }
 
         function updateUserPosition() {
-            console.log(clientPositionArray);
             const xhttp = new XMLHttpRequest();
             setDate = new Date(date.value + "T" + time.value);
             clientPositionArray["userName"] = userNameInput.value;
@@ -208,6 +207,7 @@
             clientPositionArray["heading"] = degToRad(headingInput.value) || 0;
             clientPositionArray["accuracy"] = accuracyInput.value || 10;
             clientPositionArray["speed"] = speedInput.value || 0;
+            console.log(Object.keys(clientPositionArray).map(b => `${b}=${clientPositionArray[b]}`).join(','));
             xhttp.onload = function () {
                 try {
                     const userList = JSON.parse(this.responseText);
