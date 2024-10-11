@@ -256,8 +256,8 @@
                         userList[i]["heading"] = Math.round(radToDeg(userList[i]["heading"]));
                     }
                     pre1.innerHTML = JSON.stringify(userList, undefined, 2);
-                } catch {
-                    console.log(this.responseText);
+                } catch (error) {
+                    console.log(error);
                 }
             }
             xhttp.open("POST", "sql-location-handler.php");

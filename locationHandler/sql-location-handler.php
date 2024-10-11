@@ -1,5 +1,5 @@
 <?php
-// http://localhost:8080/sqltest.php?q={%22timeStamp%22:1727377794278,%22userName%22:%22Test%20user2%22,%22coords%22:[1601556.5673312724,8264789.643593338],%22heading%22:1,%22accuracy%22:10,%22speed%22:55}
+// http://localhost:8080/sql-location-handler.php?q={%22timeStamp%22:1727377794278,%22userName%22:%22Test%20user2%22,%22coords%22:[1601556.5673312724,8264789.643593338],%22heading%22:1,%22accuracy%22:10,%22speed%22:55}
 // Create a DSN for the database using its filename
 $fileName = "db.sqlite";
 $dsn = "sqlite:$fileName";
