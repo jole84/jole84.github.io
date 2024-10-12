@@ -3,8 +3,6 @@
 // Create a DSN for the database using its filename
 $fileName = "db.sqlite";
 $dsn = "sqlite:$fileName";
-$q = $_REQUEST["q"]; // load data from current user
-$qAsArray = json_decode($q, true);
 $maxAgeMS = 10800000; // 3 hour * 60 minutes * 60 seconds * 1000 milliseconds
 
 function connectToDatabase(string $dsn): object
@@ -39,13 +37,13 @@ $stmt = $db->prepare($sqlcreate);
 $stmt->execute();
 
 // ----------------------insert or update--------------------
-if (!!$qAsArray) {
-    $userName = $qAsArray["userName"];
-    $timeStamp = $qAsArray["timeStamp"];
-    $coords = json_encode($qAsArray["coords"]);
-    $heading = $qAsArray["heading"];
-    $accuracy = $qAsArray["accuracy"];
-    $speed = $qAsArray["speed"];
+if (!!$_POST["userName"]) {
+    $userName = $_POST["userName"];
+    $timeStamp = $_POST["timeStamp"];
+    $coords = $_POST["coords"];
+    $heading = $_POST["heading"];
+    $accuracy = $_POST["accuracy"];
+    $speed = $_POST["speed"];
     
     $sqlinsert = <<<SQL
     INSERT or REPLACE INTO 
@@ -77,7 +75,4 @@ $stmt->execute();
 
 $res = $stmt->fetchAll();
 header('Content-Type: application/json');
-foreach ($res as &$row) {
-    $row["coords"] = json_decode($row["coords"], true);
-}
 echo json_encode($res);

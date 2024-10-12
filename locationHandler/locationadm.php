@@ -203,11 +203,12 @@
             clientPositionArray["userName"] = userNameInput.value;
             clientPositionArray["groupName"] = groupNameInput.value;
             clientPositionArray["timeStamp"] = setDate.getTime();
-            clientPositionArray["coords"] = [parseFloat(xInput.value), parseFloat(yInput.value)];
+            clientPositionArray["coords"] = JSON.stringify([parseFloat(xInput.value), parseFloat(yInput.value)]);
             clientPositionArray["heading"] = degToRad(headingInput.value) || 0;
             clientPositionArray["accuracy"] = accuracyInput.value || 10;
             clientPositionArray["speed"] = speedInput.value || 0;
-            console.log(Object.keys(clientPositionArray).map(b => `${b}=${clientPositionArray[b]}`).join(','));
+            const clientPositionString = Object.keys(clientPositionArray).map(b => `${b}=${clientPositionArray[b]}`).join('&');
+            console.log(clientPositionString);
             xhttp.onload = function () {
                 try {
                     const userList = JSON.parse(this.responseText);
@@ -222,6 +223,7 @@
                         para.innerText = userList[i]["userName"];
                         para.classList.add("userNameClick");
 
+                        userList[i]["coords"] =JSON.parse(userList[i]["coords"]);
                         userList[i]["coordinates"] = ol.proj.toLonLat(userList[i]["coords"]);
                         para.addEventListener("click", function () {
                             const userNameInputValue = userList[i]["userName"];
@@ -262,7 +264,7 @@
             }
             xhttp.open("POST", "sql-location-handler.php");
             xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhttp.send(!!clientPositionArray["userName"] ? ("q=" + JSON.stringify(clientPositionArray)) : "");
+            xhttp.send(!!clientPositionArray["userName"] ? clientPositionString : "");
         }
 
         updateUserPosition()
