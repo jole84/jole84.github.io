@@ -27,7 +27,7 @@ const layers = [
         groupName: "jole84",
         baseLayer: true,
     }),
-    
+
     slitlagerkarta_nedtonad = new ol.layer.Tile({
         source: new ol.source.XYZ({
             url: 'https://jole84.se/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg',
@@ -190,6 +190,31 @@ const layers = [
         name: "Open Sea Map",
         groupName: "osm",
         baseLayer: false,
+    }),
+
+
+    // RAA
+    raa = new ol.layer.Tile({
+        source: new ol.source.TileWMS({
+            url: "https://karta.raa.se/sjokort/?REQUEST=GetMap",
+            params: {
+                SERVICE: "WMS",
+                VERSION: "1.1.1",
+                LAYERS: "OgcWmsLayer0",
+                FORMAT: "image/png",
+                TRANSPARENT: true,
+                TILED: true,
+                WIDTH: 256,
+                HEIGHT: 256,
+                SRS: "EPSG:3857",
+            },
+            // crossOrigin: 'Anonymous',
+        }),
+        visible: false,
+        layerName: "raa",
+        name: "RAA Sjökort",
+        groupName: "raa",
+        baseLayer: true,
     }),
 
     // Eniro
