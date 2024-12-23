@@ -80,6 +80,10 @@
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
     }
+
+    .row {
+      display: table;
+    }
   </style>
 </head>
 
@@ -98,7 +102,10 @@
     <p class="lead text-muted">Skräddarsydd karta baserad på öppna data från Lantmäteriet (Topografi 50) och vägdata
       från Trafikverket. Enkel webbaserad applikation för navigering utan behov av app-installation samt oberoende av
       operativsystem.</p>
-    <a href="https://jole84.se/legend.svg"><img id="legend" class="rounded" src="https://jole84.se/legend.svg"></a><br>
+    <div class="row">
+      <a href="https://jole84.se/legend.svg"><img id="legend" class="rounded" src="https://jole84.se/legend.svg"></a>
+      <a href="qrcode_nav-app.png"><img src="qrcode_nav-app.png" height="150"></a>
+    </div>
     <hr>
 
     <a id="linkButton" href="https://jole84.se/nav-app/index.html" class="btn btn-danger my-2">Webbaserad
