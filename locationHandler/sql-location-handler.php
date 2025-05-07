@@ -25,8 +25,8 @@ $sqlcreate = <<<SQL
     CREATE TABLE  IF NOT EXISTS "locationData" (
     "userName"	TEXT NOT NULL,
     "timeStamp"	INTEGER NOT NULL,
-    "x"         NUMERIC,
-    "y"         NUMERIC,
+    "x"         INTEGER,
+    "y"         INTEGER,
     "heading"   INTEGER,
     "accuracy"  INTEGER,
     "speed"     INTEGER,
