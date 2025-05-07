@@ -1,5 +1,4 @@
 <?php
-// http://localhost:8080/sql-location-handler.php?q={%22timeStamp%22:1727377794278,%22userName%22:%22Test%20user2%22,%22coords%22:[1601556.5673312724,8264789.643593338],%22heading%22:1,%22accuracy%22:10,%22speed%22:55}
 // Create a DSN for the database using its filename
 $fileName = "db.sqlite";
 $dsn = "sqlite:$fileName";
@@ -26,7 +25,8 @@ $sqlcreate = <<<SQL
     CREATE TABLE  IF NOT EXISTS "locationData" (
     "userName"	TEXT NOT NULL,
     "timeStamp"	INTEGER NOT NULL,
-    "coords"	TEXT,
+    "x"         NUMERIC,
+    "y"         NUMERIC,
     "heading"   INTEGER,
     "accuracy"  INTEGER,
     "speed"     INTEGER,
@@ -40,15 +40,16 @@ $stmt->execute();
 if (!!$_POST["userName"]) {
     $userName = $_POST["userName"];
     $timeStamp = $_POST["timeStamp"];
-    $coords = $_POST["coords"];
+    $x = $_POST["x"];
+    $y = $_POST["y"];
     $heading = $_POST["heading"];
     $accuracy = $_POST["accuracy"];
     $speed = $_POST["speed"];
     
     $sqlinsert = <<<SQL
     INSERT or REPLACE INTO 
-    locationData(userName, timeStamp, coords, heading, accuracy, speed) 
-    VALUES ('$userName', $timeStamp, '$coords', $heading, $accuracy, $speed);
+    locationData(userName, timeStamp, x, y, heading, accuracy, speed) 
+    VALUES ('$userName', $timeStamp, $x, $y, $heading, $accuracy, $speed);
 SQL;
 
     $stmt = $db->prepare($sqlinsert);

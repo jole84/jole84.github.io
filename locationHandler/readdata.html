@@ -21,9 +21,10 @@
             .then(response => response.json())
             .then(result => {
                 for (let i = 0; i < result.length; i++) {
-                    result[i]["coords"] = JSON.parse(result[i]["coords"]);
+                    result[i]["x"] = result[i]["x"];
+                    result[i]["y"] = result[i]["y"];
                     result[i]["localTime"] = new Date(result[i]["timeStamp"]).toLocaleString();
-                    result[i]["coordinates"] = convert3857to4326(result[i]["coords"]);
+                    result[i]["coordinates"] = convert3857to4326([result[i]["x"], result[i]["y"]]);
                     result[i]["lastUpdate"] = msToTime(Date.now() - result[i]["timeStamp"]);
                     result[i]["heading"] = Math.round(radToDeg(result[i]["heading"]));
                 }
