@@ -68,7 +68,7 @@ $stmt->execute();
 
 // ----------------------read--------------------
 $sqlread = <<<SQL
-    select * from locationData;
+    SELECT * FROM locationData ORDER BY timeStamp;
 SQL;
 
 $stmt = $db->prepare($sqlread);
