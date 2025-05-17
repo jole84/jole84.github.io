@@ -36,16 +36,16 @@ SQL;
 $stmt = $db->prepare($sqlcreate);
 $stmt->execute();
 
+$userName = $_POST["userName"];
+$timeStamp = $_POST["timeStamp"];
+$x = $_POST["x"];
+$y = $_POST["y"];
+$heading = $_POST["heading"];
+$accuracy = $_POST["accuracy"];
+$speed = $_POST["speed"];
+
 // ----------------------insert or update--------------------
 if (!!$_POST["userName"]) {
-    $userName = $_POST["userName"];
-    $timeStamp = $_POST["timeStamp"];
-    $x = $_POST["x"];
-    $y = $_POST["y"];
-    $heading = $_POST["heading"];
-    $accuracy = $_POST["accuracy"];
-    $speed = $_POST["speed"];
-    
     $sqlinsert = <<<SQL
     INSERT or REPLACE INTO 
     locationData(userName, timeStamp, x, y, heading, accuracy, speed) 
@@ -68,7 +68,7 @@ $stmt->execute();
 
 // ----------------------read--------------------
 $sqlread = <<<SQL
-    SELECT * FROM locationData ORDER BY timeStamp;
+    SELECT * FROM locationData WHERE userName IS NOT '$userName' ORDER BY timeStamp;
 SQL;
 
 $stmt = $db->prepare($sqlread);
