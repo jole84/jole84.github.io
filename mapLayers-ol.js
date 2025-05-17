@@ -41,6 +41,48 @@ const layers = [
         baseLayer: true,
     }),
 
+    // osm
+    osm = new ol.layer.Tile({
+        className: "saturated",
+        source: new ol.source.OSM({
+            crossOrigin: 'Anonymous',
+        }),
+        visible: false,
+        layerName: "osm",
+        name: "Open Street Map",
+        groupName: "osm",
+        baseLayer: true,
+    }),
+
+    openTopoMap = new ol.layer.Tile({
+        source: new ol.source.OSM({
+            url: "https://tile.opentopomap.org/{z}/{x}/{y}.png",
+            maxZoom: 15,
+            crossOrigin: 'Anonymous',
+        }),
+        visible: false,
+        layerName: "openTopoMap",
+        name: "Open Topo Map",
+        groupName: "osm",
+        baseLayer: true,
+    }),
+
+    openseamap = new ol.layer.Tile({
+        source: new ol.source.OSM({
+            url: "https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",
+            maxZoom: 18,
+            crossOrigin: 'Anonymous',
+        }),
+        opacity: 0.9,
+        visible: false,
+        minZoom: 12,
+        layerName: "openSeaMap",
+        name: "Open Sea Map",
+        groupName: "osm",
+        baseLayer: false,
+    }),
+
+
     // Lantmäteriet
     topo = new ol.layer.Tile({
         source: new ol.source.XYZ({
@@ -54,6 +96,38 @@ const layers = [
         groupName: "lantm",
         baseLayer: true,
     }),
+
+    topowms = new ol.layer.Tile({
+        source: new ol.source.TileWMS({
+            url: "https://minkarta.lantmateriet.se/map/topowebb",
+            params: {
+                layers: "topowebbkartan",
+                TILED: true,
+            },
+            crossOrigin: 'Anonymous',
+        }),
+        visible: false,
+        layerName: "topowms",
+        name: "Lantmäteriet topoWMS",
+        groupName: "lantm",
+        baseLayer: true,
+    }),
+
+    // topowebbkartan_nedtonad = new ol.layer.Tile({
+    //     source: new ol.source.TileWMS({
+    //         url: "https://minkarta.lantmateriet.se/map/topowebb",
+    //         params: {
+    //             layers: "topowebbkartan_nedtonad",
+    //             TILED: true,
+    //         },
+    //         crossOrigin: 'Anonymous',
+    //     }),
+    //     visible: false,
+    //     layerName: "topowebbkartan_nedtonad",
+    //     name: "Lantmäteriet topowebbkartan_nedtonad",
+    //     groupName: "lantm",
+    //     baseLayer: true,
+    // }),
 
     ortofoto = new ol.layer.Tile({
         source: new ol.source.TileWMS({
@@ -70,6 +144,22 @@ const layers = [
         groupName: "lantm",
         baseLayer: true,
     }),
+
+    //     ortofotoir = new ol.layer.Tile({
+    //     source: new ol.source.TileWMS({
+    //         url: "https://minkarta.lantmateriet.se/map/ortofoto/",
+    //         params: {
+    //             layers: "Ortofoto_IR",
+    //             TILED: true,
+    //         },
+    //         crossOrigin: 'Anonymous',
+    //     }),
+    //     visible: false,
+    //     layerName: "ortofotoir",
+    //     name: "Lantmäteriet Ortofoto IR",
+    //     groupName: "lantm",
+    //     baseLayer: true,
+    // }),
 
     flyg_60 = new ol.layer.Tile({
         source: new ol.source.TileWMS({
@@ -151,48 +241,6 @@ const layers = [
         baseLayer: false,
     }),
 
-    // osm
-    osm = new ol.layer.Tile({
-        className: "saturated",
-        source: new ol.source.OSM({
-            crossOrigin: 'Anonymous',
-        }),
-        visible: false,
-        layerName: "osm",
-        name: "Open Street Map",
-        groupName: "osm",
-        baseLayer: true,
-    }),
-
-    openTopoMap = new ol.layer.Tile({
-        source: new ol.source.OSM({
-            url: "https://tile.opentopomap.org/{z}/{x}/{y}.png",
-            maxZoom: 15,
-            crossOrigin: 'Anonymous',
-        }),
-        visible: false,
-        layerName: "openTopoMap",
-        name: "Open Topo Map",
-        groupName: "osm",
-        baseLayer: true,
-    }),
-
-    openseamap = new ol.layer.Tile({
-        source: new ol.source.OSM({
-            url: "https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",
-            maxZoom: 18,
-            crossOrigin: 'Anonymous',
-        }),
-        opacity: 0.9,
-        visible: false,
-        minZoom: 12,
-        layerName: "openSeaMap",
-        name: "Open Sea Map",
-        groupName: "osm",
-        baseLayer: false,
-    }),
-
-
     // RAA
     raa = new ol.layer.Tile({
         source: new ol.source.TileWMS({
@@ -218,31 +266,43 @@ const layers = [
     }),
 
     // Eniro
-    eniro_nautical = new ol.layer.Tile({
-        source: new ol.source.XYZ({
-            url: 'https://map.eniro.se/geowebcache/service/tms1.0.0/nautical2x/{z}/{x}/{-y}.png',
-            maxZoom: 17,
-            crossOrigin: 'Anonymous',
-        }),
-        visible: false,
-        layerName: "eniro_nautical",
-        name: "Eniro Sjökort",
-        groupName: "eniro",
-        baseLayer: true,
-    }),
+    // eniro_pbf = new ol.layer.Tile({
+    //     source: new ol.source.VectorTile({
+    //         format: new ol.format.MVT(),
+    //         url : "https://vector-tiles.eniro.com/maps/osm/{z}/{x}/{-y}.vector.pbf",
+    //     }),
+    //     visible: false,
+    //     layerName: "eniro_pbf",
+    //     name: "Eniro",
+    //     groupName: "eniro",
+    //     baseLayer: true,
+    // }),
 
-    eniro_hybrid = new ol.layer.Tile({
-        source: new ol.source.XYZ({
-            url: 'https://map.eniro.se/geowebcache/service/tms1.0.0/hybrid/{z}/{x}/{-y}.png',
-            maxZoom: 17,
-            crossOrigin: 'Anonymous',
-        }),
-        visible: false,
-        layerName: "eniro_hybrid",
-        name: "Eniro Hybrid",
-        groupName: "eniro",
-        baseLayer: false,
-    }),
+    // eniro_nautical = new ol.layer.Tile({
+    //     source: new ol.source.XYZ({
+    //         url: 'https://map.eniro.se/geowebcache/service/tms1.0.0/nautical2x/{z}/{x}/{-y}.png',
+    //         maxZoom: 17,
+    //         crossOrigin: 'Anonymous',
+    //     }),
+    //     visible: false,
+    //     layerName: "eniro_nautical",
+    //     name: "Eniro Sjökort",
+    //     groupName: "eniro",
+    //     baseLayer: true,
+    // }),
+
+    // eniro_hybrid = new ol.layer.Tile({
+    //     source: new ol.source.XYZ({
+    //         url: 'https://map.eniro.se/geowebcache/service/tms1.0.0/hybrid/{z}/{x}/{-y}.png',
+    //         maxZoom: 17,
+    //         crossOrigin: 'Anonymous',
+    //     }),
+    //     visible: false,
+    //     layerName: "eniro_hybrid",
+    //     name: "Eniro Hybrid",
+    //     groupName: "eniro",
+    //     baseLayer: false,
+    // }),
 
     // NVDB
     nvdb_slitlager = new ol.layer.Tile({
@@ -313,11 +373,12 @@ const layers = [
 
     nvdb_vagnummer = new ol.layer.Tile({
         source: new ol.source.TileWMS({
-            url: "https://nvdb2012.trafikverket.se/MapProxy.ashx?mapsvc=InternNetInfo",
+            url: "https://geo-nvdb.trafikverket.se/mapservice/wms.axd/NvdbPaWebb",
             params: {
                 layers: "VagnummerText",
                 TILED: true,
             },
+            crossOrigin: 'Anonymous',
         }),
         visible: false,
         layerName: "nvdb_vagnummer",
