@@ -237,7 +237,7 @@
         });
 
 
-      var newLinkUrl = linkUrl + '?';
+      var newLinkUrl = linkUrl + '?gpxFile=';
 
       if (gpxUrl.value) {
         newLinkUrl += gpxUrl.value;
@@ -249,7 +249,7 @@
         gpx2imgLink.setAttribute("href", "https://jole84.se/html_stuff/gpx2img.html?" + selectFile.value);
       }
 
-      if (newLinkUrl == linkUrl + '?') {
+      if (newLinkUrl == linkUrl + '?gpxFile=') {
         linkCode.innerHTML = linkUrl;
         linkButton.setAttribute("href", linkUrl);
         linkButton2.setAttribute("href", linkUrl);
