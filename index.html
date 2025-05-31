@@ -127,6 +127,9 @@
       <a href="https://jole84.se/rutter" class="link" target="_blank">(Tillängliga rutter)</a><br>
       <select class="form-select" id="selectFile">
         <option>välj gpxfil</option>
+        <option value="https://jole84.se/phpReadFile.php?url=https://transeurotrail.org/wp-content/uploads/gpxsync/S.gpx">TET Sverige</option>
+        <option value="https://jole84.se/phpReadFile.php?url=https://transeurotrail.org/wp-content/uploads/gpxsync/N.gpx">TET Norge</option>
+        <option value="https://jole84.se/phpReadFile.php?url=https://transeurotrail.org/wp-content/uploads/gpxsync/D.gpx">TET Danmark</option>
       </select><br>
       <input class="form-control" id="gpxUrl" name="gpxUrl" size="20" placeholder=".gpx"><br>
     </form>
@@ -229,7 +232,7 @@
           for (var i = 0; i < filesList.length; i++) {
             var opt = filesList[i];
             var el = document.createElement("option");
-            el.textContent = opt;
+            el.textContent = opt.split("/").pop();
             el.value = opt;
             selectFile.appendChild(el);
           }
