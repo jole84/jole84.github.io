@@ -135,7 +135,7 @@
     </form>
 
     <!-- <button id="createLink" class="btn btn-primary my-2" onclick="myFunction()">Uppdatera länk</button><br> -->
-    <input type="file" id="customFileButton" accept=".gpx,application/gpx+xml, .kml" />
+    <input type="file" id="customFileButton" accept=".gpx,application/gpx+xml,.kml,.geojson" />
     <p><b>Länk för delning:</b><br>
       <code class="user-select-all link" id="linkCode">https://jole84.se/nav-app/index.html</code><br>
     </p>
@@ -185,6 +185,8 @@
         gpxFormat = new ol.format.GPX();
       } else if (fileExtention === "kml") {
         gpxFormat = new ol.format.KML({ extractStyles: false });
+      } else if (fileExtention === "geojson") {
+        gpxFormat = new ol.format.GeoJSON();
       }
 
 
