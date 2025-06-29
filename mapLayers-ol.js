@@ -193,37 +193,37 @@ const layers = [
         baseLayer: true,
     }),
 
-    historiskaortofoto97 = new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-            url: "https://api.lantmateriet.se/historiska-ortofoton/wms/v1/token/0b7ab683-07e1-337d-aaad-7e7be7224b12/?",
-            params: {
-                layers: "OI.Histortho_bw_1994,OI.Histortho_bw_1995,OI.Histortho_bw_1996,OI.Histortho_bw_1997,OI.Histortho_bw_1998,OI.Histortho_bw_1999,OI.Histortho_bw_2000",
-                TILED: true,
-            },
-            crossOrigin: 'Anonymous',
-        }),
-        visible: false,
-        layerName: "historiskaortofoto97",
-        name: "Lantmäteriet 94-2000",
-        groupName: "lantm",
-        baseLayer: true,
-    }),
+    // historiskaortofoto97 = new ol.layer.Tile({
+    //     source: new ol.source.TileWMS({
+    //         url: "https://api.lantmateriet.se/historiska-ortofoton/wms/v1/token/0b7ab683-07e1-337d-aaad-7e7be7224b12/?",
+    //         params: {
+    //             layers: "OI.Histortho_bw_1994,OI.Histortho_bw_1995,OI.Histortho_bw_1996,OI.Histortho_bw_1997,OI.Histortho_bw_1998,OI.Histortho_bw_1999,OI.Histortho_bw_2000",
+    //             TILED: true,
+    //         },
+    //         crossOrigin: 'Anonymous',
+    //     }),
+    //     visible: false,
+    //     layerName: "historiskaortofoto97",
+    //     name: "Lantmäteriet 94-2000",
+    //     groupName: "lantm",
+    //     baseLayer: true,
+    // }),
 
-    historiskaortofoto2003 = new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-            url: "https://api.lantmateriet.se/historiska-ortofoton/wms/v1/token/0b7ab683-07e1-337d-aaad-7e7be7224b12/?",
-            params: {
-                layers: "OI.Histortho_bw_2001,OI.Histortho_bw_2003,OI.Histortho_color_2003,OI.Histortho_bw_2004",
-                TILED: true,
-            },
-            crossOrigin: 'Anonymous',
-        }),
-        visible: false,
-        layerName: "historiskaortofoto2003",
-        name: "Lantmäteriet 2001-2004",
-        groupName: "lantm",
-        baseLayer: true,
-    }),
+    // historiskaortofoto2003 = new ol.layer.Tile({
+    //     source: new ol.source.TileWMS({
+    //         url: "https://api.lantmateriet.se/historiska-ortofoton/wms/v1/token/0b7ab683-07e1-337d-aaad-7e7be7224b12/?",
+    //         params: {
+    //             layers: "OI.Histortho_bw_2001,OI.Histortho_bw_2003,OI.Histortho_color_2003,OI.Histortho_bw_2004",
+    //             TILED: true,
+    //         },
+    //         crossOrigin: 'Anonymous',
+    //     }),
+    //     visible: false,
+    //     layerName: "historiskaortofoto2003",
+    //     name: "Lantmäteriet 2001-2004",
+    //     groupName: "lantm",
+    //     baseLayer: true,
+    // }),
 
     grans = new ol.layer.Tile({
         source: new ol.source.TileWMS({
