@@ -41,6 +41,20 @@ const layers = [
         baseLayer: true,
     }),
 
+    jole84vector = new ol.layer.VectorTile({
+        source: new ol.source.VectorTile({
+            format: new ol.format.MVT(),
+            url: 'https://jole84.se/tiles/{z}/{x}/{y}.pbf',
+            minZoom: 6,
+            maxZoom: 14
+        }),
+        visible: false,
+        layerName: "jole84vector",
+        name: "Jole84 Vektor",
+        groupName: "jole84",
+        baseLayer: true,
+    }),
+
     // osm
     osm = new ol.layer.Tile({
         className: "saturated",
