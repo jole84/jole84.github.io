@@ -275,8 +275,8 @@
                             userList[i]["lastUpdate"] = msToTime(Date.now() - userList[i]["timeStamp"]);
                             userList[i]["heading"] = Math.round(radToDeg(userList[i]["heading"]));
                         }
-                        pre1.innerHTML = JSON.stringify(userList, undefined, 2);
                     }
+                    pre1.innerHTML = JSON.stringify(userList, undefined, 2);
                 }).catch((error) => {
                     console.log(error)
                 });
