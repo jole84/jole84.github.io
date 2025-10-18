@@ -7,9 +7,11 @@
     <script src="https://cdn.jsdelivr.net/npm/ol@9.2.4/dist/ol.js"></script>
     <title>location admin</title>
     <style>
-        html, body {
+        html,
+        body {
             font-family: monospace;
         }
+
         #container {
             padding: 3rem;
         }
@@ -31,7 +33,7 @@
         <p>
             <input id="userNameInput" type="text" placeholder="userName">
         </p>
-        
+
         <p>
             <input id="groupNameInput" type="text" placeholder="groupName">
         </p>
@@ -62,7 +64,7 @@
 
         <button id="clearInput">clear inputs</button>
         <p>
-            <div id="text1"></div>
+        <div id="text1"></div>
         </p>
         <button id="runbutton" onclick="updateUserPosition()">update user</button>
         <button id="removebutton" onclick="removeUserPosition()">remove user</button>
@@ -165,14 +167,20 @@
         const clientPositionArray = {};
 
         function removeUserPosition() {
-            setDate = new Date(0);
-            date.value = (setDate.toLocaleDateString());
-            time.value = (setDate.toLocaleTimeString());
-            updateUserPosition();
-            date.value = (new Date().toLocaleDateString());
-            time.value = (new Date().toLocaleTimeString());
-            setDate = new Date(date.value + "T" + time.value);
-            text1.innerHTML = setDate.getTime();
+            // remove old username by setting timeStamp to 0
+            const formData = new FormData();
+            formData.append("userName", userNameInput.value);
+            formData.append("timeStamp", 0);
+            formData.append("x", 0);
+            formData.append("y", 0);
+            formData.append("heading", 0);
+            formData.append("accuracy", 0);
+            formData.append("speed", 0);
+            fetch("https://jole84.se/locationHandler/sql-location-handler.php", {
+                method: "POST",
+                body: formData,
+            });
+            location.reload();
         }
 
         function radToDeg(rad) {
@@ -196,78 +204,84 @@
         }
 
         function updateUserPosition() {
-            const xhttp = new XMLHttpRequest();
+            const formData = new FormData();
             setDate = new Date(date.value + "T" + time.value);
-            clientPositionArray["userName"] = userNameInput.value;
-            clientPositionArray["groupName"] = groupNameInput.value;
-            clientPositionArray["timeStamp"] = setDate.getTime();
-            clientPositionArray["x"] = xInput.value;
-            clientPositionArray["y"] = yInput.value;
-            clientPositionArray["heading"] = degToRad(headingInput.value) || 0;
-            clientPositionArray["accuracy"] = accuracyInput.value || 10;
-            clientPositionArray["speed"] = speedInput.value || 0;
-            const clientPositionString = Object.keys(clientPositionArray).map(b => `${b}=${clientPositionArray[b]}`).join('&');
-            console.log(clientPositionString);
-            xhttp.onload = function () {
-                try {
-                    const userList = JSON.parse(this.responseText);
-                    userList.sort((a, b) => (a["userName"] > b["userName"]) ? 1 : ((b["userName"] > a["userName"]) ? -1 : 0));
-
-                    document.getElementById("addHere").innerHTML = "";
-
-                    for (let i = 0; i < userList.length; i++) {
-                        // create links
-                        const para = document.createElement("a");
-                        const p = document.createElement("p");
-                        para.innerText = userList[i]["userName"];
-                        para.classList.add("userNameClick");
-
-                        userList[i]["x"] =userList[i]["x"];
-                        userList[i]["y"] =userList[i]["y"];
-                        userList[i]["coordinates"] = ol.proj.toLonLat([userList[i]["x"], userList[i]["y"]]);
-                        para.addEventListener("click", function () {
-                            const userNameInputValue = userList[i]["userName"];
-                            const groupNameInputValue = userList[i]["groupName"];
-                            const timeStampInputValue = userList[i]["timeStamp"];
-                            const speedInputValue = userList[i]["speed"];
-                            const accuracyInputValue = userList[i]["accuracy"];
-                            const headingInputValue = userList[i]["heading"];
-                            const xInputValue = (userList[i]["x"]).toFixed(5);
-                            const yInputValue = (userList[i]["y"]).toFixed(5);
-                            const latInputValue = (userList[i]["coordinates"][1]).toFixed(5);
-                            const lngInputValue = (userList[i]["coordinates"][0]).toFixed(5);
-                            userNameInput.value = userNameInputValue;
-                            groupNameInput.value = groupNameInputValue;
-                            speedInput.value = speedInputValue;
-                            accuracyInput.value = accuracyInputValue;
-                            headingInput.value = headingInputValue;
-                            xInput.value = xInputValue;
-                            yInput.value = yInputValue;
-                            latInput.value = latInputValue;
-                            lngInput.value = lngInputValue;
-                            date.value = (new Date(timeStampInputValue).toLocaleDateString());
-                            time.value = (new Date(timeStampInputValue).toLocaleTimeString());
-                            console.log(new Date(timeStampInputValue).toLocaleDateString())
-                            console.log(userNameInputValue + " clicked!");
-                        });
-                        document.getElementById("addHere").appendChild(para);
-                        document.getElementById("addHere").appendChild(p);
-
-                        userList[i]["localTime"] = new Date(userList[i]["timeStamp"]).toLocaleString();
-                        userList[i]["lastUpdate"] = msToTime(Date.now() - userList[i]["timeStamp"]);
-                        userList[i]["heading"] = Math.round(radToDeg(userList[i]["heading"]));
-                    }
-                    pre1.innerHTML = JSON.stringify(userList, undefined, 2);
-                } catch (error) {
-                    console.log(error);
-                }
+            formData.append("userName", userNameInput.value);
+            formData.append("groupName", groupNameInput.value);
+            formData.append("timeStamp", setDate.getTime());
+            formData.append("x", xInput.value || 0);
+            formData.append("y", yInput.value || 0);
+            formData.append("heading", degToRad(headingInput.value) || 0);
+            formData.append("accuracy", accuracyInput.value || 10);
+            formData.append("speed", speedInput.value || 0);
+            fetch("https://jole84.se/locationHandler/sql-location-handler.php", {
+                method: "POST",
+                body: formData,
+            }).then(() => {
+                readUserPosition();
             }
-            xhttp.open("POST", "sql-location-handler.php");
-            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhttp.send(!!clientPositionArray["userName"] ? clientPositionString : "");
+            );
         }
 
-        updateUserPosition()
+        function readUserPosition() {
+            fetch("https://jole84.se/locationHandler/sql-location-handler.php", {
+                method: "POST",
+            }).then((response) => response.json())
+                .then((userList) => {
+                    pre1.innerHTML = "";
+                    for (let i = 0; i < userList.length; i++) {
+                        userList.sort((a, b) => (a["userName"] > b["userName"]) ? 1 : ((b["userName"] > a["userName"]) ? -1 : 0));
+                        document.getElementById("addHere").innerHTML = "";
+
+                        for (let i = 0; i < userList.length; i++) {
+                            // create links
+                            const para = document.createElement("a");
+                            const p = document.createElement("p");
+                            para.innerText = userList[i]["userName"];
+                            para.classList.add("userNameClick");
+
+                            userList[i]["x"] = userList[i]["x"];
+                            userList[i]["y"] = userList[i]["y"];
+                            userList[i]["coordinates"] = ol.proj.toLonLat([userList[i]["x"], userList[i]["y"]]);
+                            para.addEventListener("click", function () {
+                                const userNameInputValue = userList[i]["userName"];
+                                const groupNameInputValue = userList[i]["groupName"];
+                                const timeStampInputValue = userList[i]["timeStamp"];
+                                const speedInputValue = userList[i]["speed"];
+                                const accuracyInputValue = userList[i]["accuracy"];
+                                const headingInputValue = userList[i]["heading"];
+                                const xInputValue = (userList[i]["x"]).toFixed(5);
+                                const yInputValue = (userList[i]["y"]).toFixed(5);
+                                const latInputValue = (userList[i]["coordinates"][1]).toFixed(5);
+                                const lngInputValue = (userList[i]["coordinates"][0]).toFixed(5);
+                                userNameInput.value = userNameInputValue;
+                                groupNameInput.value = groupNameInputValue;
+                                speedInput.value = speedInputValue;
+                                accuracyInput.value = accuracyInputValue;
+                                headingInput.value = headingInputValue;
+                                xInput.value = xInputValue;
+                                yInput.value = yInputValue;
+                                latInput.value = latInputValue;
+                                lngInput.value = lngInputValue;
+                                date.value = (new Date(timeStampInputValue).toLocaleDateString());
+                                time.value = (new Date(timeStampInputValue).toLocaleTimeString());
+                                console.log(new Date(timeStampInputValue).toLocaleDateString())
+                                console.log(userNameInputValue + " clicked!");
+                            });
+                            document.getElementById("addHere").appendChild(para);
+                            document.getElementById("addHere").appendChild(p);
+
+                            userList[i]["localTime"] = new Date(userList[i]["timeStamp"]).toLocaleString();
+                            userList[i]["lastUpdate"] = msToTime(Date.now() - userList[i]["timeStamp"]);
+                            userList[i]["heading"] = Math.round(radToDeg(userList[i]["heading"]));
+                        }
+                        pre1.innerHTML = JSON.stringify(userList, undefined, 2);
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                });
+        };
+        readUserPosition();
     </script>
 
     <?php
