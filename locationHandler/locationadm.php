@@ -229,52 +229,50 @@
             }).then((response) => response.json())
                 .then((userList) => {
                     pre1.innerHTML = "";
+                    userList.sort((a, b) => (a["userName"] > b["userName"]) ? 1 : ((b["userName"] > a["userName"]) ? -1 : 0));
+                    document.getElementById("addHere").innerHTML = "";
+
                     for (let i = 0; i < userList.length; i++) {
-                        userList.sort((a, b) => (a["userName"] > b["userName"]) ? 1 : ((b["userName"] > a["userName"]) ? -1 : 0));
-                        document.getElementById("addHere").innerHTML = "";
+                        // create links
+                        const para = document.createElement("a");
+                        const p = document.createElement("p");
+                        para.innerText = userList[i]["userName"];
+                        para.classList.add("userNameClick");
 
-                        for (let i = 0; i < userList.length; i++) {
-                            // create links
-                            const para = document.createElement("a");
-                            const p = document.createElement("p");
-                            para.innerText = userList[i]["userName"];
-                            para.classList.add("userNameClick");
+                        userList[i]["x"] = userList[i]["x"];
+                        userList[i]["y"] = userList[i]["y"];
+                        userList[i]["coordinates"] = ol.proj.toLonLat([userList[i]["x"], userList[i]["y"]]);
+                        para.addEventListener("click", function () {
+                            const userNameInputValue = userList[i]["userName"];
+                            const groupNameInputValue = userList[i]["groupName"];
+                            const timeStampInputValue = userList[i]["timeStamp"];
+                            const speedInputValue = userList[i]["speed"];
+                            const accuracyInputValue = userList[i]["accuracy"];
+                            const headingInputValue = userList[i]["heading"];
+                            const xInputValue = (userList[i]["x"]).toFixed(5);
+                            const yInputValue = (userList[i]["y"]).toFixed(5);
+                            const latInputValue = (userList[i]["coordinates"][1]).toFixed(5);
+                            const lngInputValue = (userList[i]["coordinates"][0]).toFixed(5);
+                            userNameInput.value = userNameInputValue;
+                            groupNameInput.value = groupNameInputValue;
+                            speedInput.value = speedInputValue;
+                            accuracyInput.value = accuracyInputValue;
+                            headingInput.value = headingInputValue;
+                            xInput.value = xInputValue;
+                            yInput.value = yInputValue;
+                            latInput.value = latInputValue;
+                            lngInput.value = lngInputValue;
+                            date.value = (new Date(timeStampInputValue).toLocaleDateString());
+                            time.value = (new Date(timeStampInputValue).toLocaleTimeString());
+                            console.log(new Date(timeStampInputValue).toLocaleDateString())
+                            console.log(userNameInputValue + " clicked!");
+                        });
+                        document.getElementById("addHere").appendChild(para);
+                        document.getElementById("addHere").appendChild(p);
 
-                            userList[i]["x"] = userList[i]["x"];
-                            userList[i]["y"] = userList[i]["y"];
-                            userList[i]["coordinates"] = ol.proj.toLonLat([userList[i]["x"], userList[i]["y"]]);
-                            para.addEventListener("click", function () {
-                                const userNameInputValue = userList[i]["userName"];
-                                const groupNameInputValue = userList[i]["groupName"];
-                                const timeStampInputValue = userList[i]["timeStamp"];
-                                const speedInputValue = userList[i]["speed"];
-                                const accuracyInputValue = userList[i]["accuracy"];
-                                const headingInputValue = userList[i]["heading"];
-                                const xInputValue = (userList[i]["x"]).toFixed(5);
-                                const yInputValue = (userList[i]["y"]).toFixed(5);
-                                const latInputValue = (userList[i]["coordinates"][1]).toFixed(5);
-                                const lngInputValue = (userList[i]["coordinates"][0]).toFixed(5);
-                                userNameInput.value = userNameInputValue;
-                                groupNameInput.value = groupNameInputValue;
-                                speedInput.value = speedInputValue;
-                                accuracyInput.value = accuracyInputValue;
-                                headingInput.value = headingInputValue;
-                                xInput.value = xInputValue;
-                                yInput.value = yInputValue;
-                                latInput.value = latInputValue;
-                                lngInput.value = lngInputValue;
-                                date.value = (new Date(timeStampInputValue).toLocaleDateString());
-                                time.value = (new Date(timeStampInputValue).toLocaleTimeString());
-                                console.log(new Date(timeStampInputValue).toLocaleDateString())
-                                console.log(userNameInputValue + " clicked!");
-                            });
-                            document.getElementById("addHere").appendChild(para);
-                            document.getElementById("addHere").appendChild(p);
-
-                            userList[i]["localTime"] = new Date(userList[i]["timeStamp"]).toLocaleString();
-                            userList[i]["lastUpdate"] = msToTime(Date.now() - userList[i]["timeStamp"]);
-                            userList[i]["heading"] = Math.round(radToDeg(userList[i]["heading"]));
-                        }
+                        userList[i]["localTime"] = new Date(userList[i]["timeStamp"]).toLocaleString();
+                        userList[i]["lastUpdate"] = msToTime(Date.now() - userList[i]["timeStamp"]);
+                        userList[i]["heading"] = Math.round(radToDeg(userList[i]["heading"]));
                     }
                     pre1.innerHTML = JSON.stringify(userList, undefined, 2);
                 }).catch((error) => {
