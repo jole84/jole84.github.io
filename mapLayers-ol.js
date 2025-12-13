@@ -15,31 +15,31 @@ const layers = [
     // }),
 
     // Jole84
-    slitlagerkarta = new ol.layer.Tile({
-        source: new ol.source.XYZ({
-            url: 'https://jole84.se/slitlagerkarta/{z}/{x}/{y}.jpg',
-            minZoom: 6,
-            maxZoom: 14,
-        }),
-        visible: true,
-        layerName: "slitlagerkarta",
-        name: "Jole84 Terrängkarta",
-        groupName: "jole84",
-        baseLayer: true,
-    }),
+    // slitlagerkarta = new ol.layer.Tile({
+    //     source: new ol.source.XYZ({
+    //         url: 'https://jole84.se/slitlagerkarta/{z}/{x}/{y}.jpg',
+    //         minZoom: 6,
+    //         maxZoom: 14,
+    //     }),
+    //     visible: true,
+    //     layerName: "slitlagerkarta",
+    //     name: "Jole84 Terrängkarta",
+    //     groupName: "jole84",
+    //     baseLayer: true,
+    // }),
 
-    slitlagerkarta_nedtonad = new ol.layer.Tile({
-        source: new ol.source.XYZ({
-            url: 'https://jole84.se/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg',
-            minZoom: 6,
-            maxZoom: 14,
-        }),
-        visible: false,
-        layerName: "slitlagerkarta_nedtonad",
-        name: "Jole84 Vägkarta",
-        groupName: "jole84",
-        baseLayer: true,
-    }),
+    // slitlagerkarta_nedtonad = new ol.layer.Tile({
+    //     source: new ol.source.XYZ({
+    //         url: 'https://jole84.se/slitlagerkarta_nedtonad/{z}/{x}/{y}.jpg',
+    //         minZoom: 6,
+    //         maxZoom: 14,
+    //     }),
+    //     visible: false,
+    //     layerName: "slitlagerkarta_nedtonad",
+    //     name: "Jole84 Vägkarta",
+    //     groupName: "jole84",
+    //     baseLayer: true,
+    // }),
 
     jole84vector = new ol.layer.VectorTile({
         source: new ol.source.VectorTile({
@@ -48,7 +48,7 @@ const layers = [
             minZoom: 6,
             maxZoom: 14
         }),
-        visible: false,
+        visible: true,
         layerName: "jole84vector",
         name: "Jole84 Vektor",
         groupName: "jole84",
