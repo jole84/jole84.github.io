@@ -158,7 +158,8 @@
 <body>
   <div id="map"></div>
   <div id="buttons">
-    <button id="export-png" class="btn btn-outline-dark" role="button"><i class="fa fa-download"></i> Download PNG</button>
+    <button id="export-png" class="btn btn-outline-dark" role="button"><i class="fa fa-download"></i> Download
+      PNG</button>
     <a id="image-download" download="karta.png"></a>
     <button class="btn btn-info" id="clickFileButton">Ladda GPX</button>
     <input type="file" class="form-control" id="customFileButton" multiple
@@ -434,7 +435,7 @@
                 mapContext,
                 matrix,
               );
-              mapContext.fillStyle = "#bfe6ff";
+              // mapContext.fillStyle = "#bfe6ff";
               mapContext.fillRect(0, 0, canvas.width, canvas.height);
               mapContext.drawImage(canvas, 0, 0);
               mapContext.drawImage(document.getElementById("controlImage"), canvas.width - 65, canvas.height - 20, 60, 15);
@@ -621,6 +622,40 @@
 
     const myControl = new ol.control.Control({ element: document.getElementById("controlImage") });
     map.addControl(myControl);
+
+    // map.addLayer(
+    //   new ol.layer.Vector({
+    //     zIndex: 0,
+
+    //     source: new ol.source.Vector({
+    //       features: [
+    //         new ol.Feature({
+    //           geometry: new ol.geom.Polygon(
+    //             [[
+    //               [1558596.7681200877, 7918131.942097035],
+    //               [1604301.1638698056, 7917138.368276389],
+    //               [1576481.0968917166, 7895421.683339411],
+    //             ]]
+    //             // [789587.9316790355, 11079885.539048715],
+    //             // [3673650.0583978305, 10906387.26653372],
+    //             // [3232540.6036082003, 6952442.517237584],
+    //             // [377359.4053335064, 7273249.393448223]
+    //           ),
+    //         })
+    //       ],
+    //     }),
+    //     style: new ol.style.Style({
+    //       fill: new ol.style.Fill({
+    //         color: "red",
+    //       }),
+    //       stroke: new ol.style.Stroke({
+    //         color: "red",
+    //         width: 4,
+    //       }),
+    //     }),
+    //   })
+    // );
+
   </script>
 
 </body>
