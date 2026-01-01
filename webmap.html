@@ -7,8 +7,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <script src="https://cdn.jsdelivr.net/npm/ol@10.5.0/dist/ol.js"></script>
-  <script src="mapLayers-ol.js"></script>
-  <script src="webmap-ol-extra.js"></script>
+  <script src="mapLayers.js"></script>
+  <script src="webmap-extra.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol/ol.css">
   <title>Karta</title>
   <style>
@@ -452,7 +452,7 @@
     });
 
 
-    // add layers from webmap-ol-extra.js
+    // add layers from webmap-extra.js
     extraLayers.forEach(function (element) {
       map.addLayer(element);
     });
