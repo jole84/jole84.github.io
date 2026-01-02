@@ -156,7 +156,7 @@ function fetchRoadCondition() {
             var format = new ol.format.WKT();
             resultRoadCondition.forEach(function (item, index) {
                 var feature = new ol.Feature({
-                    geometry: format.readGeometry(item.Geometry.WGS84).transform("EPSG:4326", "EPSG:3857"),
+                    geometry: format.readGeometry(item.Geometry.WGS84).transform("EPSG:4326", "EPSG:3857").simplify(1000),
                     conditionCode: item.ConditionCode
                 });
                 roadConditionSource.addFeature(feature);

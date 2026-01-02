@@ -270,11 +270,11 @@
       if (gpxSource.getState() === "ready") {
         const padding = 50;
         lastInteraction = new Date();
-        view.fit(gpxSource.getExtent(), {
-          padding: [padding, padding, padding, padding],
-          duration: 500,
-          maxZoom: 15,
-        });
+        // view.fit(gpxSource.getExtent(), {
+        //   padding: [padding, padding, padding, padding],
+        //   duration: 500,
+        //   maxZoom: 15,
+        // });
       }
     });
 
@@ -388,7 +388,7 @@
     document.getElementById("clickFileButton").onclick = function () {
       customFileButton.click();
       gpxLayerPoints.getSource().clear();
-      gpxSource.clear();
+      // gpxSource.clear();
     };
     document.getElementById("customFileButton").addEventListener('change', handleFileSelect, false);
     function handleFileSelect(evt) {

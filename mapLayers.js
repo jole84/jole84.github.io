@@ -333,7 +333,7 @@ const layers = [
     // NVDB
     nvdb_slitlager = new ol.layer.Tile({
         source: new ol.source.TileWMS({
-            url: "https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?",
+            url: "https://nvdbpakarta.trafikverket.se/api/MapProxy/mapProxy/NetInfo?",
             params: {
                 layers: "Slitlager",
                 TILED: true,
@@ -350,7 +350,7 @@ const layers = [
 
     atk_matplats = new ol.layer.Tile({
         source: new ol.source.TileWMS({
-            url: "https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?",
+            url: "https://nvdbpakarta.trafikverket.se/api/MapProxy/mapProxy/NetInfo?",
             params: {
                 layers: "ATK_Matplats",
                 TILED: true,
@@ -366,7 +366,7 @@ const layers = [
 
     rastplats = new ol.layer.Tile({
         source: new ol.source.TileWMS({
-            url: "https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4?",
+            url: "https://nvdbpakarta.trafikverket.se/api/MapProxy/mapProxy/NetInfo?",
             params: {
                 layers: "Rastplats",
                 TILED: true,
@@ -382,7 +382,7 @@ const layers = [
 
     nvdb_hastighetsgrans = new ol.layer.Tile({
         source: new ol.source.TileWMS({
-            url: "https://geo-netinfo.trafikverket.se/MapService/wms.axd/NetInfo_1_4",
+            url: "https://nvdbpakarta.trafikverket.se/api/MapProxy/mapProxy/NetInfo",
             params: {
                 layers: "Hastighetsgrans",
                 TILED: true,
