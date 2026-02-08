@@ -83,7 +83,7 @@ const layers = [
     openTopoMap = new ol.layer.Tile({
         source: new ol.source.OSM({
             url: "https://tile.opentopomap.org/{z}/{x}/{y}.png",
-            maxZoom: 15,
+            maxZoom: 17,
             crossOrigin: 'Anonymous',
         }),
         visible: false,
