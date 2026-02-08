@@ -500,6 +500,7 @@ const colorArray = [
         "Barr- och blandskog": "#d4eeb7ff",
         "Bebyggelse": "#eebf8fff",
         "belagd": "#000000",
+        "forbud": "#000000",
         "bidrag": "#ac7c45",
         "Djurskyddsområde": "#77e250a6",
         "Ej karterat område": "#bfe6ffff",
@@ -533,7 +534,7 @@ const colorArray = [
         "Vattendrag": "#00a6ff",
         "Vattendragsyta": "#bfe6ffff",
         "Vattenyta": "#bfe6ffff",
-        "Åker": "#fff7a6ff",
+        "Åker": "#f8fbdfff",
         "Öppen mark": "#ffffeaff",
     },
     {
@@ -543,6 +544,7 @@ const colorArray = [
         "Barr- och blandskog": "#ededed",
         "Bebyggelse": "#d4d4d4",
         "belagd": "#000000",
+        "forbud": "#ff0000ff",
         "bidrag": "#bababa",
         "Ej karterat område": "#b7d5e5ff",
         "Elljusspår": "#fff201ff",
@@ -582,6 +584,7 @@ const colorArray = [
         "Barr- och blandskog": "#121212",
         "Bebyggelse": "#2B2B2B",
         "belagd": "#e9e9e9ff",
+        "forbud": "#ff0000ff",
         "bidrag": "#454545",
         "Ej karterat område": "#030303",
         "Elljusspår": "#fff201ff",
@@ -813,7 +816,13 @@ function jole84VectorBW(feature, currentResolution) {
         // console.log(feature.get("layer"));
         if (["TNE_FT_VAGDATA", "vaglinje"].includes(feature.get("layer"))) {
             return new ol.style.Style({
-                zIndex: 10,
+                zIndex:
+                    feature.get("vagtyp") == 'rondell' ? 100 :
+                        feature.get("vagtyp") == 'stratvag' ? 50 :
+                            feature.get("vagtyp") == 'forbud' ? 40 :
+                                feature.get("vagtyp") == 'belagd' ? 20 :
+                                    0,
+                // (10 - feature.get("Klass_181")),
                 stroke: new ol.style.Stroke({
                     color: ["grus", "bidrag"].includes(feature.get("vagtyp")) ? "darkgrey" : "black",
                     width: feature.get("width") / 15,
@@ -898,9 +907,23 @@ function jole84Style(feature, currentResolution, mapMode) {
         if (feature.get("vagtyp") == "bidrag" && mapMode == 0 && currentResolution < 80) {
             styleArray.push(
                 new ol.style.Style({
-                    zIndex: 10 - feature.get("Klass_181"),
+                    zIndex: 10,
                     stroke: new ol.style.Stroke({
                         color: "black",
+                        width: (feature.get("width") / 8),
+                        lineDash: [6, 12],
+                        lineDashOffset: 10,
+                        lineCap: "butt",
+                    }),
+                }),
+            )
+        }
+        if (feature.get("vagtyp") == "grus" && feature.get("Klass_181") <= 7 && jole84vectorTerrang.getVisible() && currentResolution < 80) {
+            styleArray.push(
+                new ol.style.Style({
+                    zIndex: 10,
+                    stroke: new ol.style.Stroke({
+                        color: "red",
                         width: (feature.get("width") / 8),
                         lineDash: [6, 12],
                         lineDashOffset: 10,
@@ -935,7 +958,7 @@ function jole84Style(feature, currentResolution, mapMode) {
                     zIndex: europaVag ? 10 : 9,
                     text: new ol.style.Text({
                         text: europaVag ? "E" + String(feature.get("Huvnr_556_1")) : String(feature.get("Huvnr_556_1")),
-                        font: "bold 14px arial, sans-serif",
+                        font: "bold 16px arial, sans-serif",
                         placement: "point",
                         padding: [
                             75,
@@ -1131,6 +1154,7 @@ function jole84Style(feature, currentResolution, mapMode) {
         if (feature.get("andamal") in kartsymboler) {
             return new ol.style.Style({
                 image: new ol.style.Icon({
+                    declutterMode: "none",
                     rotation: degToRad(360 - feature.get("rotation")),
                     rotateWithView: !!feature.get("rotation"),
                     src: kartsymboler[feature.get("andamal")],
