@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>list</title>
+    <style>
+        .invisible {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <pre id="div1"></pre>
+    <script>
+        const div1 = document.getElementById("div1");
+
+        async function api(action, data = {}) {
+            const token = localStorage.getItem("token");
+
+            const res = await fetch("https://jole84.se/routeStorage/api.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action, token, ...data })
+            });
+
+            return res.json();
+        }
+
+        async function loadData() {
+            const token = localStorage.getItem("token");
+
+            const r = await api("list");
+
+            const username = localStorage.getItem("username");
+
+            const name_list = [];
+
+            console.log(r)
+
+            r["uploads"].forEach(element => {
+                name_list.push([
+                    "id: " + element.id,
+                    element.item_name,
+                ]);
+            });
+
+            div1.innerHTML = JSON.stringify(name_list, null, 2);
+        }
+
+        // Load uploads immediately
+        loadData();
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Upload App (Stateless Frontend)</title>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 700px;
+            margin: 40px auto;
+        }
+
+        .box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .public {
+            color: green;
+            font-weight: bold;
+        }
+
+        .danger {
+            color: red;
+        }
+
+        .content {
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Upload App</h1>
+
+    <h2>Uploads</h2>
+    <div id="uploads"></div>
+
+    <div id="loginView">
+        <h2>Login (auto‑register)</h2>
+        <input id="username" placeholder="Username"><br><br>
+        <input id="password" type="password" placeholder="Password"><br><br>
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div id="appView" style="display:none;">
+        <p>
+            Logged in as <strong id="userLabel"></strong><br>
+            <button onclick="logout()">Logout</button>
+            <button class="danger" onclick="deleteUser()">Delete User</button>
+        </p>
+
+        <h2>Change Password</h2>
+        <input id="oldPassword" type="password" placeholder="Old password"><br><br>
+        <input id="newPassword" type="password" placeholder="New password"><br><br>
+        <button onclick="changePassword()">Change Password</button>
+
+
+        <h2>Upload a String</h2>
+        <input id="uploadName" placeholder="Name"><br><br>
+        <textarea id="uploadText" placeholder="Text"></textarea><br><br>
+        <button onclick="upload()">Upload</button>
+    </div>
+
+    <script>
+        async function api(action, data = {}) {
+            const token = localStorage.getItem("token");
+            const res = await fetch("https://jole84.se/routeStorage/api.php", {
+                // const res = await fetch("api.php", {
+
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action, token, ...data })
+            });
+
+            return res.json();
+        }
+
+        async function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            const r = await api("login", { username, password });
+
+            if (r.success) {
+                localStorage.setItem("token", r.token);
+                localStorage.setItem("username", r.username);
+                showApp(r.username);
+            } else {
+                alert(r.error);
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("token");
+            localStorage.removeItem("username");
+            location.reload();
+        }
+
+        async function deleteUser() {
+            if (!confirm("Delete your account and ALL uploads?")) return;
+            await api("delete_user");
+            logout();
+        }
+
+        async function changePassword() {
+            const old_password = document.getElementById("oldPassword").value;
+            const new_password = document.getElementById("newPassword").value;
+
+            const r = await api("change_password", {
+                old_password,
+                new_password
+            });
+
+            if (r.error) {
+                alert(r.error);
+                return;
+            }
+
+            alert("Password changed successfully");
+            document.getElementById("oldPassword").value = "";
+            document.getElementById("newPassword").value = "";
+        }
+
+
+        async function upload() {
+            const name = document.getElementById("uploadName").value;
+            const text = btoa(encodeURIComponent(document.getElementById("uploadText").value));
+
+            await api("upload", { name, text });
+            loadData();
+        }
+
+        async function makePublic(id) {
+            await api("make_public", { id });
+            loadData();
+        }
+
+        async function makePrivate(id) {
+            await api("make_private", { id });
+            loadData();
+        }
+
+        async function deleteUpload(id) {
+            if (!confirm("Delete this upload?")) return;
+            await api("delete_upload", { id });
+            loadData();
+        }
+
+        async function loadItem(id, box) {
+            const r = await api("get_item", { id });
+
+            if (r.error) {
+                alert(r.error);
+                return;
+            }
+
+            const content = box.querySelector(".content");
+            content.innerHTML = decodeURIComponent(atob(r.item.item_text)).replace(/\n/g, "<br>");
+            content.style.display = "block";
+        }
+
+        function editItem(id, currentName) {
+            const newName = prompt("New name:", currentName);
+            if (newName === null) return;
+
+            const newText = prompt("New text:");
+            if (newText === null) return;
+
+            api("update_item", { id, name: newName, text: btoa(encodeURIComponent(newText)) })
+                .then(() => loadData());
+        }
+
+        function showApp(username) {
+            document.getElementById("loginView").style.display = "none";
+            document.getElementById("appView").style.display = "block";
+            document.getElementById("userLabel").textContent = username;
+            loadData();
+        }
+
+        async function loadData() {
+            const r = await api("list");
+            const username = localStorage.getItem("username");
+
+            document.getElementById("uploads").innerHTML =
+                r.uploads.map(u => `
+            <div class="box" onclick="loadItem(${u.id}, this)">
+                <strong>${u.item_name}</strong>
+                ${u.is_public == 1 ? `<span class="public">(public)</span>` : ""}
+                <br>
+                <small> By ${u.username} — ${new Date(u.created_at).toLocaleString()} </small><br><br>
+
+                ${username === u.username
+                        ? (u.is_public == 1
+                            ? `<button onclick="event.stopPropagation(); makePrivate(${u.id})">Make Private</button>`
+                            : `<button onclick="event.stopPropagation(); makePublic(${u.id})">Make Public</button>`
+                        ) + `<button onclick="event.stopPropagation(); editItem(${u.id}, '${u.item_name.replace(/'/g, "\\'")}')">Edit</button>
+                            <button onclick="event.stopPropagation(); deleteUpload(${u.id})">Delete</button>`
+                        : ""
+                    }
+
+                <div class="content"></div>
+            </div>
+        `).join("");
+        }
+
+        // Load metadata immediately
+        loadData();
+
+        // Auto-login if token exists
+        (() => {
+            const token = localStorage.getItem("token");
+            const username = localStorage.getItem("username");
+            if (token && username) showApp(username);
+        })();
+    </script>
+
+</body>
+
+</html>
