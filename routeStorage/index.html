@@ -160,7 +160,7 @@
             }
 
             const content = box.querySelector(".content");
-            content.innerHTML = decodeURIComponent(atob(r.item.item_text)).replace(/\n/g, "<br>");
+            content.innerHTML = JSON.stringify(JSON.parse(decodeURIComponent(atob(r.item.item_text)).replace(/\n/g, "<br>")), null, 2);
             content.style.display = "block";
         }
 
@@ -203,7 +203,7 @@
                         : ""
                     }
 
-                <div class="content"></div>
+                <pre class="content"></pre>
             </div>
         `).join("");
         }
