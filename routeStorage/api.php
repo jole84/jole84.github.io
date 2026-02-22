@@ -30,9 +30,9 @@ $SECRET = "CHANGE_THIS_TO_A_LONG_RANDOM_SECRET";
 /* ---------------- TOKEN HELPERS ---------------- */
 
 function create_token($username, $secret) {
+    // Removed "exp" field so tokens no longer expire after 24 hours
     $payload = base64_encode(json_encode([
-        "username" => $username,
-        "exp" => time() + 86400
+        "username" => $username
     ]));
     $sig = hash_hmac("sha256", $payload, $secret);
     return $payload . "." . $sig;
@@ -46,7 +46,9 @@ function verify_token($token, $secret) {
     if (hash_hmac("sha256", $payload, $secret) !== $sig) return false;
 
     $data = json_decode(base64_decode($payload), true);
-    if (!$data || $data["exp"] < time()) return false;
+    
+    // Check if data exists; expiration check has been removed
+    if (!$data) return false;
 
     return $data["username"];
 }
@@ -54,7 +56,7 @@ function verify_token($token, $secret) {
 function require_user($input, $secret) {
     if (!isset($input["token"])) respond(["error" => "Missing token"]);
     $username = verify_token($input["token"], $secret);
-    if (!$username) respond(["error" => "Invalid or expired token"]);
+    if (!$username) respond(["error" => "Invalid token"]);
     return $username;
 }
 
@@ -89,6 +91,7 @@ switch ($action) {
 
         $token = create_token($u, $SECRET);
         respond(["success" => true, "token" => $token, "username" => $u]);
+        break;
 
     case "change_password":
         $username = require_user($input, $SECRET);
@@ -96,23 +99,21 @@ switch ($action) {
         $old = $input["old_password"] ?? "";
         $new = $input["new_password"] ?? "";
 
-        // Fetch user
         $stmt = $db->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->execute([$username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$user) respond(["error" => "User not found"]);
 
-        // Verify old password
         if (!password_verify($old, $user["password_hash"])) {
             respond(["error" => "Old password is incorrect"]);
         }
 
-        // Update password
         $stmt = $db->prepare("UPDATE users SET password_hash = ? WHERE username = ?");
         $stmt->execute([password_hash($new, PASSWORD_DEFAULT), $username]);
 
         respond(["success" => true]);
+        break;
 
     case "upload":
         $username = require_user($input, $SECRET);
@@ -125,10 +126,11 @@ switch ($action) {
             $username,
             $input["name"],
             $input["text"],
-            (int)(microtime(true) * 1000)   // same format as Date.now()
+            (int)(microtime(true) * 1000)
         ]);
 
         respond(["success" => true]);
+        break;
 
     case "update_item":
         $username = require_user($input, $SECRET);
@@ -137,7 +139,6 @@ switch ($action) {
         $new_name = $input["name"] ?? "";
         $new_text = $input["text"] ?? "";
 
-        // Fetch item
         $stmt = $db->prepare("SELECT * FROM uploads WHERE id = ?");
         $stmt->execute([$id]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -145,7 +146,6 @@ switch ($action) {
         if (!$row) respond(["error" => "Not found"]);
         if ($row["username"] !== $username) respond(["error" => "Not allowed"]);
 
-        // Update
         $stmt = $db->prepare("
             UPDATE uploads
             SET item_name = ?, item_text = ?, created_at = ?
@@ -154,37 +154,41 @@ switch ($action) {
         $stmt->execute([$new_name, $new_text, (int)(microtime(true) * 1000), $id, $username]);
 
         respond(["success" => true]);
+        break;
 
     case "make_public":
         $username = require_user($input, $SECRET);
         $stmt = $db->prepare("UPDATE uploads SET is_public = 1 WHERE id = ? AND username = ?");
         $stmt->execute([$input["id"], $username]);
         respond(["success" => true]);
+        break;
 
     case "make_private":
         $username = require_user($input, $SECRET);
         $stmt = $db->prepare("UPDATE uploads SET is_public = 0 WHERE id = ? AND username = ?");
         $stmt->execute([$input["id"], $username]);
         respond(["success" => true]);
+        break;
 
     case "delete_upload":
         $username = require_user($input, $SECRET);
         $stmt = $db->prepare("DELETE FROM uploads WHERE id = ? AND username = ?");
         $stmt->execute([$input["id"], $username]);
         respond(["success" => true]);
+        break;
 
     case "delete_user":
         $username = require_user($input, $SECRET);
         $db->prepare("DELETE FROM uploads WHERE username = ?")->execute([$username]);
         $db->prepare("DELETE FROM users WHERE username = ?")->execute([$username]);
         respond(["success" => true]);
+        break;
 
     case "list":
         $token = $input["token"] ?? null;
         $username = $token ? verify_token($token, $SECRET) : null;
 
         if ($username) {
-            // Logged in → return public + private metadata
             $stmt = $db->prepare("
                 SELECT id, username, item_name, created_at, is_public
                 FROM uploads
@@ -193,7 +197,6 @@ switch ($action) {
             ");
             $stmt->execute([$username]);
         } else {
-            // Anonymous → only public metadata
             $stmt = $db->prepare("
                 SELECT id, username, item_name, created_at, is_public
                 FROM uploads
@@ -204,25 +207,25 @@ switch ($action) {
         }
 
         respond(["uploads" => $stmt->fetchAll(PDO::FETCH_ASSOC)]);
+        break;
 
     case "get_item":
         $id = $input["id"] ?? 0;
         $token = $input["token"] ?? null;
         $username = $token ? verify_token($token, $SECRET) : null;
 
-        // Fetch item by ID
         $stmt = $db->prepare("SELECT * FROM uploads WHERE id = ?");
         $stmt->execute([$id]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$row) respond(["error" => "Not found"]);
 
-        // Permission check
         if ($row["is_public"] == 0 && $row["username"] !== $username) {
             respond(["error" => "Not allowed"]);
         }
 
         respond(["item" => $row]);
+        break;
 }
 
 respond(["error" => "Invalid action"]);
