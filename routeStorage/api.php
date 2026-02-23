@@ -193,7 +193,7 @@ switch ($action) {
                 SELECT id, username, item_name, created_at, is_public
                 FROM uploads
                 WHERE is_public = 1 OR username = ?
-                ORDER BY item_name
+                ORDER BY item_name COLLATE NOCASE ASC
             ");
             $stmt->execute([$username]);
         } else {
@@ -201,7 +201,7 @@ switch ($action) {
                 SELECT id, username, item_name, created_at, is_public
                 FROM uploads
                 WHERE is_public = 1
-                ORDER BY item_name
+                ORDER BY item_name COLLATE NOCASE ASC
             ");
             $stmt->execute();
         }
