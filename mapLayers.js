@@ -24,7 +24,7 @@ const layers = [
     jole84vectorTerrang = new ol.layer.VectorTile({
         source: jole84VectorSource,
         style: function (feature, currentResolution) {
-            return jole84Style(feature, currentResolution, 0);
+            return styleStuff(feature, currentResolution, 0);
         },
         declutter: true,
         visible: true,
@@ -34,15 +34,28 @@ const layers = [
         baseLayer: true,
     }),
 
-    jole84vectorVagkarta = new ol.layer.VectorTile({
+    jole84vectorTerrangOld = new ol.layer.VectorTile({
+        source: jole84VectorSource,
+        style: function (feature, currentResolution) {
+            return jole84Style(feature, currentResolution, 0);
+        },
+        declutter: true,
+        visible: true,
+        layerName: "jole84vectorTerrangOld",
+        name: "Jole84 Vektor Terräng Gammal",
+        groupName: "jole84",
+        baseLayer: true,
+    }),
+
+    jole84vectorVagkartaOld = new ol.layer.VectorTile({
         source: jole84VectorSource,
         style: function (feature, currentResolution) {
             return jole84Style(feature, currentResolution, 1);
         },
         declutter: true,
         visible: false,
-        layerName: "jole84vectorVagkarta",
-        name: "Jole84 Vektor Vägkarta",
+        layerName: "jole84vectorVagkartaOld",
+        name: "Jole84 Vektor Vägkarta Gammal",
         groupName: "jole84",
         baseLayer: true,
     }),
@@ -704,7 +717,7 @@ const textBaseline = {
     9: "top",
 }
 
-function getTextFont(feature) {
+function getTextFontOld(feature) {
     const italicText = [
         "Administrativ indelning",
         "Fjällupplysningstext",
@@ -1272,4 +1285,182 @@ function jole84Style(feature, currentResolution, mapMode) {
         // } else {
         //   console.table(feature.getProperties());
     }
+}
+
+// --- Style Caches ---
+const cache = {
+  fill: new Map(),
+  stroke: new Map(),
+  icon: new Map()
+};
+
+const getFill = (color) => {
+  if (!cache.fill.has(color)) cache.fill.set(color, new ol.style.Fill({ color }));
+  return cache.fill.get(color);
+};
+
+const getStroke = (color, width, lineDash, lineCap = "round") => {
+  const key = `${color}|${width}|${lineDash}|${lineCap}`;
+  if (!cache.stroke.has(key)) {
+    cache.stroke.set(key, new ol.style.Stroke({ color, width, lineDash, lineCap }));
+  }
+  return cache.stroke.get(key);
+};
+
+const getIcon = (src, scale = 1, rotation = 0, rotateWithView = false, displacement = [0, 0]) => {
+  const key = `${src}|${scale}|${rotation}|${rotateWithView}|${displacement.join(',')}`;
+  if (!cache.icon.has(key)) {
+    cache.icon.set(key, new ol.style.Icon({ src, scale, rotation, rotateWithView, displacement, declutterMode: "none" }));
+  }
+  return cache.icon.get(key);
+};
+
+const getTextFont = (feature) => {
+  const italicText = ["Administrativ indelning", "Fjällupplysningstext", "Hydrografi", "Kulturhistorisk lämning", "Skyddad natur", "Terrängnamn", "Upplysningstext"];
+  const isItalic = italicText.includes(feature.get("textkategori")) ? "italic " : "";
+  const size = (feature.get("textstorleksklass") * 2.5) + 6;
+  return `${isItalic}${size}px arial, sans-serif`;
+};
+
+// --- Layer Handlers ---
+const handlers = {
+  "TNE_FT_VAGDATA": (feature, res, mode) => {
+    const vagtyp = feature.get("vagtyp");
+    const width = feature.get("width") / 8;
+    const styles = [new ol.style.Style({
+      zIndex: vagtyp === 'rondell' ? 100 : vagtyp === 'stratvag' ? 50 : vagtyp === 'forbud' ? 40 : vagtyp === 'belagd' ? 20 : 0,
+      stroke: getStroke(colorArray[mode][vagtyp], width, vagtyp === 'ovrigvag' ? [10, 12] : undefined)
+    })];
+
+    if (mode == 0 && res < 80) {
+      if (vagtyp === "bidrag") styles.push(new ol.style.Style({ zIndex: 10, stroke: getStroke("black", width, [6, 12], "butt") }));
+      if (vagtyp === "grus" && feature.get("Klass_181") <= 7) styles.push(new ol.style.Style({ zIndex: 10, stroke: getStroke("red", width, [6, 12], "butt") }));
+    }
+
+    if (res < 9) {
+      styles.push(new ol.style.Style({
+        zIndex: 10,
+        text: new ol.style.Text({
+          text: feature.get("Namn_132") || feature.get("Namn_130"), font: "12px arial, sans-serif", placement: "line",
+          fill: getFill("#000000"), stroke: getStroke("#ffffff", 4)
+        })
+      }));
+    }
+
+    const huvnr = feature.get("Huvnr_556_1");
+    if (huvnr < 500 && !feature.get("Namn_130")) {
+      const isEuropa = feature.get("Evag_555") == -1;
+      styles.push(new ol.style.Style({
+        zIndex: isEuropa ? 10 : 9,
+        text: new ol.style.Text({
+          text: (isEuropa ? "E" : "") + String(huvnr), font: "bold 16px arial, sans-serif", padding: [75, 75, 75, 75],
+          fill: getFill("white"), stroke: getStroke(isEuropa ? "#4daf4a" : "#377eb8", 10)
+        })
+      }));
+    }
+    return styles;
+  },
+
+  "traktor": (feature, res, mode) => mode == 0 ? new ol.style.Style({ stroke: getStroke(colorArray[mode][feature.get("objekttyp")], 3, [10, 10], "square") }) : null,
+  "markkantlinje": (f, r, mode) => mode == 0 ? new ol.style.Style({ zIndex: 2, stroke: getStroke("#00a6ff", 1) }) : null,
+  "kurvighet": (f, r, mode) => mode == 0 ? new ol.style.Style({ zIndex: 2, stroke: getStroke("#df006840", 12) }) : null,
+  "hojdlinje": (feature, r, mode) => mode == 0 ? new ol.style.Style({ stroke: getStroke("rgba(150, 127, 105, 0.6)", feature.get("stodkurva") == "Ja" ? 2 : 1) }) : null,
+  "ledningslinje": () => new ol.style.Style({ stroke: getStroke("#000000a2", 2) }),
+
+  "vaglinje": (feature, res, mode) => {
+    let vagNummer = "";
+    let isEuropa = false;
+    const rawNum = feature.get("vardvagnummer");
+    if (rawNum && (rawNum[0] == "E" || rawNum < 500)) {
+      vagNummer = String(rawNum).split(".")[0];
+      isEuropa = rawNum[0] == "E";
+    }
+    return new ol.style.Style({
+      zIndex: isEuropa ? 10 : 3,
+      stroke: getStroke(colorArray[mode][feature.get("objekttyp")], roadWidth[feature.get("objekttyp")] || 3),
+      text: new ol.style.Text({
+        text: vagNummer, font: "bold 14px arial, sans-serif", padding: [50, 50, 50, 50],
+        fill: getFill("white"), stroke: getStroke(isEuropa ? "#4daf4a" : "#377eb8", 10)
+      })
+    });
+  },
+
+  "ralstrafik": () => [
+    new ol.style.Style({ stroke: getStroke("black", 3) }),
+    new ol.style.Style({ stroke: getStroke("white", 2, [10, 10], "square") })
+  ],
+
+  "hydrolinje": (feature, res, mode) => new ol.style.Style({
+    stroke: getStroke(colorArray[mode][feature.get("objekttyp")], Number(feature.get("storleksklass")) || 3, undefined, "round")
+  }),
+
+  "skyddadnatur": (feature, res, mode) => mode == 0 ? new ol.style.Style({
+    zIndex: 5, stroke: getStroke(colorArray[mode][feature.get("objekttyp")], 4, dashPolygon.includes(feature.get("objekttyp")) ? [10, 10] : undefined)
+  }) : null,
+
+  "militart_omrade": (feature, res, mode) => new ol.style.Style({
+    zIndex: 5, stroke: getStroke(colorArray[mode][feature.get("objekttyp")], 4, dashPolygon.includes(feature.get("objekttyp")) ? [10, 10] : undefined)
+  }),
+
+  "byggnad": () => new ol.style.Style({ zIndex: 5, fill: getFill("#7d7d7d") }),
+  "landningsbana": (feature, res, mode) => new ol.style.Style({ zIndex: 15, fill: getFill(colorArray[mode][feature.get("objekttyp")]) }),
+  // "mark": (feature) => new ol.style.Style({ fill: getFill(`var(--map-land-${feature.get("objekttyp")})`) }),
+  "mark": (feature, res, mode) => new ol.style.Style({ fill: getFill(colorArray[mode][feature.get("objekttyp")]) }),
+
+  "textpunkt": (feature, res, mode) => {
+    const kategori = feature.get("textkategori");
+    const kategoriColor = { "Hydrografi": "#0070ff", "Fjällupplysningstext": "#c44982", "Skyddad natur": "#419821" }[kategori];
+    return new ol.style.Style({
+      zIndex: (feature.get("textstorleksklass") * 10) || 100,
+      text: new ol.style.Text({
+        text: feature.get("textstrang"), textAlign: textAlign[feature.get("textlage")], textBaseline: textBaseline[feature.get("textlage")],
+        rotation: degToRad(360 - feature.get("textriktning")), rotateWithView: !!feature.get("textriktning"), font: getTextFont(feature),
+        fill: getFill(kategoriColor || "#000000"), stroke: getStroke("#ffffff", (feature.get("textstorleksklass") * 0.3) + 3)
+      })
+    });
+  },
+
+  "Rastplats": () => new ol.style.Style({ zIndex: 18, image: getIcon("https://jole84.se/kartsymboler/h13-1.svg", 0.05) }),
+
+  "anlaggningsomradespunkt": (feature) => {
+    const src = kartsymboler[feature.get("andamal")];
+    return src ? new ol.style.Style({ image: getIcon(src, 1, degToRad(360 - feature.get("rotation")), !!feature.get("rotation")) }) : null;
+  },
+
+  "Trafikplats": (feature) => new ol.style.Style({
+    zIndex: 20,
+    text: new ol.style.Text({ offsetX: 12, offsetY: 1, text: feature.get("trafikplatsnummer"), font: "bold 16px arial, sans-serif", fill: getFill("black") }),
+    image: getIcon("https://jole84.se/kartsymboler/f27-1.svg", 0.18)
+  }),
+
+  "atk": (feature) => {
+    const bearing = degToRad(feature.get("Bearing")) - Math.PI;
+    return [
+      new ol.style.Style({ zIndex: 20, image: getIcon("https://jole84.se/kartsymboler/e24-1.svg", 0.06, bearing, true, [15, 0]) }),
+      new ol.style.Style({
+        zIndex: 20, image: getIcon("https://jole84.se/kartsymboler/c31-3.svg", 0.07, bearing, true, [15, 28]),
+        text: new ol.style.Text({ offsetX: 15, offsetY: -26, text: feature.get("HTHAST"), rotateWithView: true, rotation: bearing, font: "bold 19px arial, sans-serif", fill: getFill("black") })
+      })
+    ];
+  }
+};
+
+// --- Main Export ---
+function styleStuff(feature, currentResolution) {
+  const layerName = feature.get("layer");
+  const mode = localStorage.mapMode || 0;
+
+  const handler = handlers[layerName];
+  if (handler) return handler(feature, currentResolution, mode);
+
+
+  // Fallback for Point Icons
+  const objKey = feature.get("objekttypnr") || feature.get("andamal");
+  const iconSrc = kartsymboler[objKey];
+  if (iconSrc) {
+    const rotation = degToRad(360 - feature.get("rotation")) || 0;
+    return new ol.style.Style({
+      image: getIcon(iconSrc, 1.5, rotation, !!feature.get("rotation"))
+    });
+  }
 }
