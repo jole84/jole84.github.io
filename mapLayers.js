@@ -1,3 +1,5 @@
+// import { styleStuff } from "https://jole84.se/styleTileFunctions.js"
+
 const jole84VectorSource = new ol.source.VectorTile({
     format: new ol.format.MVT(),
     url: 'https://jole84.se/tiles/{z}/{x}/{y}.pbf',
@@ -34,31 +36,31 @@ const layers = [
         baseLayer: true,
     }),
 
-    jole84vectorTerrangOld = new ol.layer.VectorTile({
-        source: jole84VectorSource,
-        // style: function (feature, currentResolution) {
-        //     return jole84Style(feature, currentResolution, 0);
-        // },
-        declutter: true,
-        visible: true,
-        layerName: "jole84vectorTerrangOld",
-        name: "Jole84 Vektor Terräng Gammal",
-        groupName: "jole84",
-        baseLayer: true,
-    }),
+    // jole84vectorTerrangOld = new ol.layer.VectorTile({
+    //     source: jole84VectorSource,
+    //     // style: function (feature, currentResolution) {
+    //     //     return jole84Style(feature, currentResolution, 0);
+    //     // },
+    //     declutter: true,
+    //     visible: true,
+    //     layerName: "jole84vectorTerrangOld",
+    //     name: "Jole84 Vektor Terräng Gammal",
+    //     groupName: "jole84",
+    //     baseLayer: true,
+    // }),
 
-    jole84vectorVagkartaOld = new ol.layer.VectorTile({
-        source: jole84VectorSource,
-        style: function (feature, currentResolution) {
-            return jole84Style(feature, currentResolution, 1);
-        },
-        declutter: true,
-        visible: false,
-        layerName: "jole84vectorVagkartaOld",
-        name: "Jole84 Vektor Vägkarta Gammal",
-        groupName: "jole84",
-        baseLayer: true,
-    }),
+    // jole84vectorVagkartaOld = new ol.layer.VectorTile({
+    //     source: jole84VectorSource,
+    //     style: function (feature, currentResolution) {
+    //         return jole84Style(feature, currentResolution, 1);
+    //     },
+    //     declutter: true,
+    //     visible: false,
+    //     layerName: "jole84vectorVagkartaOld",
+    //     name: "Jole84 Vektor Vägkarta Gammal",
+    //     groupName: "jole84",
+    //     baseLayer: true,
+    // }),
 
     jole84vectorBW = new ol.layer.VectorTile({
         source: jole84VectorSource,
@@ -900,3 +902,10 @@ function jole84VectorBW(feature, currentResolution) {
         }
     }
 }
+
+const getTextFont = (feature) => {
+  const italicText = ["Administrativ indelning", "Fjällupplysningstext", "Hydrografi", "Kulturhistorisk lämning", "Skyddad natur", "Terrängnamn", "Upplysningstext"];
+  const isItalic = italicText.includes(feature.get("textkategori")) ? "italic " : "";
+  const size = (feature.get("textstorleksklass") * 3) + 8;
+  return `${isItalic}${size}px arial, sans-serif`;
+};
