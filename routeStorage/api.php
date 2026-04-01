@@ -1,7 +1,7 @@
 <?php
 // chown -R www-data:www-data /var/www/html/routeStorage/
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
+// header("Access-Control-Allow-Origin: *");
+// header("Access-Control-Allow-Headers: *");
 
 $db = new PDO("sqlite:database.sqlite");
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

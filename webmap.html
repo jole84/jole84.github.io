@@ -189,9 +189,7 @@
 
     const jole84vectorTerrang = new ol.layer.VectorTile({
       source: jole84VectorSource,
-      style: function (feature, currentResolution) {
-        return styleStuff(feature, currentResolution, 0);
-      },
+      style: (feature, currentResolution) => styleStuff(feature, currentResolution, 0),
       declutter: true,
       visible: true,
       layerName: "jole84vectorTerrang",
@@ -202,9 +200,7 @@
 
     const jole84vectorVag = new ol.layer.VectorTile({
       source: jole84VectorSource,
-      style: function (feature, currentResolution) {
-        return styleStuff(feature, currentResolution, 1);
-      },
+      style: (feature, currentResolution) => styleStuff(feature, currentResolution, 1),
       declutter: true,
       visible: false,
       layerName: "jole84vectorVag",
@@ -215,9 +211,7 @@
 
     const jole84vectorNight = new ol.layer.VectorTile({
       source: jole84VectorSource,
-      style: function (feature, currentResolution) {
-        return styleStuff(feature, currentResolution, 1);
-      },
+      style: (feature, currentResolution) => styleStuff(feature, currentResolution, 2),
       declutter: true,
       visible: false,
       layerName: "jole84vectorNight",
@@ -588,11 +582,11 @@
             layer.setVisible(input.checked);
           }
         }
-        if (layer.getVisible()) {
-          if (layer.get("layerName") == "jole84vectorTerrang") localStorage.mapMode = 0;
-          if (layer.get("layerName") == "jole84vectorVag") localStorage.mapMode = 1;
-          if (layer.get("layerName") == "jole84vectorNight") localStorage.mapMode = 2;
-        }
+        // if (layer.getVisible()) {
+        //   if (layer.get("layerName") == "jole84vectorTerrang") localStorage.mapMode = 0;
+        //   if (layer.get("layerName") == "jole84vectorVag") localStorage.mapMode = 1;
+        //   if (layer.get("layerName") == "jole84vectorNight") localStorage.mapMode = 2;
+        // }
       });
     });
 

@@ -1,6 +1,6 @@
 <?php
-echo(header("Access-Control-Allow-Origin: *"));
-echo(header("Access-Control-Allow-Headers: *"));
+// echo(header("Access-Control-Allow-Origin: *"));
+// echo(header("Access-Control-Allow-Headers: *"));
 header('Content-Type: application/json');
 $filesList = glob("rutter/*.{gpx,kml,geojson,GPX,KML,GEOJSON}", GLOB_BRACE);
 
