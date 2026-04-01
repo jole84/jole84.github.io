@@ -182,8 +182,49 @@
   </div>
 
   <img src="https://jole84.se/images/jole84.svg" class="controlImage" id="controlImage">
-  <script type="text/javascript">
+  <script type="module">
+    import { styleStuff } from "https://jole84.se/styleTileFunctions.js"
+
     const layerSelectorButtons = document.getElementById("layerSelectorButtons");
+
+    const jole84vectorTerrang = new ol.layer.VectorTile({
+      source: jole84VectorSource,
+      style: function (feature, currentResolution) {
+        return styleStuff(feature, currentResolution, 0);
+      },
+      declutter: true,
+      visible: true,
+      layerName: "jole84vectorTerrang",
+      name: "Jole84 Vektor Terräng",
+      groupName: "jole84",
+      baseLayer: true,
+    });
+
+    const jole84vectorVag = new ol.layer.VectorTile({
+      source: jole84VectorSource,
+      style: function (feature, currentResolution) {
+        return styleStuff(feature, currentResolution, 1);
+      },
+      declutter: true,
+      visible: false,
+      layerName: "jole84vectorVag",
+      name: "Jole84 Vektor Väg",
+      groupName: "jole84",
+      baseLayer: true,
+    });
+
+    const jole84vectorNight = new ol.layer.VectorTile({
+      source: jole84VectorSource,
+      style: function (feature, currentResolution) {
+        return styleStuff(feature, currentResolution, 1);
+      },
+      declutter: true,
+      visible: false,
+      layerName: "jole84vectorNight",
+      name: "Jole84 Vektor Natt",
+      groupName: "jole84",
+      baseLayer: true,
+    });
 
     window.onbeforeunload = function () {
       localStorage.webmapOlCenter = JSON.stringify(view.getCenter());
@@ -198,10 +239,18 @@
 
     const map = new ol.Map({
       target: 'map',
-      layers: layers,
+      layers: [
+        jole84vectorTerrang,
+        jole84vectorVag,
+        jole84vectorNight
+      ],
       view: view,
       keyboardEventTarget: document
     });
+
+    for (const layer of layers) {
+      map.addLayer(layer);
+    }
 
     const gpxStyle = {
       'Point': new ol.style.Style({
@@ -538,6 +587,11 @@
           if (layer.get("layerName") == input.value) {
             layer.setVisible(input.checked);
           }
+        }
+        if (layer.getVisible()) {
+          if (layer.get("layerName") == "jole84vectorTerrang") localStorage.mapMode = 0;
+          if (layer.get("layerName") == "jole84vectorVag") localStorage.mapMode = 1;
+          if (layer.get("layerName") == "jole84vectorNight") localStorage.mapMode = 2;
         }
       });
     });

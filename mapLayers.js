@@ -23,18 +23,18 @@ const layers = [
     // }),
 
     // Jole84
-    jole84vectorTerrang = new ol.layer.VectorTile({
-        source: jole84VectorSource,
-        // style: function (feature, currentResolution) {
-        //     return styleStuff(feature, currentResolution, 0);
-        // },
-        declutter: true,
-        visible: true,
-        layerName: "jole84vectorTerrang",
-        name: "Jole84 Vektor Terräng",
-        groupName: "jole84",
-        baseLayer: true,
-    }),
+    // jole84vectorTerrang = new ol.layer.VectorTile({
+    //     source: jole84VectorSource,
+    //     // style: function (feature, currentResolution) {
+    //     //     return styleStuff(feature, currentResolution, 0);
+    //     // },
+    //     declutter: true,
+    //     visible: true,
+    //     layerName: "jole84vectorTerrang",
+    //     name: "Jole84 Vektor Terräng",
+    //     groupName: "jole84",
+    //     baseLayer: true,
+    // }),
 
     // jole84vectorTerrangOld = new ol.layer.VectorTile({
     //     source: jole84VectorSource,
