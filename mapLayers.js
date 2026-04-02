@@ -363,6 +363,23 @@ const layers = [
         baseLayer: false,
     }),
 
+        nvdb_bidrag = new ol.layer.Tile({
+        source: new ol.source.TileWMS({
+            url: "https://nvdbpakarta.trafikverket.se/api/MapProxy/mapProxy/NetInfo?",
+            params: {
+                layers: "DriftbidragStatligt",
+                TILED: true,
+            },
+            crossOrigin: 'Anonymous',
+        }),
+        visible: false,
+        minZoom: 9,
+        layerName: "nvdb_bidrag",
+        name: "NVDB Driftbidrag Statligt",
+        groupName: "nvdb",
+        baseLayer: false,
+    }),
+
     atk_matplats = new ol.layer.Tile({
         source: new ol.source.TileWMS({
             url: "https://nvdbpakarta.trafikverket.se/api/MapProxy/mapProxy/NetInfo?",
