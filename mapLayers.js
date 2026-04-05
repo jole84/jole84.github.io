@@ -803,7 +803,7 @@ function jole84VectorBW(feature, currentResolution) {
                 width: 1,
             }),
             fill: new ol.style.Fill({
-                color: "#3a3a3aff",
+                color: "rgb(100, 100, 100)",
             }),
         });
     }
