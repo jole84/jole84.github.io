@@ -70,6 +70,7 @@ const layers = [
         name: "Jole84 Vektor Svartvit",
         groupName: "jole84",
         baseLayer: true,
+        background: "white",
     }),
 
     jole84vector = new ol.layer.VectorTile({
@@ -363,7 +364,7 @@ const layers = [
         baseLayer: false,
     }),
 
-        nvdb_bidrag = new ol.layer.Tile({
+    nvdb_bidrag = new ol.layer.Tile({
         source: new ol.source.TileWMS({
             url: "https://nvdbpakarta.trafikverket.se/api/MapProxy/mapProxy/NetInfo?",
             params: {
@@ -781,148 +782,129 @@ function jole84VectorBW(feature, currentResolution) {
     const geometryType = feature.getGeometry().getType();
     const layerName = feature.get("layer");
 
-    if (geometryType == "Polygon") {
-        // console.log(feature.get("objekttypnr"), feature.get("objekttyp"));
-        // console.log(layerName);
-        // 2632 'sjö'
-        // 2633 'vattendragsyta'
-        // 2654 'vattenyta'
-        // 2631 'Hav'
-        // 2648 'Ej karterat område'
+    // console.log(feature.get("objekttypnr"), feature.get("objekttyp"));
+    // console.log(layerName);
+    // 2632 'sjö'
+    // 2633 'vattendragsyta'
+    // 2654 'vattenyta'
+    // 2631 'Hav'
+    // 2648 'Ej karterat område'
 
-        if ([2632, 2654, 2631, 2633, 2648].includes(feature.get("objekttypnr"))) {
-            return new ol.style.Style({
+    if ([
+        'Sjö',
+        'Vattendragsyta',
+        'Vattenyta',
+        'Hav',
+        'Ej karterat område',
+    ].includes(feature.get("objekttyp"))) {
+        return new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: "darkgrey",
+                width: 1,
+            }),
+            fill: new ol.style.Fill({
+                color: "#3a3a3aff",
+            }),
+        });
+    }
+
+    if (
+        [
+            "Bebyggelse",
+            'Hög bebyggelse',
+            'Industri- och handelsbebyggelse',
+            'Sluten bebyggelse',
+            'Låg bebyggelse'
+        ].includes(feature.get("objekttyp"))) {
+        return new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: "darkgrey",
+                width: 1,
+            }),
+            fill: new ol.style.Fill({
+                color: "#d4d4d4",
+            }),
+        });
+    }
+
+    if (layerName == "byggnad") {
+        return new ol.style.Style({
+            zIndex: 10,
+            fill: new ol.style.Fill({
+                color: "#7d7d7d",
+            }),
+        });
+    }
+    if (["militart_omrade", "skyddadnatur"].includes(layerName)) {
+        return
+    }
+
+
+    if (["TNE_FT_VAGDATA", "vaglinje"].includes(feature.get("layer"))) {
+        return new ol.style.Style({
+            zIndex:
+                feature.get("vagtyp") == 'rondell' ? 100 :
+                    feature.get("vagtyp") == 'stratvag' ? 50 :
+                        feature.get("vagtyp") == 'forbud' ? 40 :
+                            feature.get("vagtyp") == 'belagd' ? 20 :
+                                0,
+            // (10 - feature.get("Klass_181")),
+            stroke: new ol.style.Stroke({
+                color: ["grus", "bidrag"].includes(feature.get("vagtyp")) ? "darkgrey" : "black",
+                width: feature.get("width") / 15,
+            }),
+            // fill: new ol.style.Fill({
+            //   color: "black",
+            // }),
+        });
+    }
+
+    if (layerName == "ralstrafik") {
+        return [
+            new ol.style.Style({
                 stroke: new ol.style.Stroke({
-                    color: "darkgrey",
-                    width: 1,
+                    color: "black",
+                    width: 3,
                 }),
-                fill: new ol.style.Fill({
-                    color: "#3a3a3aff",
-                }),
-            });
-        } else {
-            if (
-                [
-                    "Bebyggelse",
-                    'Hög bebyggelse',
-                    'Industri- och handelsbebyggelse',
-                    'Sluten bebyggelse',
-                    'Låg bebyggelse'
-                ].includes(feature.get("objekttyp"))) {
-                return new ol.style.Style({
-                    stroke: new ol.style.Stroke({
-                        color: "darkgrey",
-                        width: 1,
-                    }),
-                    fill: new ol.style.Fill({
-                        color: "#d4d4d4",
-                    }),
-                });
-            }
-            if (layerName == "byggnad") {
-                return new ol.style.Style({
-                    zIndex: 10,
-                    fill: new ol.style.Fill({
-                        color: "#7d7d7d",
-                    }),
-                });
-            }
-            if (["militart_omrade", "skyddadnatur"].includes(layerName)) {
-                return
-            }
-            return new ol.style.Style({
+            }),
+            new ol.style.Style({
                 stroke: new ol.style.Stroke({
                     color: "white",
                     width: 2,
+                    lineDash: [10, 10],
+                    lineDashOffset: 10,
+                    lineCap: "square",
                 }),
+            }),
+        ];
+    }
+
+    if (layerName == "textpunkt") {
+        return new ol.style.Style({
+            zIndex: (feature.get("textstorleksklass") * 10) || 100,
+            text: new ol.style.Text({
+                declutterMode: "none",
+                text: feature.get("textstrang"),
+                textAlign: textAlign[feature.get("textlage")],
+                textBaseline: textBaseline[feature.get("textlage")],
+                rotation: degToRad(360 - feature.get("textriktning")),
+                rotateWithView: !!feature.get("textriktning"),
+                font: getTextFont(feature),
                 fill: new ol.style.Fill({
-                    color: "white",
+                    color: "black",
                 }),
-            });
-
-        }
-    }
-
-    if (geometryType == "LineString" || geometryType == "MultiLineString") {
-        // console.log(feature.get("objekttypnr"), feature.get("objekttyp"));
-        // console.log(feature.get("layer"));
-        if (["TNE_FT_VAGDATA", "vaglinje"].includes(feature.get("layer"))) {
-            return new ol.style.Style({
-                zIndex:
-                    feature.get("vagtyp") == 'rondell' ? 100 :
-                        feature.get("vagtyp") == 'stratvag' ? 50 :
-                            feature.get("vagtyp") == 'forbud' ? 40 :
-                                feature.get("vagtyp") == 'belagd' ? 20 :
-                                    0,
-                // (10 - feature.get("Klass_181")),
                 stroke: new ol.style.Stroke({
-                    color: ["grus", "bidrag"].includes(feature.get("vagtyp")) ? "darkgrey" : "black",
-                    width: feature.get("width") / 15,
+                    color: "white",
+                    width: Number(feature.get("textstorleksklass") * 0.2) + 2,
                 }),
-                // fill: new ol.style.Fill({
-                //   color: "black",
-                // }),
-            });
-        }
-
-        if (feature.get("layer") == "ralstrafik") {
-            return [
-                new ol.style.Style({
-                    stroke: new ol.style.Stroke({
-                        color: "black",
-                        width: 3,
-                    }),
-                }),
-                new ol.style.Style({
-                    stroke: new ol.style.Stroke({
-                        color: "white",
-                        width: 2,
-                        lineDash: [10, 10],
-                        lineDashOffset: 10,
-                        lineCap: "square",
-                    }),
-                }),
-            ];
-        }
-        // if (feature.get("layer") == "hydrolinje") {
-        //   return new ol.style.Style({
-        //     zIndex: 8,
-        //     stroke: new ol.style.Stroke({
-        //       color: "lightgray",
-        //       width: Number(feature.get("storleksklass")) || 2,
-        //     }),
-        //   });
-        // }
-    }
-
-    if (geometryType == "Point") {
-        if (layerName == "textpunkt") {
-            return new ol.style.Style({
-                zIndex: (feature.get("textstorleksklass") * 10) || 100,
-                text: new ol.style.Text({
-                    declutterMode: "none",
-                    text: feature.get("textstrang"),
-                    textAlign: textAlign[feature.get("textlage")],
-                    textBaseline: textBaseline[feature.get("textlage")],
-                    rotation: degToRad(360 - feature.get("textriktning")),
-                    rotateWithView: !!feature.get("textriktning"),
-                    font: getTextFont(feature),
-                    fill: new ol.style.Fill({
-                        color: "black",
-                    }),
-                    stroke: new ol.style.Stroke({
-                        color: "white",
-                        width: Number(feature.get("textstorleksklass") * 0.2) + 2,
-                    }),
-                }),
-            });
-        }
+            }),
+        });
     }
 }
 
 const getTextFont = (feature) => {
-  const italicText = ["Administrativ indelning", "Fjällupplysningstext", "Hydrografi", "Kulturhistorisk lämning", "Skyddad natur", "Terrängnamn", "Upplysningstext"];
-  const isItalic = italicText.includes(feature.get("textkategori")) ? "italic " : "";
-  const size = (feature.get("textstorleksklass") * 3) + 8;
-  return `${isItalic}${size}px arial, sans-serif`;
+    const italicText = ["Administrativ indelning", "Fjällupplysningstext", "Hydrografi", "Kulturhistorisk lämning", "Skyddad natur", "Terrängnamn", "Upplysningstext"];
+    const isItalic = italicText.includes(feature.get("textkategori")) ? "italic " : "";
+    const size = (feature.get("textstorleksklass") * 3) + 8;
+    return `${isItalic}${size}px arial, sans-serif`;
 };
