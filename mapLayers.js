@@ -3,7 +3,7 @@
 const jole84VectorSource = new ol.source.VectorTile({
     format: new ol.format.MVT(),
     url: 'https://jole84.se/tiles/{z}/{x}/{y}.pbf',
-    minZoom: 6,
+    minZoom: 5,
     maxZoom: 14
 });
 
